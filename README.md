@@ -6,6 +6,7 @@ Récupère les icônes de rôles ou les emojis d'un serveur Discord et télécha
 
 ## Fonctionnalités
 
+- Interface en **français et en anglais** (bouton FR/EN)
 - Choix entre les **icônes de rôles** et les **emojis** du serveur (les emojis animés sont exportés en GIF)
 - Liste les serveurs du compte et affiche les éléments de celui que tu choisis
 - Sélection des icônes à télécharger (ou tout d'un coup)
@@ -22,7 +23,7 @@ Récupère les icônes de rôles ou les emojis d'un serveur Discord et télécha
 
 ## Sécurité
 
-- Tout se passe dans ton navigateur : le token n'est envoyé qu'à `discord.com` et n'est jamais stocké ni transmis ailleurs. Tout le code tient dans un seul fichier, `index.html`, que tu peux relire.
+- Tout se passe dans ton navigateur : le token n'est **jamais enregistré** (ni dans le navigateur, ni sur un serveur), il n'est envoyé qu'à `discord.com` et disparaît quand tu fermes l'onglet. Tout le code tient dans un seul fichier, `index.html`, que tu peux relire.
 - Un token de compte donne accès à l'intégralité du compte. Ne le partage jamais, avec personne.
 - Utiliser un token de compte en dehors de l'application Discord va à l'encontre des conditions d'utilisation de Discord. Utilise-le à tes risques. Le mode token de bot ou le mode JSON manuel évitent ce problème.
 

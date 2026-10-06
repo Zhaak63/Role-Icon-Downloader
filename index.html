@@ -4,11 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Discord Role Icon Downloader</title>
+<meta name="description" content="Download the role icons or emojis of any Discord server as a ZIP. Free, open source, runs in your browser.">
+<meta name="theme-color" content="#5865f2">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Discord Role Icon Downloader">
+<meta property="og:description" content="Download role icons or emojis of any Discord server as a ZIP. Free, open source, runs in your browser. / Télécharge les icônes de rôles ou les emojis d'un serveur Discord en ZIP.">
+<meta property="og:url" content="https://zhaak63.github.io/Role-Icon-Downloader/">
+<meta property="og:site_name" content="Role Icon Downloader">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎨%3C/text%3E%3C/svg%3E">
 <style>
 :root{--bg:#1e1f22;--panel:#2b2d31;--line:#3f4147;--text:#f2f3f5;--mute:#b5bac1;--accent:#5865f2;--ok:#3ba55d;--err:#ed4245}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 "Segoe UI",system-ui,sans-serif;padding:24px 16px}
 main{max-width:760px;margin:0 auto}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 h1{font-size:26px;margin:0 0 4px}
 p.sub{color:var(--mute);margin:0 0 20px}
 .panel{background:var(--panel);border-radius:10px;padding:18px;margin-bottom:16px}
@@ -19,14 +29,15 @@ button{cursor:pointer;background:var(--accent);border-color:var(--accent);font-w
 button.ghost{background:transparent;border-color:var(--line)}
 button.on{background:var(--accent);border-color:var(--accent)}
 button:disabled{opacity:.5;cursor:default}
-button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #fff;outline-offset:2px}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid #fff;outline-offset:2px}
 label{display:block;margin:0 0 6px;color:var(--mute);font-size:13px}
 .row{display:flex;gap:8px;margin-bottom:12px}
 .row>input,.row>select{flex:1;min-width:0}
 textarea{width:100%;min-height:130px;font-family:Consolas,monospace;font-size:13px;margin-bottom:12px}
 .hint{color:var(--mute);font-size:13px;margin:0 0 12px}
+.hint a,details a{color:#8ea1ff}
 code{background:var(--bg);padding:1px 5px;border-radius:4px;font-size:13px}
-#status{min-height:22px;font-size:14px}
+#status{min-height:22px;font-size:14px;margin-bottom:12px}
 #status.err{color:var(--err)}#status.ok{color:var(--ok)}
 .bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
 .bar .count{margin-left:auto;color:var(--mute);font-size:14px}
@@ -39,76 +50,79 @@ code{background:var(--bg);padding:1px 5px;border-radius:4px;font-size:13px}
 .hidden{display:none}
 details{margin-top:6px}
 summary{cursor:pointer;font-weight:600;margin-bottom:8px}
-summary:focus-visible,a:focus-visible{outline:2px solid #fff;outline-offset:2px}
 details ol{padding-left:20px;margin:8px 0}
 details li{margin-bottom:8px}
-details a{color:#8ea1ff}
-pre{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px;margin:8px 0;overflow-x:auto;white-space:pre-wrap;word-break:break-all;font-size:12px}
+pre{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px;margin:8px 0;white-space:pre-wrap;word-break:break-all;font-size:12px}
 pre code{background:none;padding:0}
-footer{text-align:center;margin-top:28px;font-size:14px}
+footer{text-align:center;margin-top:28px;font-size:14px;color:var(--mute)}
 footer a{color:var(--mute);text-decoration:none;font-weight:600}
-footer a:hover,footer a:focus-visible{color:var(--text);text-decoration:underline}
+footer a:hover{color:var(--text);text-decoration:underline}
 </style>
 </head>
 <body>
 <main>
-  <h1>Role Icon Downloader</h1>
-  <p class="sub">Récupère les icônes de rôles ou les emojis d'un serveur Discord dans un ZIP.</p>
+  <header>
+    <div>
+      <h1>Role Icon Downloader</h1>
+      <p class="sub" data-i="sub"></p>
+    </div>
+    <button id="lang" class="ghost" type="button" aria-label="Language / Langue">EN</button>
+  </header>
 
   <div class="panel">
-    <label for="type">Que veux-tu télécharger ?</label>
+    <label for="type" data-i="what"></label>
     <div class="row">
       <select id="type">
-        <option value="roles">Icônes de rôles</option>
-        <option value="emojis">Emojis du serveur</option>
+        <option value="roles" data-i="optRoles"></option>
+        <option value="emojis" data-i="optEmojis"></option>
       </select>
     </div>
     <div class="tabs">
-      <button id="tabBot" class="on" type="button">Avec un token</button>
-      <button id="tabManual" class="ghost" type="button">JSON manuel</button>
+      <button id="tabBot" class="on" type="button" data-i="tabToken"></button>
+      <button id="tabManual" class="ghost" type="button" data-i="tabJson"></button>
     </div>
 
     <div id="modeBot">
-      <label for="kind">Type de token</label>
+      <label for="kind" data-i="kindLabel"></label>
       <div class="row">
         <select id="kind">
-          <option value="user">Compte Discord (token utilisateur)</option>
-          <option value="bot">Bot (doit être dans le serveur)</option>
+          <option value="user" data-i="kindUser"></option>
+          <option value="bot" data-i="kindBot"></option>
         </select>
       </div>
       <label for="token">Token</label>
       <div class="row">
-        <input id="token" type="password" placeholder="Colle le token du bot" autocomplete="off">
-        <button id="loadGuilds" type="button">Charger les serveurs</button>
+        <input id="token" type="password" data-p="tokenPh" autocomplete="off">
+        <button id="loadGuilds" type="button" data-i="loadGuilds"></button>
       </div>
       <div id="guildBox" class="hidden">
-        <label for="guild">Serveur</label>
+        <label for="guild" data-i="server"></label>
         <div class="row">
           <select id="guild"></select>
-          <button id="loadRoles" type="button">Afficher</button>
+          <button id="loadRoles" type="button" data-i="show"></button>
         </div>
       </div>
-      <p class="hint">Le token reste dans ton navigateur et n'est envoyé qu'à <code>discord.com</code>. Attention : un token utilisateur donne accès à tout le compte. Ne le partage jamais, et l'utiliser en dehors de l'app Discord va contre ses conditions d'utilisation (risque de sanction du compte).</p>
+      <p class="hint" data-i="privacy"></p>
       <details id="help">
-        <summary>Comment trouver mon token ?</summary>
+        <summary data-i="helpTitle"></summary>
         <ol>
-          <li>Ouvre l'application Discord de bureau, ou connecte-toi sur <a href="https://discord.com/app" target="_blank" rel="noopener noreferrer">discord.com/app</a>.</li>
-          <li>Ouvre les outils de développement avec <code>F12</code> ou <code>Ctrl + Shift + I</code>, puis va dans l'onglet <b>Console</b>.</li>
-          <li>Si le collage est bloqué, tape <code>allow pasting</code> puis appuie sur Entrée.</li>
-          <li>Colle le code ci-dessous et appuie sur Entrée :
+          <li data-i="h1"></li>
+          <li data-i="h2"></li>
+          <li data-i="h3"></li>
+          <li><span data-i="h4"></span>
             <pre><code id="snippet">{webpackChunkdiscord_app.push([[Math.random()],{},e=&gt;{e.b&amp;&amp;(m=Object.values(e.c))}]);let e=m.find((e=&gt;!e?.exports?.messagesLoader&amp;&amp;e?.exports?.default?.getToken))?.exports?.default?.getToken?.();e?console.log(`"${e}"`):console.warn("Token not found.")}</code></pre>
-            <button id="copySnippet" class="ghost" type="button">Copier le code</button>
+            <button id="copySnippet" class="ghost" type="button" data-i="copy"></button>
           </li>
-          <li>Ton token s'affiche en bas de la console. Copie ce qui se trouve entre les guillemets <code>""</code> et colle-le dans le champ ci-dessus.</li>
+          <li data-i="h5"></li>
         </ol>
-        <p class="hint">Ce code lit ton token dans ta propre session et l'affiche dans ta console, rien d'autre. Ne colle jamais dans la console un code que tu ne comprends pas ou qu'on t'a envoyé en message privé : il pourrait voler ton compte. Si le message « Token not found » apparaît, Discord a probablement changé son fonctionnement et ce code ne marche plus.</p>
+        <p class="hint" data-i="helpWarn"></p>
       </details>
     </div>
 
     <div id="modeManual" class="hidden">
-      <p class="hint">Fais un <code>GET https://discord.com/api/v10/guilds/ID_DU_SERVEUR</code> avec ton bot, puis colle ici la réponse JSON complète.</p>
+      <p class="hint" data-i="manualHint"></p>
       <textarea id="json" placeholder='{"id":"...","name":"...","roles":[...]}' spellcheck="false"></textarea>
-      <button id="parse" type="button">Analyser le JSON</button>
+      <button id="parse" type="button" data-i="parse"></button>
     </div>
   </div>
 
@@ -116,9 +130,9 @@ footer a:hover,footer a:focus-visible{color:var(--text);text-decoration:underlin
 
   <div id="result" class="panel hidden">
     <div class="bar">
-      <button id="all" class="ghost" type="button">Tout sélectionner</button>
-      <button id="none" class="ghost" type="button">Tout désélectionner</button>
-      <button id="dl" type="button">Télécharger le ZIP</button>
+      <button id="all" class="ghost" type="button" data-i="all"></button>
+      <button id="none" class="ghost" type="button" data-i="none"></button>
+      <button id="dl" type="button" data-i="dl"></button>
       <span class="count" id="count"></span>
     </div>
     <div class="grid" id="grid"></div>
@@ -127,16 +141,90 @@ footer a:hover,footer a:focus-visible{color:var(--text);text-decoration:underlin
 
   <footer>
     <a href="https://discord.gg/GRpCYzmtuJ" target="_blank" rel="noopener noreferrer">by Zhaak</a>
+    · <a href="https://github.com/Zhaak63/Role-Icon-Downloader" target="_blank" rel="noopener noreferrer" data-i="source"></a>
   </footer>
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 const API = "https://discord.com/api/v10";
+const SRC = "https://github.com/Zhaak63/Role-Icon-Downloader";
 const $ = id => document.getElementById(id);
-let guildName = "serveur", roles = [];
 
+const T = {
+fr: {
+  title: "Téléchargeur d'icônes de rôles Discord",
+  sub: "Récupère les icônes de rôles ou les emojis d'un serveur Discord dans un ZIP.",
+  what: "Que veux-tu télécharger ?", optRoles: "Icônes de rôles", optEmojis: "Emojis du serveur",
+  tabToken: "Avec un token", tabJson: "JSON manuel",
+  kindLabel: "Type de token", kindUser: "Compte Discord (token utilisateur)", kindBot: "Bot (doit être dans le serveur)",
+  tokenPh: "Colle ton token", loadGuilds: "Charger les serveurs", server: "Serveur", show: "Afficher",
+  privacy: `<b>Ton token n'est jamais enregistré</b> : il reste dans ta page, n'est envoyé qu'à <code>discord.com</code>, et disparaît quand tu fermes l'onglet. Rien ne passe par un serveur à nous. Le code est public : <a href="${SRC}" target="_blank" rel="noopener noreferrer">voir le code source</a>.<br>Attention : un token utilisateur donne accès à tout le compte, ne le partage jamais. L'utiliser en dehors de l'app Discord va contre ses conditions d'utilisation (risque de sanction du compte).`,
+  helpTitle: "Comment trouver mon token ?",
+  h1: `Ouvre l'application Discord de bureau, ou connecte-toi sur <a href="https://discord.com/app" target="_blank" rel="noopener noreferrer">discord.com/app</a>.`,
+  h2: "Ouvre les outils de développement avec <code>F12</code> ou <code>Ctrl + Shift + I</code>, puis va dans l'onglet <b>Console</b>.",
+  h3: "Si le collage est bloqué, tape <code>allow pasting</code> puis appuie sur Entrée.",
+  h4: "Colle le code ci-dessous et appuie sur Entrée :",
+  h5: "Ton token s'affiche en bas de la console. Copie ce qui se trouve entre les guillemets <code>\"\"</code> et colle-le dans le champ ci-dessus.",
+  helpWarn: "Ce code lit ton token dans ta propre session et l'affiche dans ta console, rien d'autre. Ne colle jamais dans la console un code que tu ne comprends pas ou qu'on t'a envoyé en message privé : il pourrait voler ton compte. Si « Token not found » apparaît, Discord a probablement changé son fonctionnement et ce code ne marche plus.",
+  copy: "Copier le code", copied: "Copié !", copyFail: "Sélectionne le code et copie-le à la main",
+  manualHint: "Fais un <code>GET https://discord.com/api/v10/guilds/ID_DU_SERVEUR</code> avec ton token, puis colle ici la réponse JSON complète.",
+  parse: "Analyser le JSON", all: "Tout sélectionner", none: "Tout désélectionner", dl: "Télécharger le ZIP",
+  source: "Code source",
+  needToken: "Colle d'abord ton token.", loadingGuilds: "Chargement des serveurs…", noGuilds: "Aucun serveur trouvé pour ce token.",
+  guildsFound: "{n} serveur(s) trouvé(s).", loadingRoles: "Chargement…", badJson: "JSON invalide : colle la réponse complète de l'API.",
+  noRolesField: "Aucun champ « roles » dans ces données.", noEmojiField: "Aucun champ « emojis » dans ces données.",
+  foundRoles: "{n} icône(s) trouvée(s) sur « {g} ».", foundEmojis: "{n} emoji(s) trouvé(s) sur « {g} ».",
+  noEmojis: "Ce serveur n'a aucun emoji personnalisé.", noRoleIcons: "Aucun rôle de ce serveur n'a d'icône image. Il faut le niveau 2 de boost pour en avoir.",
+  uniNote: "{n} rôle(s) utilisent un emoji standard au lieu d'une image (non téléchargeables) : {list}",
+  count: "{a} / {b} sélectionnée(s)", pickOne: "Sélectionne au moins un élément.",
+  progress: "Téléchargement {i} / {n}…", dlFail: "Impossible de récupérer « {name} ».", dlDone: "{n} fichier(s) téléchargé(s) dans le ZIP.",
+  e401: "Token invalide.", e403: "Pas d'accès à ce serveur avec ce token.", e429: "Trop de requêtes, réessaie dans quelques secondes.", eOther: "Erreur Discord {s}"
+},
+en: {
+  title: "Discord Role Icon Downloader",
+  sub: "Download the role icons or emojis of a Discord server as a ZIP.",
+  what: "What do you want to download?", optRoles: "Role icons", optEmojis: "Server emojis",
+  tabToken: "With a token", tabJson: "Manual JSON",
+  kindLabel: "Token type", kindUser: "Discord account (user token)", kindBot: "Bot (must be in the server)",
+  tokenPh: "Paste your token", loadGuilds: "Load servers", server: "Server", show: "Show",
+  privacy: `<b>Your token is never stored</b>: it stays in your page, is only sent to <code>discord.com</code>, and is gone when you close the tab. Nothing goes through a server of ours. The code is public: <a href="${SRC}" target="_blank" rel="noopener noreferrer">view the source code</a>.<br>Warning: a user token gives access to the whole account, never share it. Using it outside the Discord app goes against Discord's Terms of Service (your account could be sanctioned).`,
+  helpTitle: "How do I find my token?",
+  h1: `Open the Discord desktop app, or log in at <a href="https://discord.com/app" target="_blank" rel="noopener noreferrer">discord.com/app</a>.`,
+  h2: "Open the developer tools with <code>F12</code> or <code>Ctrl + Shift + I</code>, then go to the <b>Console</b> tab.",
+  h3: "If pasting is blocked, type <code>allow pasting</code> and press Enter.",
+  h4: "Paste the code below and press Enter:",
+  h5: "Your token appears at the bottom of the console. Copy what is between the quotes <code>\"\"</code> and paste it in the field above.",
+  helpWarn: "This code reads the token from your own session and prints it in your console, nothing else. Never paste code you don't understand, or that someone sent you in a DM: it could steal your account. If \"Token not found\" appears, Discord has probably changed something and this code no longer works.",
+  copy: "Copy code", copied: "Copied!", copyFail: "Select the code and copy it manually",
+  manualHint: "Make a <code>GET https://discord.com/api/v10/guilds/SERVER_ID</code> request with your token, then paste the full JSON response here.",
+  parse: "Parse JSON", all: "Select all", none: "Deselect all", dl: "Download ZIP",
+  source: "Source code",
+  needToken: "Paste your token first.", loadingGuilds: "Loading servers…", noGuilds: "No server found for this token.",
+  guildsFound: "{n} server(s) found.", loadingRoles: "Loading…", badJson: "Invalid JSON: paste the full API response.",
+  noRolesField: "No \"roles\" field in this data.", noEmojiField: "No \"emojis\" field in this data.",
+  foundRoles: "{n} icon(s) found on \"{g}\".", foundEmojis: "{n} emoji(s) found on \"{g}\".",
+  noEmojis: "This server has no custom emoji.", noRoleIcons: "No role on this server has an image icon. Server boost level 2 is required to have them.",
+  uniNote: "{n} role(s) use a standard emoji instead of an image (not downloadable): {list}",
+  count: "{a} / {b} selected", pickOne: "Select at least one item.",
+  progress: "Downloading {i} / {n}…", dlFail: "Could not fetch \"{name}\".", dlDone: "{n} file(s) downloaded in the ZIP.",
+  e401: "Invalid token.", e403: "No access to this server with this token.", e429: "Too many requests, try again in a few seconds.", eOther: "Discord error {s}"
+}};
+
+let L = (navigator.language || "en").toLowerCase().startsWith("fr") ? "fr" : "en";
+let guildName = "server", roles = [], lastGuild = null;
+const t = (k, v = {}) => (T[L][k] || k).replace(/\{(\w+)\}/g, (_, x) => v[x]);
 function say(msg, cls = "") { const s = $("status"); s.textContent = msg; s.className = cls; }
+
+function applyLang() {
+  document.documentElement.lang = L;
+  document.title = t("title");
+  document.querySelectorAll("[data-i]").forEach(e => e.innerHTML = t(e.dataset.i));
+  document.querySelectorAll("[data-p]").forEach(e => e.placeholder = t(e.dataset.p));
+  $("lang").textContent = L === "fr" ? "EN" : "FR";
+  if (lastGuild) build(); else say("");
+}
+$("lang").onclick = () => { L = L === "fr" ? "en" : "fr"; applyLang(); };
 
 function setMode(bot) {
   $("modeBot").classList.toggle("hidden", !bot);
@@ -148,68 +236,64 @@ $("tabBot").onclick = () => setMode(true);
 $("tabManual").onclick = () => setMode(false);
 
 async function api(path) {
-  const t = $("token").value.trim().replace(/^"|"$/g, "").replace(/^Bot\s+/i, "");
-  const auth = $("kind").value === "bot" ? "Bot " + t : t;
+  const tk = $("token").value.trim().replace(/^"|"$/g, "").replace(/^Bot\s+/i, "");
+  const auth = $("kind").value === "bot" ? "Bot " + tk : tk;
   const r = await fetch(API + path, { headers: { Authorization: auth } });
-  if (!r.ok) throw new Error(r.status === 401 ? "Token invalide." : r.status === 403 || r.status === 404 ? "Pas d'accès à ce serveur avec ce token." : r.status === 429 ? "Trop de requêtes, réessaie dans quelques secondes." : "Erreur Discord " + r.status);
+  if (!r.ok) throw new Error(r.status === 401 ? t("e401") : r.status === 403 || r.status === 404 ? t("e403") : r.status === 429 ? t("e429") : t("eOther", { s: r.status }));
   return r.json();
 }
 
 $("loadGuilds").onclick = async () => {
-  if (!$("token").value.trim()) return say("Colle d'abord le token du bot.", "err");
-  say("Chargement des serveurs…");
+  if (!$("token").value.trim()) return say(t("needToken"), "err");
+  say(t("loadingGuilds"));
   try {
     const guilds = await api("/users/@me/guilds");
-    if (!guilds.length) return say("Ce bot n'est dans aucun serveur.", "err");
-    $("guild").innerHTML = guilds.map(g => `<option value="${g.id}">${g.name.replace(/</g, "&lt;")}</option>`).join("");
+    if (!guilds.length) return say(t("noGuilds"), "err");
+    $("guild").innerHTML = "";
+    guilds.forEach(g => { const o = document.createElement("option"); o.value = g.id; o.textContent = g.name; $("guild").append(o); });
     $("guildBox").classList.remove("hidden");
-    say(guilds.length + " serveur(s) trouvé(s).", "ok");
+    say(t("guildsFound", { n: guilds.length }), "ok");
   } catch (e) { say(e.message, "err"); }
 };
 
 $("loadRoles").onclick = async () => {
-  say("Chargement des rôles…");
+  say(t("loadingRoles"));
   try { show(await api("/guilds/" + $("guild").value)); }
   catch (e) { say(e.message, "err"); }
 };
 
 $("parse").onclick = () => {
   try { show(JSON.parse($("json").value)); }
-  catch (e) { say("JSON invalide : colle la réponse complète de l'API.", "err"); }
+  catch (e) { say(t("badJson"), "err"); }
 };
 
-let lastGuild = null;
 function show(guild) { lastGuild = guild; build(); }
 $("type").onchange = () => { if (lastGuild) build(); };
 
 function build() {
   const guild = lastGuild, emojis = $("type").value === "emojis";
-  guildName = guild.name || "serveur";
+  guildName = guild.name || "server";
   let unicode = [];
   if (emojis) {
-    if (!Array.isArray(guild.emojis)) return say("Aucun champ « emojis » dans ces données.", "err");
+    if (!Array.isArray(guild.emojis)) return say(t("noEmojiField"), "err");
     roles = guild.emojis.map(e => {
       const ext = e.animated ? "gif" : "png";
       return { id: e.id, name: e.name, sel: true, ext, url: s => `https://cdn.discordapp.com/emojis/${e.id}.${ext}?size=${s}` };
     });
   } else {
-    if (!Array.isArray(guild.roles)) return say("Aucun champ « roles » dans ces données.", "err");
+    if (!Array.isArray(guild.roles)) return say(t("noRolesField"), "err");
     roles = guild.roles.filter(r => r.icon).map(r => ({ id: r.id, name: r.name, sel: true, ext: "png", url: s => `https://cdn.discordapp.com/role-icons/${r.id}/${r.icon}.png?size=${s}` }));
     unicode = guild.roles.filter(r => !r.icon && r.unicode_emoji);
   }
-  $("emojiNote").textContent = unicode.length
-    ? unicode.length + " rôle(s) utilisent un emoji standard au lieu d'une image (non téléchargeables) : " + unicode.map(r => r.unicode_emoji + " " + r.name).join(", ")
-    : "";
+  $("emojiNote").textContent = unicode.length ? t("uniNote", { n: unicode.length, list: unicode.map(r => r.unicode_emoji + " " + r.name).join(", ") }) : "";
   if (!roles.length) {
     $("result").classList.add("hidden");
-    return say(emojis ? "Ce serveur n'a aucun emoji personnalisé." : "Aucun rôle de ce serveur n'a d'icône image. Il faut le niveau 2 de boost pour en avoir.", "err");
+    return say(emojis ? t("noEmojis") : t("noRoleIcons"), "err");
   }
-  say(roles.length + (emojis ? " emoji(s) trouvé(s)" : " icône(s) trouvée(s)") + " sur « " + guildName + " ».", "ok");
+  say(t(emojis ? "foundEmojis" : "foundRoles", { n: roles.length, g: guildName }), "ok");
   render();
   $("result").classList.remove("hidden");
 }
-
-const iconUrl = (r, size) => r.url(size);
 
 function render() {
   const grid = $("grid");
@@ -221,7 +305,7 @@ function render() {
     cb.type = "checkbox"; cb.checked = r.sel;
     cb.onchange = () => { r.sel = cb.checked; el.classList.toggle("sel", r.sel); count(); };
     const img = document.createElement("img");
-    img.src = iconUrl(r, 128); img.alt = ""; img.loading = "lazy";
+    img.src = r.url(128); img.alt = ""; img.loading = "lazy";
     const name = document.createElement("span");
     name.textContent = r.name;
     el.append(cb, img, name);
@@ -229,30 +313,30 @@ function render() {
   });
   count();
 }
-function count() { $("count").textContent = roles.filter(r => r.sel).length + " / " + roles.length + " sélectionnée(s)"; }
+function count() { $("count").textContent = t("count", { a: roles.filter(r => r.sel).length, b: roles.length }); }
 $("all").onclick = () => { roles.forEach(r => r.sel = true); render(); };
 $("none").onclick = () => { roles.forEach(r => r.sel = false); render(); };
 
 $("copySnippet").onclick = async () => {
   const b = $("copySnippet");
-  try { await navigator.clipboard.writeText($("snippet").textContent); b.textContent = "Copié !"; }
-  catch (e) { b.textContent = "Sélectionne le code et copie-le à la main"; }
-  setTimeout(() => b.textContent = "Copier le code", 2000);
+  try { await navigator.clipboard.writeText($("snippet").textContent); b.textContent = t("copied"); }
+  catch (e) { b.textContent = t("copyFail"); }
+  setTimeout(() => b.textContent = t("copy"), 2000);
 };
 
-const clean = s => s.replace(/[\\/:*?"<>|]+/g, "_").trim() || "role";
+const clean = s => s.replace(/[\\/:*?"<>|]+/g, "_").trim() || "file";
 
 $("dl").onclick = async () => {
   const picked = roles.filter(r => r.sel);
-  if (!picked.length) return say("Sélectionne au moins une icône.", "err");
+  if (!picked.length) return say(t("pickOne"), "err");
   $("dl").disabled = true;
   try {
     const zip = new JSZip(), used = {};
     let done = 0;
     for (const r of picked) {
-      say(`Téléchargement ${++done} / ${picked.length}…`);
-      const res = await fetch(iconUrl(r, 512));
-      if (!res.ok) throw new Error("Impossible de récupérer l'icône « " + r.name + " ».");
+      say(t("progress", { i: ++done, n: picked.length }));
+      const res = await fetch(r.url(512));
+      if (!res.ok) throw new Error(t("dlFail", { name: r.name }));
       let base = clean(r.name);
       used[base] = (used[base] || 0) + 1;
       if (used[base] > 1) base += "_" + r.id;
@@ -264,10 +348,12 @@ $("dl").onclick = async () => {
     a.download = clean(guildName) + ($("type").value === "emojis" ? "-emojis" : "-role-icons") + ".zip";
     a.click();
     URL.revokeObjectURL(a.href);
-    say(picked.length + " icône(s) téléchargée(s) dans le ZIP.", "ok");
+    say(t("dlDone", { n: picked.length }), "ok");
   } catch (e) { say(e.message, "err"); }
   $("dl").disabled = false;
 };
+
+applyLang();
 </script>
 </body>
 </html>
