@@ -37,6 +37,14 @@ code{background:var(--bg);padding:1px 5px;border-radius:4px;font-size:13px}
 .role span{font-size:13px;word-break:break-word}
 .role input{position:absolute;top:8px;left:8px;width:16px;height:16px;padding:0}
 .hidden{display:none}
+details{margin-top:6px}
+summary{cursor:pointer;font-weight:600;margin-bottom:8px}
+summary:focus-visible,a:focus-visible{outline:2px solid #fff;outline-offset:2px}
+details ol{padding-left:20px;margin:8px 0}
+details li{margin-bottom:8px}
+details a{color:#8ea1ff}
+pre{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px;margin:8px 0;overflow-x:auto;white-space:pre-wrap;word-break:break-all;font-size:12px}
+pre code{background:none;padding:0}
 footer{text-align:center;margin-top:28px;font-size:14px}
 footer a{color:var(--mute);text-decoration:none;font-weight:600}
 footer a:hover,footer a:focus-visible{color:var(--text);text-decoration:underline}
@@ -74,6 +82,20 @@ footer a:hover,footer a:focus-visible{color:var(--text);text-decoration:underlin
         </div>
       </div>
       <p class="hint">Le token reste dans ton navigateur et n'est envoyé qu'à <code>discord.com</code>. Attention : un token utilisateur donne accès à tout le compte. Ne le partage jamais, et l'utiliser en dehors de l'app Discord va contre ses conditions d'utilisation (risque de sanction du compte).</p>
+      <details id="help">
+        <summary>Comment trouver mon token ?</summary>
+        <ol>
+          <li>Ouvre l'application Discord de bureau, ou connecte-toi sur <a href="https://discord.com/app" target="_blank" rel="noopener noreferrer">discord.com/app</a>.</li>
+          <li>Ouvre les outils de développement avec <code>F12</code> ou <code>Ctrl + Shift + I</code>, puis va dans l'onglet <b>Console</b>.</li>
+          <li>Si le collage est bloqué, tape <code>allow pasting</code> puis appuie sur Entrée.</li>
+          <li>Colle le code ci-dessous et appuie sur Entrée :
+            <pre><code id="snippet">{webpackChunkdiscord_app.push([[Math.random()],{},e=&gt;{e.b&amp;&amp;(m=Object.values(e.c))}]);let e=m.find((e=&gt;!e?.exports?.messagesLoader&amp;&amp;e?.exports?.default?.getToken))?.exports?.default?.getToken?.();e?console.log(`"${e}"`):console.warn("Token not found.")}</code></pre>
+            <button id="copySnippet" class="ghost" type="button">Copier le code</button>
+          </li>
+          <li>Ton token s'affiche en bas de la console. Copie ce qui se trouve entre les guillemets <code>""</code> et colle-le dans le champ ci-dessus.</li>
+        </ol>
+        <p class="hint">Ce code lit ton token dans ta propre session et l'affiche dans ta console, rien d'autre. Ne colle jamais dans la console un code que tu ne comprends pas ou qu'on t'a envoyé en message privé : il pourrait voler ton compte. Si le message « Token not found » apparaît, Discord a probablement changé son fonctionnement et ce code ne marche plus.</p>
+      </details>
     </div>
 
     <div id="modeManual" class="hidden">
@@ -186,6 +208,13 @@ function render() {
 function count() { $("count").textContent = roles.filter(r => r.sel).length + " / " + roles.length + " sélectionnée(s)"; }
 $("all").onclick = () => { roles.forEach(r => r.sel = true); render(); };
 $("none").onclick = () => { roles.forEach(r => r.sel = false); render(); };
+
+$("copySnippet").onclick = async () => {
+  const b = $("copySnippet");
+  try { await navigator.clipboard.writeText($("snippet").textContent); b.textContent = "Copié !"; }
+  catch (e) { b.textContent = "Sélectionne le code et copie-le à la main"; }
+  setTimeout(() => b.textContent = "Copier le code", 2000);
+};
 
 const clean = s => s.replace(/[\\/:*?"<>|]+/g, "_").trim() || "role";
 
