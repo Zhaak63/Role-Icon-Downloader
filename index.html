@@ -53,9 +53,16 @@ footer a:hover,footer a:focus-visible{color:var(--text);text-decoration:underlin
 <body>
 <main>
   <h1>Role Icon Downloader</h1>
-  <p class="sub">Récupère toutes les icônes de rôles d'un serveur Discord dans un ZIP.</p>
+  <p class="sub">Récupère les icônes de rôles ou les emojis d'un serveur Discord dans un ZIP.</p>
 
   <div class="panel">
+    <label for="type">Que veux-tu télécharger ?</label>
+    <div class="row">
+      <select id="type">
+        <option value="roles">Icônes de rôles</option>
+        <option value="emojis">Emojis du serveur</option>
+      </select>
+    </div>
     <div class="tabs">
       <button id="tabBot" class="on" type="button">Avec un token</button>
       <button id="tabManual" class="ghost" type="button">JSON manuel</button>
@@ -78,7 +85,7 @@ footer a:hover,footer a:focus-visible{color:var(--text);text-decoration:underlin
         <label for="guild">Serveur</label>
         <div class="row">
           <select id="guild"></select>
-          <button id="loadRoles" type="button">Voir les icônes</button>
+          <button id="loadRoles" type="button">Afficher</button>
         </div>
       </div>
       <p class="hint">Le token reste dans ton navigateur et n'est envoyé qu'à <code>discord.com</code>. Attention : un token utilisateur donne accès à tout le compte. Ne le partage jamais, et l'utiliser en dehors de l'app Discord va contre ses conditions d'utilisation (risque de sanction du compte).</p>
@@ -171,21 +178,38 @@ $("parse").onclick = () => {
   catch (e) { say("JSON invalide : colle la réponse complète de l'API.", "err"); }
 };
 
-function show(guild) {
-  if (!Array.isArray(guild.roles)) return say("Aucun champ « roles » dans ces données.", "err");
+let lastGuild = null;
+function show(guild) { lastGuild = guild; build(); }
+$("type").onchange = () => { if (lastGuild) build(); };
+
+function build() {
+  const guild = lastGuild, emojis = $("type").value === "emojis";
   guildName = guild.name || "serveur";
-  roles = guild.roles.filter(r => r.icon).map(r => ({ id: r.id, name: r.name, icon: r.icon, sel: true }));
-  const unicode = guild.roles.filter(r => !r.icon && r.unicode_emoji);
+  let unicode = [];
+  if (emojis) {
+    if (!Array.isArray(guild.emojis)) return say("Aucun champ « emojis » dans ces données.", "err");
+    roles = guild.emojis.map(e => {
+      const ext = e.animated ? "gif" : "png";
+      return { id: e.id, name: e.name, sel: true, ext, url: s => `https://cdn.discordapp.com/emojis/${e.id}.${ext}?size=${s}` };
+    });
+  } else {
+    if (!Array.isArray(guild.roles)) return say("Aucun champ « roles » dans ces données.", "err");
+    roles = guild.roles.filter(r => r.icon).map(r => ({ id: r.id, name: r.name, sel: true, ext: "png", url: s => `https://cdn.discordapp.com/role-icons/${r.id}/${r.icon}.png?size=${s}` }));
+    unicode = guild.roles.filter(r => !r.icon && r.unicode_emoji);
+  }
   $("emojiNote").textContent = unicode.length
     ? unicode.length + " rôle(s) utilisent un emoji standard au lieu d'une image (non téléchargeables) : " + unicode.map(r => r.unicode_emoji + " " + r.name).join(", ")
     : "";
-  if (!roles.length) { $("result").classList.add("hidden"); return say("Aucun rôle de ce serveur n'a d'icône image. Il faut le niveau 2 de boost pour en avoir.", "err"); }
-  say(roles.length + " icône(s) trouvée(s) sur « " + guildName + " ».", "ok");
+  if (!roles.length) {
+    $("result").classList.add("hidden");
+    return say(emojis ? "Ce serveur n'a aucun emoji personnalisé." : "Aucun rôle de ce serveur n'a d'icône image. Il faut le niveau 2 de boost pour en avoir.", "err");
+  }
+  say(roles.length + (emojis ? " emoji(s) trouvé(s)" : " icône(s) trouvée(s)") + " sur « " + guildName + " ».", "ok");
   render();
   $("result").classList.remove("hidden");
 }
 
-const iconUrl = (r, size) => `https://cdn.discordapp.com/role-icons/${r.id}/${r.icon}.png?size=${size}`;
+const iconUrl = (r, size) => r.url(size);
 
 function render() {
   const grid = $("grid");
@@ -232,12 +256,12 @@ $("dl").onclick = async () => {
       let base = clean(r.name);
       used[base] = (used[base] || 0) + 1;
       if (used[base] > 1) base += "_" + r.id;
-      zip.file(base + ".png", await res.blob());
+      zip.file(base + "." + r.ext, await res.blob());
     }
     const blob = await zip.generateAsync({ type: "blob" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = clean(guildName) + "-role-icons.zip";
+    a.download = clean(guildName) + ($("type").value === "emojis" ? "-emojis" : "-role-icons") + ".zip";
     a.click();
     URL.revokeObjectURL(a.href);
     say(picked.length + " icône(s) téléchargée(s) dans le ZIP.", "ok");

@@ -1,12 +1,13 @@
 # Discord Role Icon Downloader
 
-Récupère toutes les icônes de rôles d'un serveur Discord et télécharge-les dans un ZIP.
+Récupère les icônes de rôles ou les emojis d'un serveur Discord et télécharge-les dans un ZIP.
 
 **Utiliser l'outil :** https://TONPSEUDO.github.io/NOM-DU-DEPOT/
 
 ## Fonctionnalités
 
-- Liste les serveurs du compte et affiche les icônes de rôles de celui que tu choisis
+- Choix entre les **icônes de rôles** et les **emojis** du serveur (les emojis animés sont exportés en GIF)
+- Liste les serveurs du compte et affiche les éléments de celui que tu choisis
 - Sélection des icônes à télécharger (ou tout d'un coup)
 - Export en ZIP, un fichier PNG par rôle, nommé d'après le rôle
 - Fonctionne avec un token de compte Discord ou un token de bot
@@ -15,8 +16,8 @@ Récupère toutes les icônes de rôles d'un serveur Discord et télécharge-les
 ## Utilisation
 
 1. Ouvre la page.
-2. Colle ton token (ou passe sur l'onglet « JSON manuel »).
-3. Clique sur **Charger les serveurs**, choisis un serveur, puis **Voir les icônes**.
+2. Choisis ce que tu veux télécharger (icônes de rôles ou emojis), puis colle ton token (ou passe sur l'onglet « JSON manuel »).
+3. Clique sur **Charger les serveurs**, choisis un serveur, puis **Afficher**.
 4. Coche les icônes voulues et clique sur **Télécharger le ZIP**.
 
 ## Sécurité
