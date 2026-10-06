@@ -4,14 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Discord Role Icon Downloader</title>
-<meta name="description" content="Download the role icons or emojis of any Discord server as a ZIP. Free, open source, runs in your browser.">
+<meta name="description" content="Download the role icons, emojis or stickers of any Discord server as a ZIP. Free, open source, runs in your browser.">
 <meta name="theme-color" content="#5865f2">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Discord Role Icon Downloader">
-<meta property="og:description" content="Download role icons or emojis of any Discord server as a ZIP. Free, open source, runs in your browser. / Télécharge les icônes de rôles ou les emojis d'un serveur Discord en ZIP.">
+<meta property="og:description" content="Download role icons, emojis or stickers of any Discord server as a ZIP. Free, open source, runs in your browser. / Télécharge les icônes de rôles, les emojis ou les stickers d'un serveur Discord en ZIP.">
 <meta property="og:url" content="https://zhaak63.github.io/Role-Icon-Downloader/">
 <meta property="og:site_name" content="Role Icon Downloader">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://zhaak63.github.io/Role-Icon-Downloader/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://zhaak63.github.io/Role-Icon-Downloader/og-image.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎨%3C/text%3E%3C/svg%3E">
 <style>
 :root{--bg:#1e1f22;--panel:#2b2d31;--line:#3f4147;--text:#f2f3f5;--mute:#b5bac1;--accent:#5865f2;--ok:#3ba55d;--err:#ed4245}
@@ -48,6 +52,9 @@ code{background:var(--bg);padding:1px 5px;border-radius:4px;font-size:13px}
 .role span{font-size:13px;word-break:break-word}
 .role input{position:absolute;top:8px;left:8px;width:16px;height:16px;padding:0}
 .hidden{display:none}
+.bar label{margin:0}
+.prog{height:10px;background:var(--bg);border-radius:6px;overflow:hidden;margin-bottom:14px}
+#fill{height:100%;width:0;background:var(--accent);transition:width .15s}
 details{margin-top:6px}
 summary{cursor:pointer;font-weight:600;margin-bottom:8px}
 details ol{padding-left:20px;margin:8px 0}
@@ -75,6 +82,7 @@ footer a:hover{color:var(--text);text-decoration:underline}
       <select id="type">
         <option value="roles" data-i="optRoles"></option>
         <option value="emojis" data-i="optEmojis"></option>
+        <option value="stickers" data-i="optStickers"></option>
       </select>
     </div>
     <div class="tabs">
@@ -132,9 +140,12 @@ footer a:hover{color:var(--text);text-decoration:underline}
     <div class="bar">
       <button id="all" class="ghost" type="button" data-i="all"></button>
       <button id="none" class="ghost" type="button" data-i="none"></button>
+      <label for="size" data-i="size"></label>
+      <select id="size"><option>64</option><option>128</option><option>256</option><option selected>512</option><option>1024</option></select>
       <button id="dl" type="button" data-i="dl"></button>
       <span class="count" id="count"></span>
     </div>
+    <div id="prog" class="prog hidden"><div id="fill"></div></div>
     <div class="grid" id="grid"></div>
     <p class="hint" id="emojiNote" style="margin-top:14px"></p>
   </div>
@@ -142,6 +153,7 @@ footer a:hover{color:var(--text);text-decoration:underline}
   <footer>
     <a href="https://discord.gg/GRpCYzmtuJ" target="_blank" rel="noopener noreferrer">by Zhaak</a>
     · <a href="https://github.com/Zhaak63/Role-Icon-Downloader" target="_blank" rel="noopener noreferrer" data-i="source"></a>
+    · <a href="https://discord.gg/94seN7srjv" target="_blank" rel="noopener noreferrer" data-i="support"></a>
   </footer>
 </main>
 
@@ -154,8 +166,8 @@ const $ = id => document.getElementById(id);
 const T = {
 fr: {
   title: "Téléchargeur d'icônes de rôles Discord",
-  sub: "Récupère les icônes de rôles ou les emojis d'un serveur Discord dans un ZIP.",
-  what: "Que veux-tu télécharger ?", optRoles: "Icônes de rôles", optEmojis: "Emojis du serveur",
+  sub: "Récupère les icônes de rôles, les emojis ou les stickers d'un serveur Discord dans un ZIP.",
+  what: "Que veux-tu télécharger ?", optRoles: "Icônes de rôles", optEmojis: "Emojis du serveur", optStickers: "Stickers du serveur",
   tabToken: "Avec un token", tabJson: "JSON manuel",
   kindLabel: "Type de token", kindUser: "Compte Discord (token utilisateur)", kindBot: "Bot (doit être dans le serveur)",
   tokenPh: "Colle ton token", loadGuilds: "Charger les serveurs", server: "Serveur", show: "Afficher",
@@ -170,21 +182,30 @@ fr: {
   copy: "Copier le code", copied: "Copié !", copyFail: "Sélectionne le code et copie-le à la main",
   manualHint: "Fais un <code>GET https://discord.com/api/v10/guilds/ID_DU_SERVEUR</code> avec ton token, puis colle ici la réponse JSON complète.",
   parse: "Analyser le JSON", all: "Tout sélectionner", none: "Tout désélectionner", dl: "Télécharger le ZIP",
-  source: "Code source",
+  source: "Code source", support: "Support Discord", size: "Taille (px) :",
   needToken: "Colle d'abord ton token.", loadingGuilds: "Chargement des serveurs…", noGuilds: "Aucun serveur trouvé pour ce token.",
   guildsFound: "{n} serveur(s) trouvé(s).", loadingRoles: "Chargement…", badJson: "JSON invalide : colle la réponse complète de l'API.",
   noRolesField: "Aucun champ « roles » dans ces données.", noEmojiField: "Aucun champ « emojis » dans ces données.",
   foundRoles: "{n} icône(s) trouvée(s) sur « {g} ».", foundEmojis: "{n} emoji(s) trouvé(s) sur « {g} ».",
-  noEmojis: "Ce serveur n'a aucun emoji personnalisé.", noRoleIcons: "Aucun rôle de ce serveur n'a d'icône image. Il faut le niveau 2 de boost pour en avoir.",
+  noEmojis: "Ce serveur n'a aucun emoji personnalisé.", noStickers: "Ce serveur n'a aucun sticker.",
+  foundStickers: "{n} sticker(s) trouvé(s) sur « {g} ».", noStickerField: "Aucun champ « stickers » dans ces données.",
+  lottie: "{n} sticker(s) au format Lottie ignoré(s) : ils ne peuvent pas être convertis en image.",
+  jsonErr: "Discord a renvoyé une erreur au lieu des données du serveur : « {m} ».", noRoleIcons: "Aucun rôle de ce serveur n'a d'icône image. Il faut le niveau 2 de boost pour en avoir.",
   uniNote: "{n} rôle(s) utilisent un emoji standard au lieu d'une image (non téléchargeables) : {list}",
   count: "{a} / {b} sélectionnée(s)", pickOne: "Sélectionne au moins un élément.",
-  progress: "Téléchargement {i} / {n}…", dlFail: "Impossible de récupérer « {name} ».", dlDone: "{n} fichier(s) téléchargé(s) dans le ZIP.",
-  e401: "Token invalide.", e403: "Pas d'accès à ce serveur avec ce token.", e429: "Trop de requêtes, réessaie dans quelques secondes.", eOther: "Erreur Discord {s}"
+  progress: "Téléchargement {i} / {n}…", zipping: "Création du ZIP…", dlFail: "Impossible de récupérer « {name} ».", dlDone: "{n} fichier(s) téléchargé(s) dans le ZIP.",
+  e401: "Token refusé par Discord : il est invalide ou expiré. Vérifie que tu l'as copié sans les guillemets et que le type choisi (compte ou bot) correspond.",
+  e403: "Discord refuse l'accès à ce serveur avec ce token. Pour un bot, il doit d'abord être invité sur le serveur.",
+  e404: "Serveur introuvable. Vérifie que ton compte ou ton bot est bien dans ce serveur.",
+  e429: "Discord limite les requêtes. Réessaie dans {s} seconde(s).",
+  e5xx: "Discord a un problème en ce moment (erreur {s}). Réessaie dans quelques minutes.",
+  eNet: "Impossible de contacter Discord. Vérifie ta connexion, ton VPN ou ton bloqueur de pub.",
+  eOther: "Erreur Discord {s}"
 },
 en: {
   title: "Discord Role Icon Downloader",
-  sub: "Download the role icons or emojis of a Discord server as a ZIP.",
-  what: "What do you want to download?", optRoles: "Role icons", optEmojis: "Server emojis",
+  sub: "Download the role icons, emojis or stickers of a Discord server as a ZIP.",
+  what: "What do you want to download?", optRoles: "Role icons", optEmojis: "Server emojis", optStickers: "Server stickers",
   tabToken: "With a token", tabJson: "Manual JSON",
   kindLabel: "Token type", kindUser: "Discord account (user token)", kindBot: "Bot (must be in the server)",
   tokenPh: "Paste your token", loadGuilds: "Load servers", server: "Server", show: "Show",
@@ -199,16 +220,25 @@ en: {
   copy: "Copy code", copied: "Copied!", copyFail: "Select the code and copy it manually",
   manualHint: "Make a <code>GET https://discord.com/api/v10/guilds/SERVER_ID</code> request with your token, then paste the full JSON response here.",
   parse: "Parse JSON", all: "Select all", none: "Deselect all", dl: "Download ZIP",
-  source: "Source code",
+  source: "Source code", support: "Discord support", size: "Size (px):",
   needToken: "Paste your token first.", loadingGuilds: "Loading servers…", noGuilds: "No server found for this token.",
   guildsFound: "{n} server(s) found.", loadingRoles: "Loading…", badJson: "Invalid JSON: paste the full API response.",
   noRolesField: "No \"roles\" field in this data.", noEmojiField: "No \"emojis\" field in this data.",
   foundRoles: "{n} icon(s) found on \"{g}\".", foundEmojis: "{n} emoji(s) found on \"{g}\".",
-  noEmojis: "This server has no custom emoji.", noRoleIcons: "No role on this server has an image icon. Server boost level 2 is required to have them.",
+  noEmojis: "This server has no custom emoji.", noStickers: "This server has no stickers.",
+  foundStickers: "{n} sticker(s) found on \"{g}\".", noStickerField: "No \"stickers\" field in this data.",
+  lottie: "{n} Lottie sticker(s) skipped: they can't be converted to an image.",
+  jsonErr: "Discord returned an error instead of the server data: \"{m}\".", noRoleIcons: "No role on this server has an image icon. Server boost level 2 is required to have them.",
   uniNote: "{n} role(s) use a standard emoji instead of an image (not downloadable): {list}",
   count: "{a} / {b} selected", pickOne: "Select at least one item.",
-  progress: "Downloading {i} / {n}…", dlFail: "Could not fetch \"{name}\".", dlDone: "{n} file(s) downloaded in the ZIP.",
-  e401: "Invalid token.", e403: "No access to this server with this token.", e429: "Too many requests, try again in a few seconds.", eOther: "Discord error {s}"
+  progress: "Downloading {i} / {n}…", zipping: "Building the ZIP…", dlFail: "Could not fetch \"{name}\".", dlDone: "{n} file(s) downloaded in the ZIP.",
+  e401: "Discord rejected the token: it is invalid or expired. Check that you copied it without the quotes and that the selected type (account or bot) matches.",
+  e403: "Discord denies access to this server with this token. For a bot, it must be invited to the server first.",
+  e404: "Server not found. Check that your account or bot is in this server.",
+  e429: "Discord is rate-limiting requests. Try again in {s} second(s).",
+  e5xx: "Discord is having issues right now (error {s}). Try again in a few minutes.",
+  eNet: "Can't reach Discord. Check your connection, VPN or ad blocker.",
+  eOther: "Discord error {s}"
 }};
 
 let L = (navigator.language || "en").toLowerCase().startsWith("fr") ? "fr" : "en";
@@ -238,8 +268,14 @@ $("tabManual").onclick = () => setMode(false);
 async function api(path) {
   const tk = $("token").value.trim().replace(/^"|"$/g, "").replace(/^Bot\s+/i, "");
   const auth = $("kind").value === "bot" ? "Bot " + tk : tk;
-  const r = await fetch(API + path, { headers: { Authorization: auth } });
-  if (!r.ok) throw new Error(r.status === 401 ? t("e401") : r.status === 403 || r.status === 404 ? t("e403") : r.status === 429 ? t("e429") : t("eOther", { s: r.status }));
+  let r;
+  try { r = await fetch(API + path, { headers: { Authorization: auth } }); }
+  catch (e) { throw new Error(t("eNet")); }
+  if (!r.ok) {
+    let wait = 0;
+    if (r.status === 429) { try { wait = Math.ceil((await r.json()).retry_after || 0); } catch (e) {} }
+    throw new Error(r.status === 401 ? t("e401") : r.status === 403 ? t("e403") : r.status === 404 ? t("e404") : r.status === 429 ? t("e429", { s: wait || 5 }) : r.status >= 500 ? t("e5xx", { s: r.status }) : t("eOther", { s: r.status }));
+  }
   return r.json();
 }
 
@@ -263,18 +299,25 @@ $("loadRoles").onclick = async () => {
 };
 
 $("parse").onclick = () => {
-  try { show(JSON.parse($("json").value)); }
-  catch (e) { say(t("badJson"), "err"); }
+  let g;
+  try { g = JSON.parse($("json").value); } catch (e) { return say(t("badJson"), "err"); }
+  if (g && g.message && !g.roles && !g.emojis) return say(t("jsonErr", { m: g.message }), "err");
+  show(g);
 };
 
 function show(guild) { lastGuild = guild; build(); }
 $("type").onchange = () => { if (lastGuild) build(); };
 
 function build() {
-  const guild = lastGuild, emojis = $("type").value === "emojis";
+  const guild = lastGuild, type = $("type").value, emojis = type === "emojis", stickers = type === "stickers";
   guildName = guild.name || "server";
-  let unicode = [];
-  if (emojis) {
+  let unicode = [], lottie = 0;
+  if (stickers) {
+    if (!Array.isArray(guild.stickers)) return say(t("noStickerField"), "err");
+    const ok = guild.stickers.filter(x => x.format_type !== 3);
+    lottie = guild.stickers.length - ok.length;
+    roles = ok.map(x => { const ext = x.format_type === 4 ? "gif" : "png"; return { id: x.id, name: x.name, sel: true, ext, url: z => `https://cdn.discordapp.com/stickers/${x.id}.${ext}?size=${z}` }; });
+  } else if (emojis) {
     if (!Array.isArray(guild.emojis)) return say(t("noEmojiField"), "err");
     roles = guild.emojis.map(e => {
       const ext = e.animated ? "gif" : "png";
@@ -285,12 +328,12 @@ function build() {
     roles = guild.roles.filter(r => r.icon).map(r => ({ id: r.id, name: r.name, sel: true, ext: "png", url: s => `https://cdn.discordapp.com/role-icons/${r.id}/${r.icon}.png?size=${s}` }));
     unicode = guild.roles.filter(r => !r.icon && r.unicode_emoji);
   }
-  $("emojiNote").textContent = unicode.length ? t("uniNote", { n: unicode.length, list: unicode.map(r => r.unicode_emoji + " " + r.name).join(", ") }) : "";
+  $("emojiNote").textContent = unicode.length ? t("uniNote", { n: unicode.length, list: unicode.map(r => r.unicode_emoji + " " + r.name).join(", ") }) : (lottie ? t("lottie", { n: lottie }) : "");
   if (!roles.length) {
     $("result").classList.add("hidden");
-    return say(emojis ? t("noEmojis") : t("noRoleIcons"), "err");
+    return say(stickers ? t("noStickers") : emojis ? t("noEmojis") : t("noRoleIcons"), "err");
   }
-  say(t(emojis ? "foundEmojis" : "foundRoles", { n: roles.length, g: guildName }), "ok");
+  say(t(stickers ? "foundStickers" : emojis ? "foundEmojis" : "foundRoles", { n: roles.length, g: guildName }), "ok");
   render();
   $("result").classList.remove("hidden");
 }
@@ -331,21 +374,31 @@ $("dl").onclick = async () => {
   if (!picked.length) return say(t("pickOne"), "err");
   $("dl").disabled = true;
   try {
-    const zip = new JSZip(), used = {};
-    let done = 0;
-    for (const r of picked) {
-      say(t("progress", { i: ++done, n: picked.length }));
-      const res = await fetch(r.url(512));
-      if (!res.ok) throw new Error(t("dlFail", { name: r.name }));
-      let base = clean(r.name);
-      used[base] = (used[base] || 0) + 1;
-      if (used[base] > 1) base += "_" + r.id;
-      zip.file(base + "." + r.ext, await res.blob());
-    }
+    const zip = new JSZip(), used = {}, size = $("size").value;
+    let done = 0, next = 0;
+    $("prog").classList.remove("hidden"); $("fill").style.width = "0";
+    say(t("progress", { i: 0, n: picked.length }));
+    const worker = async () => {
+      while (next < picked.length) {
+        const r = picked[next++];
+        let res;
+        try { res = await fetch(r.url(size)); } catch (e) { throw new Error(t("dlFail", { name: r.name })); }
+        if (!res.ok) throw new Error(t("dlFail", { name: r.name }));
+        let base = clean(r.name);
+        used[base] = (used[base] || 0) + 1;
+        if (used[base] > 1) base += "_" + r.id;
+        zip.file(base + "." + r.ext, await res.blob());
+        done++;
+        $("fill").style.width = (done / picked.length * 100) + "%";
+        say(t("progress", { i: done, n: picked.length }));
+      }
+    };
+    await Promise.all(Array.from({ length: Math.min(6, picked.length) }, worker));
+    say(t("zipping"));
     const blob = await zip.generateAsync({ type: "blob" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = clean(guildName) + ($("type").value === "emojis" ? "-emojis" : "-role-icons") + ".zip";
+    a.download = clean(guildName) + "-" + ({ emojis: "emojis", stickers: "stickers" }[$("type").value] || "role-icons") + ".zip";
     a.click();
     URL.revokeObjectURL(a.href);
     say(t("dlDone", { n: picked.length }), "ok");
