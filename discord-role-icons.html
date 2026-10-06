@@ -46,12 +46,19 @@ code{background:var(--bg);padding:1px 5px;border-radius:4px;font-size:13px}
 
   <div class="panel">
     <div class="tabs">
-      <button id="tabBot" class="on" type="button">Token de bot</button>
+      <button id="tabBot" class="on" type="button">Avec un token</button>
       <button id="tabManual" class="ghost" type="button">JSON manuel</button>
     </div>
 
     <div id="modeBot">
-      <label for="token">Token du bot (le bot doit être dans le serveur)</label>
+      <label for="kind">Type de token</label>
+      <div class="row">
+        <select id="kind">
+          <option value="user">Compte Discord (token utilisateur)</option>
+          <option value="bot">Bot (doit être dans le serveur)</option>
+        </select>
+      </div>
+      <label for="token">Token</label>
       <div class="row">
         <input id="token" type="password" placeholder="Colle le token du bot" autocomplete="off">
         <button id="loadGuilds" type="button">Charger les serveurs</button>
@@ -63,7 +70,7 @@ code{background:var(--bg);padding:1px 5px;border-radius:4px;font-size:13px}
           <button id="loadRoles" type="button">Voir les icônes</button>
         </div>
       </div>
-      <p class="hint">Le token reste dans ton navigateur et n'est envoyé qu'à <code>discord.com</code>.</p>
+      <p class="hint">Le token reste dans ton navigateur et n'est envoyé qu'à <code>discord.com</code>. Attention : un token utilisateur donne accès à tout le compte. Ne le partage jamais, et l'utiliser en dehors de l'app Discord va contre ses conditions d'utilisation (risque de sanction du compte).</p>
     </div>
 
     <div id="modeManual" class="hidden">
@@ -105,8 +112,10 @@ $("tabBot").onclick = () => setMode(true);
 $("tabManual").onclick = () => setMode(false);
 
 async function api(path) {
-  const r = await fetch(API + path, { headers: { Authorization: "Bot " + $("token").value.trim().replace(/^Bot\s+/i, "") } });
-  if (!r.ok) throw new Error(r.status === 401 ? "Token invalide." : r.status === 403 || r.status === 404 ? "Le bot n'a pas accès à ce serveur." : "Erreur Discord " + r.status);
+  const t = $("token").value.trim().replace(/^"|"$/g, "").replace(/^Bot\s+/i, "");
+  const auth = $("kind").value === "bot" ? "Bot " + t : t;
+  const r = await fetch(API + path, { headers: { Authorization: auth } });
+  if (!r.ok) throw new Error(r.status === 401 ? "Token invalide." : r.status === 403 || r.status === 404 ? "Pas d'accès à ce serveur avec ce token." : r.status === 429 ? "Trop de requêtes, réessaie dans quelques secondes." : "Erreur Discord " + r.status);
   return r.json();
 }
 
