@@ -55,6 +55,15 @@ code{background:var(--bg);padding:1px 5px;border-radius:4px;font-size:13px}
 .bar label{margin:0}
 .prog{height:10px;background:var(--bg);border-radius:6px;overflow:hidden;margin-bottom:14px}
 #fill{height:100%;width:0;background:var(--accent);transition:width .15s}
+.search{width:100%;margin-bottom:14px}
+.glist{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;max-height:300px;overflow-y:auto;margin-bottom:12px}
+.g{display:flex;align-items:center;gap:10px;text-align:left;background:var(--bg);border:2px solid var(--line);padding:6px 10px;font-weight:500}
+.g.sel{border-color:var(--accent);background:rgba(88,101,242,.12)}
+.g img,.g .ph{width:36px;height:36px;border-radius:50%;flex:none;object-fit:cover}
+.g .ph{display:flex;align-items:center;justify-content:center;background:var(--panel);font-size:12px;font-weight:700}
+.g .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px}
+.acts{display:flex;gap:6px}
+.acts button{padding:2px 8px;font-size:13px}
 details{margin-top:6px}
 summary{cursor:pointer;font-weight:600;margin-bottom:8px}
 details ol{padding-left:20px;margin:8px 0}
@@ -83,6 +92,7 @@ footer a:hover{color:var(--text);text-decoration:underline}
         <option value="roles" data-i="optRoles"></option>
         <option value="emojis" data-i="optEmojis"></option>
         <option value="stickers" data-i="optStickers"></option>
+        <option value="server" data-i="optServer"></option>
       </select>
     </div>
     <div class="tabs">
@@ -104,11 +114,10 @@ footer a:hover{color:var(--text);text-decoration:underline}
         <button id="loadGuilds" type="button" data-i="loadGuilds"></button>
       </div>
       <div id="guildBox" class="hidden">
-        <label for="guild" data-i="server"></label>
-        <div class="row">
-          <select id="guild"></select>
-          <button id="loadRoles" type="button" data-i="show"></button>
-        </div>
+        <label data-i="server"></label>
+        <input type="hidden" id="guild">
+        <div id="guildList" class="glist" role="listbox"></div>
+        <div class="row"><button id="loadRoles" type="button" data-i="show"></button></div>
       </div>
       <p class="hint" data-i="privacy"></p>
       <details id="help">
@@ -142,10 +151,13 @@ footer a:hover{color:var(--text);text-decoration:underline}
       <button id="none" class="ghost" type="button" data-i="none"></button>
       <label for="size" data-i="size"></label>
       <select id="size"><option>64</option><option>128</option><option>256</option><option selected>512</option><option>1024</option></select>
+      <label for="naming" data-i="naming"></label>
+      <select id="naming"><option value="name" data-i="namName"></option><option value="id" data-i="namId"></option><option value="both" data-i="namBoth"></option></select>
       <button id="dl" type="button" data-i="dl"></button>
       <span class="count" id="count"></span>
     </div>
     <div id="prog" class="prog hidden"><div id="fill"></div></div>
+    <input id="search" class="search" type="search" data-p="searchPh">
     <div class="grid" id="grid"></div>
     <p class="hint" id="emojiNote" style="margin-top:14px"></p>
   </div>
@@ -183,6 +195,9 @@ fr: {
   manualHint: "Fais un <code>GET https://discord.com/api/v10/guilds/ID_DU_SERVEUR</code> avec ton token, puis colle ici la réponse JSON complète.",
   parse: "Analyser le JSON", all: "Tout sélectionner", none: "Tout désélectionner", dl: "Télécharger le ZIP",
   source: "Code source", support: "Support Discord", size: "Taille (px) :",
+  naming: "Nom des fichiers :", namName: "Nom", namId: "ID", namBoth: "Nom + ID", searchPh: "Rechercher par nom…",
+  dlOne: "Télécharger cette image", copyLink: "Copier le lien", linkCopied: "Lien copié.",
+  optServer: "Icône et bannière du serveur", noServer: "Ce serveur n'a ni icône, ni bannière, ni image d'invitation.", foundServer: "{n} image(s) trouvée(s) sur « {g} ».",
   needToken: "Colle d'abord ton token.", loadingGuilds: "Chargement des serveurs…", noGuilds: "Aucun serveur trouvé pour ce token.",
   guildsFound: "{n} serveur(s) trouvé(s).", loadingRoles: "Chargement…", badJson: "JSON invalide : colle la réponse complète de l'API.",
   noRolesField: "Aucun champ « roles » dans ces données.", noEmojiField: "Aucun champ « emojis » dans ces données.",
@@ -221,6 +236,9 @@ en: {
   manualHint: "Make a <code>GET https://discord.com/api/v10/guilds/SERVER_ID</code> request with your token, then paste the full JSON response here.",
   parse: "Parse JSON", all: "Select all", none: "Deselect all", dl: "Download ZIP",
   source: "Source code", support: "Discord support", size: "Size (px):",
+  naming: "File names:", namName: "Name", namId: "ID", namBoth: "Name + ID", searchPh: "Search by name…",
+  dlOne: "Download this image", copyLink: "Copy link", linkCopied: "Link copied.",
+  optServer: "Server icon & banner", noServer: "This server has no icon, banner or invite splash.", foundServer: "{n} image(s) found on \"{g}\".",
   needToken: "Paste your token first.", loadingGuilds: "Loading servers…", noGuilds: "No server found for this token.",
   guildsFound: "{n} server(s) found.", loadingRoles: "Loading…", badJson: "Invalid JSON: paste the full API response.",
   noRolesField: "No \"roles\" field in this data.", noEmojiField: "No \"emojis\" field in this data.",
@@ -279,14 +297,43 @@ async function api(path) {
   return r.json();
 }
 
+function pick(id) {
+  $("guild").value = id;
+  document.querySelectorAll("#guildList .g").forEach(b => {
+    const on = b.dataset.id === id;
+    b.classList.toggle("sel", on);
+    b.setAttribute("aria-selected", on);
+  });
+}
+
 $("loadGuilds").onclick = async () => {
   if (!$("token").value.trim()) return say(t("needToken"), "err");
   say(t("loadingGuilds"));
   try {
     const guilds = await api("/users/@me/guilds");
     if (!guilds.length) return say(t("noGuilds"), "err");
-    $("guild").innerHTML = "";
-    guilds.forEach(g => { const o = document.createElement("option"); o.value = g.id; o.textContent = g.name; $("guild").append(o); });
+    const list = $("guildList");
+    list.innerHTML = "";
+    guilds.forEach((g, i) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "g"; b.dataset.id = g.id; b.setAttribute("role", "option");
+      let ic;
+      if (g.icon) {
+        ic = document.createElement("img");
+        ic.src = `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png?size=64`;
+        ic.alt = ""; ic.loading = "lazy";
+      } else {
+        ic = document.createElement("span");
+        ic.className = "ph";
+        ic.textContent = g.name.split(/\s+/).map(w => w[0] || "").join("").slice(0, 3);
+      }
+      const nm = document.createElement("span");
+      nm.className = "nm"; nm.textContent = g.name;
+      b.append(ic, nm);
+      b.onclick = () => pick(g.id);
+      list.append(b);
+      if (i === 0) pick(g.id);
+    });
     $("guildBox").classList.remove("hidden");
     say(t("guildsFound", { n: guilds.length }), "ok");
   } catch (e) { say(e.message, "err"); }
@@ -305,14 +352,17 @@ $("parse").onclick = () => {
   show(g);
 };
 
-function show(guild) { lastGuild = guild; build(); }
-$("type").onchange = () => { if (lastGuild) build(); };
+function show(guild) { lastGuild = guild; $("search").value = ""; build(); }
+$("type").onchange = () => { $("search").value = ""; if (lastGuild) build(); };
 
 function build() {
   const guild = lastGuild, type = $("type").value, emojis = type === "emojis", stickers = type === "stickers";
   guildName = guild.name || "server";
   let unicode = [], lottie = 0;
-  if (stickers) {
+  if (type === "server") {
+    const mk = (folder, hash, label) => { if (!hash) return null; const ext = hash.startsWith("a_") ? "gif" : "png"; return { id: label, name: label, sel: true, ext, url: z => `https://cdn.discordapp.com/${folder}/${guild.id}/${hash}.${ext}?size=${z}` }; };
+    roles = [mk("icons", guild.icon, "icon"), mk("banners", guild.banner, "banner"), mk("splashes", guild.splash, "invite-splash")].filter(Boolean);
+  } else if (stickers) {
     if (!Array.isArray(guild.stickers)) return say(t("noStickerField"), "err");
     const ok = guild.stickers.filter(x => x.format_type !== 3);
     lottie = guild.stickers.length - ok.length;
@@ -331,9 +381,9 @@ function build() {
   $("emojiNote").textContent = unicode.length ? t("uniNote", { n: unicode.length, list: unicode.map(r => r.unicode_emoji + " " + r.name).join(", ") }) : (lottie ? t("lottie", { n: lottie }) : "");
   if (!roles.length) {
     $("result").classList.add("hidden");
-    return say(stickers ? t("noStickers") : emojis ? t("noEmojis") : t("noRoleIcons"), "err");
+    return say(type === "server" ? t("noServer") : stickers ? t("noStickers") : emojis ? t("noEmojis") : t("noRoleIcons"), "err");
   }
-  say(t(stickers ? "foundStickers" : emojis ? "foundEmojis" : "foundRoles", { n: roles.length, g: guildName }), "ok");
+  say(t(type === "server" ? "foundServer" : stickers ? "foundStickers" : emojis ? "foundEmojis" : "foundRoles", { n: roles.length, g: guildName }), "ok");
   render();
   $("result").classList.remove("hidden");
 }
@@ -341,7 +391,9 @@ function build() {
 function render() {
   const grid = $("grid");
   grid.innerHTML = "";
+  const q = $("search").value.trim().toLowerCase();
   roles.forEach(r => {
+    if (q && !r.name.toLowerCase().includes(q)) return;
     const el = document.createElement("label");
     el.className = "role" + (r.sel ? " sel" : "");
     const cb = document.createElement("input");
@@ -351,14 +403,29 @@ function render() {
     img.src = r.url(128); img.alt = ""; img.loading = "lazy";
     const name = document.createElement("span");
     name.textContent = r.name;
-    el.append(cb, img, name);
+    const acts = document.createElement("div");
+    acts.className = "acts";
+    const one = document.createElement("button");
+    one.type = "button"; one.className = "ghost"; one.textContent = "⬇"; one.title = t("dlOne");
+    one.onclick = e => { e.preventDefault(); e.stopPropagation(); downloadOne(r); };
+    const link = document.createElement("button");
+    link.type = "button"; link.className = "ghost"; link.textContent = "🔗"; link.title = t("copyLink");
+    link.onclick = async e => {
+      e.preventDefault(); e.stopPropagation();
+      const u = r.url($("size").value);
+      try { await navigator.clipboard.writeText(u); say(t("linkCopied"), "ok"); } catch (err) { say(u); }
+    };
+    acts.append(one, link);
+    el.append(cb, img, name, acts);
     grid.append(el);
   });
   count();
 }
 function count() { $("count").textContent = t("count", { a: roles.filter(r => r.sel).length, b: roles.length }); }
-$("all").onclick = () => { roles.forEach(r => r.sel = true); render(); };
-$("none").onclick = () => { roles.forEach(r => r.sel = false); render(); };
+const vis = r => { const q = $("search").value.trim().toLowerCase(); return !q || r.name.toLowerCase().includes(q); };
+$("all").onclick = () => { roles.filter(vis).forEach(r => r.sel = true); render(); };
+$("none").onclick = () => { roles.filter(vis).forEach(r => r.sel = false); render(); };
+$("search").oninput = render;
 
 $("copySnippet").onclick = async () => {
   const b = $("copySnippet");
@@ -384,7 +451,7 @@ $("dl").onclick = async () => {
         let res;
         try { res = await fetch(r.url(size)); } catch (e) { throw new Error(t("dlFail", { name: r.name })); }
         if (!res.ok) throw new Error(t("dlFail", { name: r.name }));
-        let base = clean(r.name);
+        let base = fileBase(r);
         used[base] = (used[base] || 0) + 1;
         if (used[base] > 1) base += "_" + r.id;
         zip.file(base + "." + r.ext, await res.blob());
@@ -398,13 +465,29 @@ $("dl").onclick = async () => {
     const blob = await zip.generateAsync({ type: "blob" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = clean(guildName) + "-" + ({ emojis: "emojis", stickers: "stickers" }[$("type").value] || "role-icons") + ".zip";
+    a.download = clean(guildName) + "-" + ({ emojis: "emojis", stickers: "stickers", server: "server-images" }[$("type").value] || "role-icons") + ".zip";
     a.click();
     URL.revokeObjectURL(a.href);
     say(t("dlDone", { n: picked.length }), "ok");
   } catch (e) { say(e.message, "err"); }
   $("dl").disabled = false;
 };
+
+function fileBase(r) {
+  const n = $("naming").value;
+  return n === "id" ? r.id : n === "both" ? clean(r.name) + "_" + r.id : clean(r.name);
+}
+async function downloadOne(r) {
+  try {
+    const res = await fetch(r.url($("size").value));
+    if (!res.ok) throw new Error();
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(await res.blob());
+    a.download = fileBase(r) + "." + r.ext;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  } catch (e) { say(t("dlFail", { name: r.name }), "err"); }
+}
 
 applyLang();
 </script>
