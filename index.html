@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Discord Role Icon Downloader</title>
+<title>Zhaak's Workshop</title>
 <meta name="description" content="Download the role icons, emojis or stickers of any Discord server as a ZIP. Free, open source, runs in your browser.">
 <meta name="theme-color" content="#5865f2">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Discord Role Icon Downloader">
+<meta property="og:title" content="Zhaak's Workshop - Discord tools">
 <meta property="og:description" content="Download role icons, emojis or stickers of any Discord server as a ZIP. Free, open source, runs in your browser. / Télécharge les icônes de rôles, les emojis ou les stickers d'un serveur Discord en ZIP.">
 <meta property="og:url" content="https://zhaak63.github.io/Role-Icon-Downloader/">
-<meta property="og:site_name" content="Role Icon Downloader">
+<meta property="og:site_name" content="Zhaak's Workshop">
 <meta property="og:image" content="https://zhaak63.github.io/Role-Icon-Downloader/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -21,7 +21,7 @@
 :root{--bg:#1e1f22;--panel:#2b2d31;--line:#3f4147;--text:#f2f3f5;--mute:#b5bac1;--accent:#5865f2;--ok:#3ba55d;--err:#ed4245}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 "Segoe UI",system-ui,sans-serif;padding:24px 16px}
-main{max-width:760px;margin:0 auto}
+main{max-width:980px;margin:0 auto}
 header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 h1{font-size:26px;margin:0 0 4px}
 p.sub{color:var(--mute);margin:0 0 20px}
@@ -70,6 +70,38 @@ details ol{padding-left:20px;margin:8px 0}
 details li{margin-bottom:8px}
 pre{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px;margin:8px 0;white-space:pre-wrap;word-break:break-all;font-size:12px}
 pre code{background:none;padding:0}
+header.top{align-items:center;margin-bottom:22px}
+.brand{color:var(--text);font-weight:800;text-decoration:none;font-size:18px}
+nav{display:flex;gap:4px;margin-left:auto;margin-right:10px}
+nav a{color:var(--mute);text-decoration:none;font-weight:600;padding:6px 12px;border-radius:6px}
+nav a.act,nav a:hover{color:var(--text);background:var(--panel)}
+.hero{text-align:center;margin:34px 0 26px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{display:block;background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:24px;color:var(--text);text-decoration:none}
+.card:hover,.card:focus-visible{border-color:var(--accent)}
+.card .ic{font-size:36px}.card h2{margin:8px 0 6px;font-size:19px}.card p{margin:0;color:var(--mute);font-size:14px}
+.eb{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+@media(max-width:800px){.eb{grid-template-columns:1fr}nav{display:none}}
+.eb input[type=text],.eb input[type=password],.eb textarea{width:100%;margin-bottom:10px}
+.eb textarea{min-height:60px}
+.eb input[type=color]{width:64px;height:38px;padding:2px;margin-bottom:10px}
+.chk{display:flex;align-items:center;gap:8px;color:var(--text);font-size:14px;margin-bottom:10px}
+.row2{border:1px solid var(--line);border-radius:8px;padding:8px;margin-bottom:8px}
+.row2 .rm{padding:3px 10px;font-size:13px}
+#eStatus{min-height:20px;font-size:14px;margin-top:8px}#eStatus.err{color:var(--err)}#eStatus.ok{color:var(--ok)}
+#eOut{max-height:320px;overflow:auto;font-size:12px}
+.pv{background:#313338;border-radius:8px;padding:12px;font-size:14px;color:#dbdee1;word-break:break-word;min-height:60px}
+.pv a{color:#00a8fc}.pv code{background:#1e1f22}
+.pe{position:relative;background:#2b2d31;border-left:4px solid #5865f2;border-radius:4px;padding:8px 12px;margin-top:6px;max-width:432px}
+.pa{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.pa img,.pfoot img{width:20px;height:20px;border-radius:50%}
+.pt{font-weight:700;margin-bottom:4px}.pt a{text-decoration:none}
+.pf{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.pf>div{grid-column:1/-1}.pf>div.in{grid-column:auto}.pf b{display:block;font-size:13px}
+.pi{max-width:100%;border-radius:4px;margin-top:8px;display:block}
+.pth{position:absolute;top:8px;right:8px;width:64px;height:64px;border-radius:4px;object-fit:cover}
+.pfoot{font-size:12px;color:#b5bac1;margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pb{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}.pb span{background:#4e5058;border-radius:4px;padding:4px 12px;font-size:14px}
 footer{text-align:center;margin-top:28px;font-size:14px;color:var(--mute)}
 footer a{color:var(--mute);text-decoration:none;font-weight:600}
 footer a:hover{color:var(--text);text-decoration:underline}
@@ -77,13 +109,29 @@ footer a:hover{color:var(--text);text-decoration:underline}
 </head>
 <body>
 <main>
-  <header>
-    <div>
-      <h1>Role Icon Downloader</h1>
-      <p class="sub" data-i="sub"></p>
-    </div>
+  <header class="top">
+    <a class="brand" href="#/">🛠️ <span id="siteName"></span></a>
+    <nav>
+      <a href="#/download" data-i="navDl"></a>
+      <a href="#/embed" data-i="navEmbed"></a>
+    </nav>
     <button id="lang" class="ghost" type="button" aria-label="Language / Langue">EN</button>
   </header>
+
+  <section id="pg-home">
+    <div class="hero">
+      <h1 data-i="homeTitle"></h1>
+      <p class="sub" data-i="homeSub"></p>
+    </div>
+    <div class="cards">
+      <a class="card" href="#/download"><div class="ic">🖼️</div><h2 data-i="cardDlT"></h2><p data-i="cardDlD"></p></a>
+      <a class="card" href="#/embed"><div class="ic">🧩</div><h2 data-i="cardEbT"></h2><p data-i="cardEbD"></p></a>
+    </div>
+  </section>
+
+  <section id="pg-download" class="hidden">
+  <h1>Role Icon Downloader</h1>
+  <p class="sub" data-i="sub"></p>
 
   <div class="panel">
     <label for="type" data-i="what"></label>
@@ -162,6 +210,39 @@ footer a:hover{color:var(--text);text-decoration:underline}
     <p class="hint" id="emojiNote" style="margin-top:14px"></p>
   </div>
 
+  </section>
+
+  <section id="pg-embed" class="hidden">
+    <h1 data-i="embedTitle"></h1>
+    <p class="sub" data-i="embedSub"></p>
+    <div class="eb">
+      <div class="panel" id="efForm"></div>
+      <div>
+        <div class="panel"><label data-i="previewTitle"></label><div id="pv" class="pv"></div></div>
+        <div class="panel">
+          <div class="tabs">
+            <button id="oJson" class="on" type="button" data-i="outJson"></button>
+            <button id="oJs" class="ghost" type="button" data-i="outJs"></button>
+          </div>
+          <pre id="eOut"></pre>
+          <button id="eCopy" class="ghost" type="button" data-i="copyOut"></button>
+        </div>
+        <div class="panel">
+          <label style="color:var(--text);font-weight:600" data-i="whTitle"></label>
+          <label for="e-wh" data-i="whUrl"></label>
+          <input id="e-wh" type="password" autocomplete="off">
+          <label for="e-uname" data-i="whName"></label>
+          <input id="e-uname" type="text">
+          <label for="e-uavatar" data-i="whAvatar"></label>
+          <input id="e-uavatar" type="text">
+          <button id="eSend" type="button" data-i="whSend"></button>
+          <div id="eStatus" role="status"></div>
+          <p class="hint" data-i="whNote" style="margin-top:8px"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <a href="https://discord.gg/GRpCYzmtuJ" target="_blank" rel="noopener noreferrer">by Zhaak</a>
     · <a href="https://github.com/Zhaak63/Role-Icon-Downloader" target="_blank" rel="noopener noreferrer" data-i="source"></a>
@@ -195,6 +276,17 @@ fr: {
   manualHint: "Fais un <code>GET https://discord.com/api/v10/guilds/ID_DU_SERVEUR</code> avec ton token, puis colle ici la réponse JSON complète.",
   parse: "Analyser le JSON", all: "Tout sélectionner", none: "Tout désélectionner", dl: "Télécharger le ZIP",
   source: "Code source", support: "Support Discord", size: "Taille (px) :",
+  navDl: "Téléchargeur", navEmbed: "Créateur d'embed", homeTitle: "Que veux-tu faire ?", homeSub: "Des outils gratuits pour Discord, qui tournent dans ton navigateur.",
+  cardDlT: "Télécharger icônes et emojis", cardDlD: "Icônes de rôles, emojis, stickers et images d'un serveur, en ZIP.",
+  cardEbT: "Créer un embed", cardEbD: "Compose un message avec aperçu en direct, puis copie le JSON ou le code discord.js, ou envoie-le avec un webhook.",
+  embedTitle: "Créateur d'embed", embedSub: "Compose ton message, vois l'aperçu et récupère le code.", previewTitle: "Aperçu",
+  eContent: "Message (au-dessus de l'embed)", eColor: "Couleur", eAname: "Nom de l'auteur", eAurl: "Lien de l'auteur", eAicon: "Icône de l'auteur (URL)",
+  eTitle: "Titre", eUrl: "Lien du titre", eDesc: "Description", eThumb: "Miniature (URL)", eImage: "Image (URL)", eFooter: "Pied de page", eFicon: "Icône du pied de page (URL)",
+  eTs: "Afficher la date d'envoi", eFields: "Champs", addField: "+ Ajouter un champ", fName: "Nom du champ", fVal: "Valeur", fInline: "Sur la même ligne",
+  eButtons: "Boutons (liens)", addBtn: "+ Ajouter un bouton", bLabel: "Texte du bouton", bUrl: "https://…", remove: "Supprimer",
+  outJson: "JSON", outJs: "discord.js", copyOut: "Copier", whTitle: "Envoyer avec un webhook", whUrl: "URL du webhook", whName: "Nom affiché (facultatif)", whAvatar: "Avatar (URL, facultatif)", whSend: "Envoyer le message",
+  whNote: "L'URL d'un webhook est secrète : elle n'est ni enregistrée ni envoyée ailleurs qu'à discord.com. Les boutons ne sont pas envoyés par webhook : utilise le code discord.js avec un bot.",
+  whBad: "URL de webhook invalide.", whOk: "Message envoyé !", whFail: "Discord a refusé le message (erreur {s}) {m}", whEmpty: "Ajoute au moins un message ou un embed.",
   naming: "Nom des fichiers :", namName: "Nom", namId: "ID", namBoth: "Nom + ID", searchPh: "Rechercher par nom…",
   dlOne: "Télécharger cette image", copyLink: "Copier le lien", linkCopied: "Lien copié.",
   optServer: "Icône et bannière du serveur", noServer: "Ce serveur n'a ni icône, ni bannière, ni image d'invitation.", foundServer: "{n} image(s) trouvée(s) sur « {g} ».",
@@ -236,6 +328,17 @@ en: {
   manualHint: "Make a <code>GET https://discord.com/api/v10/guilds/SERVER_ID</code> request with your token, then paste the full JSON response here.",
   parse: "Parse JSON", all: "Select all", none: "Deselect all", dl: "Download ZIP",
   source: "Source code", support: "Discord support", size: "Size (px):",
+  navDl: "Downloader", navEmbed: "Embed builder", homeTitle: "What do you want to do?", homeSub: "Free tools for Discord, running in your browser.",
+  cardDlT: "Download icons & emojis", cardDlD: "Role icons, emojis, stickers and server images, as a ZIP.",
+  cardEbT: "Create an embed", cardEbD: "Build a message with a live preview, then copy the JSON or discord.js code, or send it with a webhook.",
+  embedTitle: "Embed builder", embedSub: "Build your message, see the preview and get the code.", previewTitle: "Preview",
+  eContent: "Message (above the embed)", eColor: "Color", eAname: "Author name", eAurl: "Author link", eAicon: "Author icon (URL)",
+  eTitle: "Title", eUrl: "Title link", eDesc: "Description", eThumb: "Thumbnail (URL)", eImage: "Image (URL)", eFooter: "Footer", eFicon: "Footer icon (URL)",
+  eTs: "Show the send time", eFields: "Fields", addField: "+ Add a field", fName: "Field name", fVal: "Value", fInline: "Inline",
+  eButtons: "Buttons (links)", addBtn: "+ Add a button", bLabel: "Button label", bUrl: "https://…", remove: "Remove",
+  outJson: "JSON", outJs: "discord.js", copyOut: "Copy", whTitle: "Send with a webhook", whUrl: "Webhook URL", whName: "Display name (optional)", whAvatar: "Avatar (URL, optional)", whSend: "Send the message",
+  whNote: "A webhook URL is secret: it is never stored or sent anywhere except discord.com. Buttons are not sent through webhooks: use the discord.js code with a bot.",
+  whBad: "Invalid webhook URL.", whOk: "Message sent!", whFail: "Discord rejected the message (error {s}) {m}", whEmpty: "Add at least a message or an embed.",
   naming: "File names:", namName: "Name", namId: "ID", namBoth: "Name + ID", searchPh: "Search by name…",
   dlOne: "Download this image", copyLink: "Copy link", linkCopied: "Link copied.",
   optServer: "Server icon & banner", noServer: "This server has no icon, banner or invite splash.", foundServer: "{n} image(s) found on \"{g}\".",
@@ -264,12 +367,26 @@ let guildName = "server", roles = [], lastGuild = null;
 const t = (k, v = {}) => (T[L][k] || k).replace(/\{(\w+)\}/g, (_, x) => v[x]);
 function say(msg, cls = "") { const s = $("status"); s.textContent = msg; s.className = cls; }
 
+const SITE = "Zhaak's Workshop";
+function tr(root = document) {
+  root.querySelectorAll("[data-i]").forEach(e => e.innerHTML = t(e.dataset.i));
+  root.querySelectorAll("[data-p]").forEach(e => e.placeholder = t(e.dataset.p));
+}
+function route() {
+  const h = location.hash.replace(/^#\/?/, "");
+  const pg = h === "download" || h === "embed" ? h : "home";
+  ["home", "download", "embed"].forEach(x => $("pg-" + x).classList.toggle("hidden", x !== pg));
+  document.querySelectorAll("nav a").forEach(a => a.classList.toggle("act", a.getAttribute("href") === "#/" + pg));
+  document.title = SITE + (pg === "home" ? "" : " · " + t(pg === "embed" ? "navEmbed" : "navDl"));
+}
+window.addEventListener("hashchange", route);
+$("siteName").textContent = SITE;
+
 function applyLang() {
   document.documentElement.lang = L;
-  document.title = t("title");
-  document.querySelectorAll("[data-i]").forEach(e => e.innerHTML = t(e.dataset.i));
-  document.querySelectorAll("[data-p]").forEach(e => e.placeholder = t(e.dataset.p));
+  tr();
   $("lang").textContent = L === "fr" ? "EN" : "FR";
+  route();
   if (lastGuild) build(); else say("");
 }
 $("lang").onclick = () => { L = L === "fr" ? "en" : "fr"; applyLang(); };
@@ -489,7 +606,142 @@ async function downloadOne(r) {
   } catch (e) { say(t("dlFail", { name: r.name }), "err"); }
 }
 
+/* ---------- Créateur d'embed ---------- */
+const EF = [["content","eContent","ta"],["color","eColor","col"],["aname","eAname","in"],["aurl","eAurl","in"],["aicon","eAicon","in"],
+  ["title","eTitle","in"],["url","eUrl","in"],["desc","eDesc","ta"],["thumb","eThumb","in"],["image","eImage","in"],["footer","eFooter","in"],["ficon","eFicon","in"]];
+let outMode = "json";
+const J = JSON.stringify;
+const esc = x => String(x).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const okUrl = u => /^https?:\/\/[^\s"'<>]+$/i.test(u || "");
+const pimg = (u, c) => okUrl(u) ? `<img class="${c}" src="${esc(u)}" alt="">` : "";
+function md(x) {
+  return esc(x).replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+    .replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/\*(.+?)\*/g, "<i>$1</i>").replace(/`(.+?)`/g, "<code>$1</code>").replace(/\n/g, "<br>");
+}
+
+function buildEmbedForm() {
+  const f = $("efForm");
+  f.innerHTML = EF.map(([id, k, ty]) => `<label for="e-${id}" data-i="${k}"></label>` +
+    (ty === "ta" ? `<textarea id="e-${id}" rows="${id === "desc" ? 5 : 3}"></textarea>` : ty === "col" ? `<input id="e-${id}" type="color" value="#5865f2">` : `<input id="e-${id}" type="text">`)).join("") +
+    `<label class="chk"><input id="e-ts" type="checkbox"><span data-i="eTs"></span></label>
+     <label data-i="eFields"></label><div id="efFields"></div><button type="button" id="addField" class="ghost" data-i="addField"></button>
+     <label data-i="eButtons" style="margin-top:14px"></label><div id="efBtns"></div><button type="button" id="addBtn" class="ghost" data-i="addBtn"></button>`;
+  f.oninput = f.onchange = upd;
+  $("addField").onclick = () => addRow("efFields", 25, `<input class="fn" type="text" data-p="fName"><textarea class="fv" rows="2" data-p="fVal"></textarea><label class="chk"><input class="fi" type="checkbox"><span data-i="fInline"></span></label>`);
+  $("addBtn").onclick = () => addRow("efBtns", 5, `<input class="bl" type="text" data-p="bLabel"><input class="bu" type="text" data-p="bUrl">`);
+}
+function addRow(box, max, inner) {
+  const c = $(box);
+  if (c.children.length >= max) return;
+  const d = document.createElement("div");
+  d.className = "row2";
+  d.innerHTML = inner + `<button type="button" class="ghost rm" data-i="remove"></button>`;
+  d.querySelector(".rm").onclick = () => { d.remove(); upd(); };
+  c.append(d); tr(d); upd();
+}
+
+function getEmbed() {
+  const v = id => $("e-" + id).value.trim();
+  const e = { color: parseInt($("e-color").value.slice(1), 16) };
+  if (v("title")) e.title = v("title");
+  if (v("desc")) e.description = v("desc");
+  if (v("url")) e.url = v("url");
+  if (v("aname")) { e.author = { name: v("aname") }; if (v("aurl")) e.author.url = v("aurl"); if (v("aicon")) e.author.icon_url = v("aicon"); }
+  if (v("thumb")) e.thumbnail = { url: v("thumb") };
+  if (v("image")) e.image = { url: v("image") };
+  if (v("footer")) { e.footer = { text: v("footer") }; if (v("ficon")) e.footer.icon_url = v("ficon"); }
+  if ($("e-ts").checked) e.timestamp = new Date().toISOString();
+  const fields = [...document.querySelectorAll("#efFields .row2")].map(r => ({ name: r.querySelector(".fn").value.trim(), value: r.querySelector(".fv").value.trim(), inline: r.querySelector(".fi").checked })).filter(x => x.name && x.value);
+  if (fields.length) e.fields = fields;
+  return e;
+}
+function getPayload(webhook) {
+  const p = {};
+  if ($("e-content").value.trim()) p.content = $("e-content").value;
+  if (webhook) { if ($("e-uname").value.trim()) p.username = $("e-uname").value.trim(); if ($("e-uavatar").value.trim()) p.avatar_url = $("e-uavatar").value.trim(); }
+  const e = getEmbed();
+  if (Object.keys(e).length > 1) p.embeds = [e];
+  const b = [...document.querySelectorAll("#efBtns .row2")].map(r => ({ label: r.querySelector(".bl").value.trim(), url: r.querySelector(".bu").value.trim() })).filter(x => x.label && okUrl(x.url));
+  if (b.length && !webhook) p.components = [{ type: 1, components: b.map(x => ({ type: 2, style: 5, label: x.label, url: x.url })) }];
+  return p;
+}
+
+function genJs(p) {
+  const e = (p.embeds || [])[0], o = [];
+  const L = ["const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');", ""];
+  if (e) {
+    L.push("const embed = new EmbedBuilder()", "  .setColor(0x" + e.color.toString(16).padStart(6, "0").toUpperCase() + ")");
+    if (e.title) L.push("  .setTitle(" + J(e.title) + ")");
+    if (e.url) L.push("  .setURL(" + J(e.url) + ")");
+    if (e.author) L.push("  .setAuthor(" + J({ name: e.author.name, url: e.author.url, iconURL: e.author.icon_url }) + ")");
+    if (e.description) L.push("  .setDescription(" + J(e.description) + ")");
+    if (e.thumbnail) L.push("  .setThumbnail(" + J(e.thumbnail.url) + ")");
+    if (e.image) L.push("  .setImage(" + J(e.image.url) + ")");
+    if (e.fields) L.push("  .addFields(" + J(e.fields) + ")");
+    if (e.footer) L.push("  .setFooter(" + J({ text: e.footer.text, iconURL: e.footer.icon_url }) + ")");
+    if (e.timestamp) L.push("  .setTimestamp()");
+    L[L.length - 1] += ";";
+    L.push("");
+  }
+  if (p.components) {
+    const bs = p.components[0].components;
+    L.push("const row = new ActionRowBuilder().addComponents(");
+    bs.forEach((b, i) => L.push("  new ButtonBuilder().setStyle(ButtonStyle.Link).setLabel(" + J(b.label) + ").setURL(" + J(b.url) + ")" + (i < bs.length - 1 ? "," : "")));
+    L.push(");", "");
+  }
+  if (p.content) o.push("content: " + J(p.content));
+  if (e) o.push("embeds: [embed]");
+  if (p.components) o.push("components: [row]");
+  L.push("await channel.send({ " + o.join(", ") + " });");
+  return L.join("\n");
+}
+
+function renderPreview(p) {
+  const e = (p.embeds || [])[0];
+  let h = p.content ? `<div>${md(p.content)}</div>` : "";
+  if (e) {
+    h += `<div class="pe" style="border-left-color:#${e.color.toString(16).padStart(6, "0")}${e.thumbnail ? ";padding-right:84px" : ""}">`;
+    if (e.author) h += `<div class="pa">${pimg(e.author.icon_url, "")}${esc(e.author.name)}</div>`;
+    if (e.title) h += `<div class="pt">${okUrl(e.url) ? `<a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer">${esc(e.title)}</a>` : esc(e.title)}</div>`;
+    if (e.description) h += `<div>${md(e.description)}</div>`;
+    if (e.fields) h += `<div class="pf">` + e.fields.map(x => `<div class="${x.inline ? "in" : ""}"><b>${esc(x.name)}</b>${md(x.value)}</div>`).join("") + `</div>`;
+    if (e.thumbnail) h += pimg(e.thumbnail.url, "pth");
+    if (e.image) h += pimg(e.image.url, "pi");
+    if (e.footer || e.timestamp) h += `<div class="pfoot">${e.footer ? pimg(e.footer.icon_url, "") + esc(e.footer.text) : ""}${e.timestamp ? (e.footer ? " • " : "") + new Date().toLocaleString(L) : ""}</div>`;
+    h += `</div>`;
+  }
+  if (p.components) h += `<div class="pb">` + p.components[0].components.map(b => `<span>${esc(b.label)} ↗</span>`).join("") + `</div>`;
+  $("pv").innerHTML = h || `<span style="color:#949ba4">…</span>`;
+}
+function upd() {
+  const p = getPayload(false);
+  renderPreview(p);
+  $("eOut").textContent = outMode === "json" ? J(p, null, 2) : genJs(p);
+}
+function setOut(m) { outMode = m; $("oJson").className = m === "json" ? "on" : "ghost"; $("oJs").className = m === "js" ? "on" : "ghost"; upd(); }
+$("oJson").onclick = () => setOut("json");
+$("oJs").onclick = () => setOut("js");
+$("eCopy").onclick = async () => {
+  const b = $("eCopy");
+  try { await navigator.clipboard.writeText($("eOut").textContent); b.textContent = t("copied"); } catch (e) { b.textContent = t("copyFail"); }
+  setTimeout(() => b.textContent = t("copyOut"), 2000);
+};
+function eSay(m, c) { $("eStatus").textContent = m; $("eStatus").className = c || ""; }
+$("eSend").onclick = async () => {
+  const u = $("e-wh").value.trim(), p = getPayload(true);
+  if (!/^https:\/\/(discord|discordapp)\.com\/api\/webhooks\/\d+\/[\w-]+$/.test(u)) return eSay(t("whBad"), "err");
+  if (!p.content && !p.embeds) return eSay(t("whEmpty"), "err");
+  try {
+    const r = await fetch(u + "?wait=true", { method: "POST", headers: { "Content-Type": "application/json" }, body: J(p) });
+    if (r.ok) return eSay(t("whOk"), "ok");
+    let m = ""; try { m = "- " + (await r.json()).message; } catch (e) {}
+    eSay(t("whFail", { s: r.status, m }), "err");
+  } catch (e) { eSay(t("eNet"), "err"); }
+};
+
+buildEmbedForm();
 applyLang();
+upd();
 </script>
 </body>
 </html>
