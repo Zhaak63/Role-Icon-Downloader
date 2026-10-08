@@ -114,6 +114,16 @@ nav a.act,nav a:hover{color:var(--text);background:var(--panel)}
 .pg{display:grid;grid-template-columns:repeat(2,1fr);gap:4px;margin-top:6px}.pg img{width:100%;border-radius:6px}
 .pv hr{border:0;border-top:1px solid #3f4147}.pv hr.nd{border-top-color:transparent}
 .h1{font-size:22px;font-weight:700}.h2{font-size:18px;font-weight:700}.h3{font-size:15px;font-weight:700}.sm2{font-size:12px;color:#b5bac1}
+#toolStatus{min-height:20px;font-size:14px;margin-top:8px}#toolStatus.err{color:var(--err)}#toolStatus.ok{color:var(--ok)}
+.mn{background:rgba(88,101,242,.3);color:#c9cdfb;border-radius:3px;padding:0 2px;font-weight:500}
+.emo{width:22px;height:22px;vertical-align:-5px}
+.psel{background:#1e1f22;border:1px solid #3f4147;border-radius:4px;padding:8px 10px;color:#b5bac1;margin-top:6px}
+.emg{display:flex;flex-wrap:wrap;gap:4px;max-height:140px;overflow-y:auto;margin-bottom:10px}
+.emg button{padding:3px 6px;font-size:18px}.emg img{width:22px;height:22px;display:block}
+.rp{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;background:#313338;border-radius:8px;padding:8px}
+.rp canvas{width:24px;height:24px}
+.eb input[type=range],.eb input[type=file]{width:100%;padding:0;margin-bottom:10px}
+details textarea{margin-top:8px}
 footer{text-align:center;margin-top:28px;font-size:14px;color:var(--mute)}
 footer a{color:var(--mute);text-decoration:none;font-weight:600}
 footer a:hover{color:var(--text);text-decoration:underline}
@@ -126,6 +136,7 @@ footer a:hover{color:var(--text);text-decoration:underline}
     <nav>
       <a href="#/download" data-i="navDl"></a>
       <a href="#/embed" data-i="navEmbed"></a>
+      <a href="#/icons" data-i="navIcons"></a>
     </nav>
     <button id="lang" class="ghost" type="button" aria-label="Language / Langue">EN</button>
   </header>
@@ -138,6 +149,7 @@ footer a:hover{color:var(--text);text-decoration:underline}
     <div class="cards">
       <a class="card" href="#/download"><div class="ic">🖼️</div><h2 data-i="cardDlT"></h2><p data-i="cardDlD"></p></a>
       <a class="card" href="#/embed"><div class="ic">🧩</div><h2 data-i="cardEbT"></h2><p data-i="cardEbD"></p></a>
+      <a class="card" href="#/icons"><div class="ic">🎨</div><h2 data-i="cardIcT"></h2><p data-i="cardIcD"></p></a>
     </div>
   </section>
 
@@ -233,6 +245,15 @@ footer a:hover{color:var(--text);text-decoration:underline}
     </div>
     <div class="eb">
       <div>
+        <div class="panel" id="toolPanel">
+          <label data-i="tplTitle"></label>
+          <div class="row"><select id="tplSel"></select><button id="tplLoad" class="ghost" type="button" data-i="tplLoad"></button><button id="tplDel" class="ghost" type="button" data-i="tplDel"></button></div>
+          <div class="row"><input id="tplName" type="text" data-p="tplName"><button id="tplSave" type="button" data-i="tplSave"></button></div>
+          <button id="shareBtn" class="ghost" type="button" data-i="shareBtn"></button>
+          <details><summary data-i="impTitle"></summary><textarea id="impTxt" spellcheck="false"></textarea><button id="impBtn" type="button" data-i="impBtn"></button></details>
+          <div id="toolStatus" role="status"></div>
+        </div>
+        <div class="panel" id="insPanel"></div>
         <div class="panel hidden" id="efForm"></div>
         <div class="panel" id="cvForm">
           <p class="hint" data-i="v2Note"></p>
@@ -261,6 +282,48 @@ footer a:hover{color:var(--text);text-decoration:underline}
           <button id="eSend" type="button" data-i="whSend"></button>
           <div id="eStatus" role="status"></div>
           <p class="hint" data-i="whNote" style="margin-top:8px"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pg-icons" class="hidden">
+    <h1 data-i="icTitle"></h1>
+    <p class="sub" data-i="icSub"></p>
+    <div class="eb">
+      <div class="panel">
+        <label for="ic-shape" data-i="icShape"></label>
+        <select id="ic-shape"><option value="circle" data-i="shCircle"></option><option value="square" data-i="shSquare"></option><option value="hex" data-i="shHex"></option><option value="shield" data-i="shShield"></option><option value="star" data-i="shStar"></option></select>
+        <label for="ic-c1" data-i="icFill"></label>
+        <input id="ic-c1" type="color" value="#5865f2">
+        <label class="chk"><input id="ic-grad" type="checkbox"><span data-i="icGrad"></span></label>
+        <input id="ic-c2" type="color" value="#eb459e">
+        <label for="ic-bc" data-i="icBorder"></label>
+        <input id="ic-bc" type="color" value="#ffffff">
+        <label for="ic-bw" data-i="icBorderW"></label>
+        <input id="ic-bw" type="range" min="0" max="24" value="8">
+        <label for="ic-sym" data-i="icSymbol"></label>
+        <input id="ic-sym" type="text" value="⭐">
+        <div id="ic-pre" class="emg"></div>
+        <label for="ic-sc" data-i="icSymColor"></label>
+        <input id="ic-sc" type="color" value="#ffffff">
+        <label for="ic-sz" data-i="icSymSize"></label>
+        <input id="ic-sz" type="range" min="30" max="90" value="58">
+        <label for="ic-up" data-i="icUpload"></label>
+        <input id="ic-up" type="file" accept="image/*">
+        <button id="ic-clear" class="ghost sm" type="button" data-i="icClear"></button>
+      </div>
+      <div>
+        <div class="panel" style="text-align:center">
+          <canvas id="ic-cv" width="256" height="256" style="width:256px;max-width:100%;background:repeating-conic-gradient(#3a3c41 0 25%,#2b2d31 0 50%) 0 0/20px 20px;border-radius:12px"></canvas>
+          <div class="rp"><canvas id="ic-mini" width="48" height="48"></canvas><b data-i="icRole"></b></div>
+        </div>
+        <div class="panel">
+          <label for="ic-out" data-i="icExport"></label>
+          <select id="ic-out"><option>64</option><option>128</option><option selected>256</option><option>512</option></select>
+          <button id="ic-dl" type="button" data-i="icDownload"></button>
+          <div id="ic-info" class="hint" style="margin-top:8px"></div>
+          <p class="hint" data-i="icNote"></p>
         </div>
       </div>
     </div>
@@ -308,7 +371,7 @@ fr: {
   eTs: "Afficher la date d'envoi", eFields: "Champs", addField: "+ Ajouter un champ", fName: "Nom du champ", fVal: "Valeur", fInline: "Sur la même ligne",
   eButtons: "Boutons (liens)", addBtn: "+ Ajouter un bouton", bLabel: "Texte du bouton", bUrl: "https://…", remove: "Supprimer",
   outJson: "JSON", outJs: "discord.js", copyOut: "Copier", whTitle: "Envoyer avec un webhook", whUrl: "URL du webhook", whName: "Nom affiché (facultatif)", whAvatar: "Avatar (URL, facultatif)", whSend: "Envoyer le message",
-  whNote: "L'URL d'un webhook est secrète : elle n'est ni enregistrée ni envoyée ailleurs qu'à discord.com. En mode embed classique, les boutons ne sont pas envoyés par webhook ; en mode composants, seuls les boutons lien fonctionnent avec un webhook.",
+  whNote: "L'URL d'un webhook est secrète : elle n'est ni enregistrée ni envoyée ailleurs qu'à discord.com. En mode embed classique, les boutons ne sont pas envoyés par webhook ; en mode composants, seuls les boutons lien fonctionnent avec un webhook (les menus déroulants ne sont pas envoyés).",
   whBad: "URL de webhook invalide.", whOk: "Message envoyé !", whFail: "Discord a refusé le message (erreur {s}) {m}", whEmpty: "Ajoute au moins un message ou un embed.",
   modeV2: "Composants (V2)", modeCl: "Embed classique",
   v2Note: "Les messages en composants V2 remplacent le texte simple et les embeds : tout est composé de blocs (40 composants et 4000 caractères de texte maximum).",
@@ -317,6 +380,18 @@ fr: {
   textPh: "Texte (markdown : **gras**, # titre, -# petit…)", accThumb: "Miniature à droite", accButton: "Bouton lien à droite", thumbUrl: "URL de la miniature",
   divider: "Afficher une ligne", spacingBig: "Grand espace", galleryPh: "Une URL d'image par ligne (10 max)", buttonsPh: "Un bouton par ligne : texte | https://lien (5 max)",
   accent: "Couleur d'accent", spoiler: "Spoiler (masqué)", v2Count: "{c} composant(s) · {n} caractère(s) de texte", v2Warn: "Limite dépassée (40 composants, 4000 caractères).",
+  tplTitle: "Modèles et partage", tplLoad: "Charger", tplDel: "Supprimer", tplName: "Nom du modèle", tplSave: "Enregistrer", shareBtn: "Copier un lien de partage",
+  impTitle: "Importer du JSON", impBtn: "Importer", impBad: "JSON invalide.", impNone: "Rien à importer dans ce JSON.", impOk: "JSON importé.",
+  tplNeed: "Donne un nom au modèle.", tplSaved: "Modèle enregistré dans ce navigateur.", tplFail: "Impossible d'enregistrer (stockage bloqué).", tplLoaded: "Modèle chargé.",
+  shCopied: "Lien copié ({n} caractères).", shFail: "Impossible de créer le lien.", shLoaded: "Message partagé chargé.", shBad: "Lien de partage invalide.",
+  insHint: "Charge un serveur dans le Téléchargeur pour insérer ici ses emojis et ses rôles.", insTitle: "Insérer un emoji ou un rôle du serveur", insRole: "Insérer un rôle…", insNone: "Clique d'abord dans un champ de texte.",
+  add_select: "+ Menu déroulant", bk_select: "Menu déroulant", selStr: "Menu de choix (texte)", selUser: "Choix d'utilisateurs", selRole: "Choix de rôles", selChan: "Choix de salons",
+  selPh: "Texte d'invite (placeholder)", selId: "Identifiant (custom_id)", selOpts: "Une option par ligne : libellé | valeur | description (25 max)",
+  navIcons: "Créateur d'icônes", cardIcT: "Créer une icône de rôle", cardIcD: "Choisis une forme, des couleurs et un symbole, puis exporte l'image en PNG.",
+  icTitle: "Créateur d'icônes de rôles", icSub: "Dessine une icône prête à être envoyée sur Discord.", icShape: "Forme", shCircle: "Cercle", shSquare: "Carré arrondi", shHex: "Hexagone", shShield: "Écu", shStar: "Étoile",
+  icFill: "Couleur de fond", icGrad: "Dégradé avec la couleur ci-dessous", icBorder: "Couleur du contour", icBorderW: "Épaisseur du contour", icSymbol: "Symbole (emoji ou lettres)", icSymColor: "Couleur des lettres", icSymSize: "Taille du symbole",
+  icUpload: "Ou une image à la place du symbole", icClear: "Retirer l'image", icExport: "Taille de l'export (px)", icDownload: "Télécharger le PNG", icRole: "Modérateur",
+  icNote: "Les icônes de rôles demandent un serveur au niveau 2 de boost, et Discord limite leur poids à environ 256 Ko.", icBig: "Fichier trop lourd ({k} Ko) : la limite est d'environ 256 Ko.", icOk: "{k} Ko : le poids est bon.",
   naming: "Nom des fichiers :", namName: "Nom", namId: "ID", namBoth: "Nom + ID", searchPh: "Rechercher par nom…",
   dlOne: "Télécharger cette image", copyLink: "Copier le lien", linkCopied: "Lien copié.",
   optServer: "Icône et bannière du serveur", noServer: "Ce serveur n'a ni icône, ni bannière, ni image d'invitation.", foundServer: "{n} image(s) trouvée(s) sur « {g} ».",
@@ -367,7 +442,7 @@ en: {
   eTs: "Show the send time", eFields: "Fields", addField: "+ Add a field", fName: "Field name", fVal: "Value", fInline: "Inline",
   eButtons: "Buttons (links)", addBtn: "+ Add a button", bLabel: "Button label", bUrl: "https://…", remove: "Remove",
   outJson: "JSON", outJs: "discord.js", copyOut: "Copy", whTitle: "Send with a webhook", whUrl: "Webhook URL", whName: "Display name (optional)", whAvatar: "Avatar (URL, optional)", whSend: "Send the message",
-  whNote: "A webhook URL is secret: it is never stored or sent anywhere except discord.com. In classic embed mode, buttons are not sent through webhooks; in components mode, only link buttons work with a webhook.",
+  whNote: "A webhook URL is secret: it is never stored or sent anywhere except discord.com. In classic embed mode, buttons are not sent through webhooks; in components mode, only link buttons work with a webhook (select menus are not sent).",
   whBad: "Invalid webhook URL.", whOk: "Message sent!", whFail: "Discord rejected the message (error {s}) {m}", whEmpty: "Add at least a message or an embed.",
   modeV2: "Components (V2)", modeCl: "Classic embed",
   v2Note: "Components V2 messages replace plain text and embeds: everything is made of blocks (40 components and 4000 characters of text maximum).",
@@ -376,6 +451,18 @@ en: {
   textPh: "Text (markdown: **bold**, # title, -# small…)", accThumb: "Thumbnail on the right", accButton: "Link button on the right", thumbUrl: "Thumbnail URL",
   divider: "Show a line", spacingBig: "Large spacing", galleryPh: "One image URL per line (10 max)", buttonsPh: "One button per line: label | https://link (5 max)",
   accent: "Accent color", spoiler: "Spoiler (hidden)", v2Count: "{c} component(s) · {n} text character(s)", v2Warn: "Limit exceeded (40 components, 4000 characters).",
+  tplTitle: "Templates and sharing", tplLoad: "Load", tplDel: "Delete", tplName: "Template name", tplSave: "Save", shareBtn: "Copy a share link",
+  impTitle: "Import JSON", impBtn: "Import", impBad: "Invalid JSON.", impNone: "Nothing to import in this JSON.", impOk: "JSON imported.",
+  tplNeed: "Give the template a name.", tplSaved: "Template saved in this browser.", tplFail: "Could not save (storage blocked).", tplLoaded: "Template loaded.",
+  shCopied: "Link copied ({n} characters).", shFail: "Could not create the link.", shLoaded: "Shared message loaded.", shBad: "Invalid share link.",
+  insHint: "Load a server in the Downloader to insert its emojis and roles here.", insTitle: "Insert a server emoji or role", insRole: "Insert a role…", insNone: "Click in a text field first.",
+  add_select: "+ Select menu", bk_select: "Select menu", selStr: "Choice menu (text)", selUser: "User select", selRole: "Role select", selChan: "Channel select",
+  selPh: "Placeholder text", selId: "Identifier (custom_id)", selOpts: "One option per line: label | value | description (25 max)",
+  navIcons: "Icon maker", cardIcT: "Create a role icon", cardIcD: "Pick a shape, colors and a symbol, then export the image as a PNG.",
+  icTitle: "Role icon maker", icSub: "Draw an icon ready to upload to Discord.", icShape: "Shape", shCircle: "Circle", shSquare: "Rounded square", shHex: "Hexagon", shShield: "Shield", shStar: "Star",
+  icFill: "Background color", icGrad: "Gradient with the color below", icBorder: "Border color", icBorderW: "Border width", icSymbol: "Symbol (emoji or letters)", icSymColor: "Letter color", icSymSize: "Symbol size",
+  icUpload: "Or an image instead of the symbol", icClear: "Remove image", icExport: "Export size (px)", icDownload: "Download PNG", icRole: "Moderator",
+  icNote: "Role icons need a server at boost level 2, and Discord limits their size to about 256 KB.", icBig: "File too large ({k} KB): the limit is about 256 KB.", icOk: "{k} KB: the size is fine.",
   naming: "File names:", namName: "Name", namId: "ID", namBoth: "Name + ID", searchPh: "Search by name…",
   dlOne: "Download this image", copyLink: "Copy link", linkCopied: "Link copied.",
   optServer: "Server icon & banner", noServer: "This server has no icon, banner or invite splash.", foundServer: "{n} image(s) found on \"{g}\".",
@@ -410,11 +497,12 @@ function tr(root = document) {
   root.querySelectorAll("[data-p]").forEach(e => e.placeholder = t(e.dataset.p));
 }
 function route() {
-  const h = location.hash.replace(/^#\/?/, "");
-  const pg = h === "download" || h === "embed" ? h : "home";
-  ["home", "download", "embed"].forEach(x => $("pg-" + x).classList.toggle("hidden", x !== pg));
+  const h = location.hash.replace(/^#\/?/, "").split("?")[0];
+  const pg = ["download", "embed", "icons"].includes(h) ? h : "home";
+  ["home", "download", "embed", "icons"].forEach(x => $("pg-" + x).classList.toggle("hidden", x !== pg));
   document.querySelectorAll("nav a").forEach(a => a.classList.toggle("act", a.getAttribute("href") === "#/" + pg));
-  document.title = SITE + (pg === "home" ? "" : " · " + t(pg === "embed" ? "navEmbed" : "navDl"));
+  document.title = SITE + (pg === "home" ? "" : " · " + t({ embed: "navEmbed", icons: "navIcons", download: "navDl" }[pg]));
+  if (pg === "embed") { buildIns(); loadShared(); }
 }
 window.addEventListener("hashchange", route);
 $("siteName").textContent = SITE;
@@ -653,7 +741,12 @@ const okUrl = u => /^https?:\/\/[^\s"'<>]+$/i.test(u || "");
 const pimg = (u, c) => okUrl(u) ? `<img class="${c}" src="${esc(u)}" alt="">` : "";
 function md(x) {
   const inl = z => esc(z).replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-    .replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/\*(.+?)\*/g, "<i>$1</i>").replace(/`(.+?)`/g, "<code>$1</code>");
+    .replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/\*(.+?)\*/g, "<i>$1</i>").replace(/`(.+?)`/g, "<code>$1</code>")
+    .replace(/&lt;@&amp;(\d+)&gt;/g, (_, id) => { const r = rl(id); return `<span class="mn"${r.c ? ` style="color:${r.c}"` : ""}>@${esc(r.n)}</span>`; })
+    .replace(/&lt;@!?(\d+)&gt;/g, '<span class="mn">@user</span>')
+    .replace(/&lt;#(\d+)&gt;/g, '<span class="mn"># channel</span>')
+    .replace(/&lt;(a?):(\w+):(\d+)&gt;/g, (_, a, n, id) => `<img class="emo" src="https://cdn.discordapp.com/emojis/${id}.${a ? "gif" : "png"}?size=48" alt=":${n}:">`)
+    .replace(/@(everyone|here)/g, '<span class="mn">@$1</span>');
   return String(x).split("\n").map(l => {
     const m = l.match(/^(#{1,3}) (.+)$/), q = l.match(/^-# (.+)$/);
     return m ? `<div class="h${m[1].length}">${inl(m[2])}</div>` : q ? `<div class="sm2">${inl(q[1])}</div>` : `<div>${inl(l) || "&nbsp;"}</div>`;
@@ -782,8 +875,8 @@ $("eSend").onclick = async () => {
 };
 
 /* ---------- Composants V2 ---------- */
-let bMode = "v2";
-const KID = ["text", "section", "sep", "gallery", "buttons"];
+let bMode = "v2", v2Wh = false;
+const KID = ["text", "section", "sep", "gallery", "buttons", "select"];
 let V2 = [{ type: "container", color: "#5865f2", spoiler: false, children: [{ type: "text", text: "## Welcome!\nWrite your text here." }] }];
 const mkBlock = k => ({
   text: { type: "text", text: "" },
@@ -791,6 +884,7 @@ const mkBlock = k => ({
   sep: { type: "sep", divider: true, big: false },
   gallery: { type: "gallery", urls: "" },
   buttons: { type: "buttons", lines: "" },
+  select: { type: "select", kind: 3, ph: "", id: "menu_1", opts: "Option 1 | one | First choice\nOption 2 | two" },
   container: { type: "container", color: "#5865f2", spoiler: false, children: [] }
 }[k]);
 
@@ -840,6 +934,15 @@ function blockList(list, el) {
     if (b.type === "sep") { mkCheck(c, b, "divider", "divider"); mkCheck(c, b, "big", "spacingBig"); }
     if (b.type === "gallery") mkInput(c, b, "urls", "ta", "galleryPh");
     if (b.type === "buttons") mkInput(c, b, "lines", "ta", "buttonsPh");
+    if (b.type === "select") {
+      const sel = document.createElement("select");
+      sel.innerHTML = `<option value="3" data-i="selStr"></option><option value="5" data-i="selUser"></option><option value="6" data-i="selRole"></option><option value="8" data-i="selChan"></option>`;
+      sel.value = String(b.kind); sel.onchange = () => { b.kind = Number(sel.value); formV2(); };
+      c.append(sel);
+      mkInput(c, b, "ph", "in", "selPh");
+      mkInput(c, b, "id", "in", "selId");
+      if (Number(b.kind) === 3) mkInput(c, b, "opts", "ta", "selOpts");
+    }
     if (b.type === "container") {
       const l = document.createElement("label"), col = document.createElement("input"), sp = document.createElement("span");
       l.className = "chk"; col.type = "color"; col.value = b.color; sp.dataset.i = "accent";
@@ -872,6 +975,18 @@ function v2Comp(b) {
     return acc ? { type: 9, components: [{ type: 10, content: b.text }], accessory: acc } : { type: 10, content: b.text };
   }
   if (b.type === "sep") return { type: 14, divider: b.divider, spacing: b.big ? 2 : 1 };
+  if (b.type === "select") {
+    if (v2Wh) return null;
+    const sel = { type: Number(b.kind), custom_id: (b.id || "").trim() || "menu" };
+    if (b.ph.trim()) sel.placeholder = b.ph.trim().slice(0, 150);
+    if (sel.type === 3) {
+      const opts = b.opts.split("\n").map(l => { const [a, v, ...d] = l.split("|"); return { label: (a || "").trim().slice(0, 100), value: (v || a || "").trim().slice(0, 100), description: d.join("|").trim().slice(0, 100) }; })
+        .filter(o => o.label).slice(0, 25).map(o => o.description ? o : { label: o.label, value: o.value });
+      if (!opts.length) return null;
+      sel.options = opts;
+    }
+    return { type: 1, components: [sel] };
+  }
   if (b.type === "gallery") {
     const items = b.urls.split("\n").map(x => x.trim()).filter(okUrl).slice(0, 10).map(u => ({ media: { url: u } }));
     return items.length ? { type: 12, items } : null;
@@ -888,6 +1003,7 @@ function v2Comp(b) {
   return null;
 }
 function v2Payload(webhook) {
+  v2Wh = !!webhook;
   const p = { flags: 32768, components: V2.map(v2Comp).filter(Boolean) };
   if (webhook) { if ($("e-uname").value.trim()) p.username = $("e-uname").value.trim(); if ($("e-uavatar").value.trim()) p.avatar_url = $("e-uavatar").value.trim(); }
   return p;
@@ -906,7 +1022,7 @@ function pv2(c) {
   if (c.type === 9) return `<div class="ps"><div>${md(c.components[0].content)}</div>` + (c.accessory.type === 11 ? pimg(c.accessory.media.url, "pth2") : `<span class="pbtn">${esc(c.accessory.label)} ↗</span>`) + `</div>`;
   if (c.type === 14) return `<hr class="${c.divider ? "" : "nd"}" style="margin:${c.spacing === 2 ? 14 : 6}px 0">`;
   if (c.type === 12) return `<div class="pg">${c.items.map(i => pimg(i.media.url, "")).join("")}</div>`;
-  if (c.type === 1) return `<div class="pb">${c.components.map(b => `<span>${esc(b.label)} ↗</span>`).join("")}</div>`;
+  if (c.type === 1) { const f = c.components[0]; return f.type === 2 ? `<div class="pb">${c.components.map(b => `<span>${esc(b.label)} ↗</span>`).join("")}</div>` : `<div class="psel">${esc(f.placeholder || "…")} ▾</div>`; }
   if (c.type === 17) return `<div class="pe" style="border-left-color:#${c.accent_color.toString(16).padStart(6, "0")};max-width:none">${c.components.map(pv2).join("")}</div>`;
   return "";
 }
@@ -928,8 +1044,206 @@ function setBuilder(m) {
 $("mV2").onclick = () => setBuilder("v2");
 $("mCl").onclick = () => setBuilder("cl");
 
+/* ---------- Import, modèles, partage, insertion ---------- */
+let sharedDone = "", lastField = null;
+function tSay(m, c) { $("toolStatus").textContent = m; $("toolStatus").className = c || ""; }
+function rl(id) {
+  const r = lastGuild && (lastGuild.roles || []).find(x => x.id === id);
+  return r ? { n: r.name, c: r.color ? "#" + r.color.toString(16).padStart(6, "0") : "" } : { n: "role", c: "" };
+}
+const hex6 = n => "#" + (n == null ? 0x5865f2 : n).toString(16).padStart(6, "0");
+function fromComp(c) {
+  if (c.type === 10) return { type: "text", text: c.content || "" };
+  if (c.type === 9) {
+    const a = c.accessory || {};
+    return { type: "section", text: (c.components || []).map(x => x.content).join("\n"), acc: a.type === 2 ? "button" : "thumb", url: a.type === 2 ? a.url || "" : (a.media && a.media.url) || "", label: a.label || "" };
+  }
+  if (c.type === 14) return { type: "sep", divider: c.divider !== false, big: c.spacing === 2 };
+  if (c.type === 12) return { type: "gallery", urls: (c.items || []).map(i => i.media && i.media.url).filter(Boolean).join("\n") };
+  if ([3, 5, 6, 8].includes(c.type)) return { type: "select", kind: c.type, ph: c.placeholder || "", id: c.custom_id || "menu", opts: (c.options || []).map(o => [o.label, o.value, o.description || ""].join(" | ")).join("\n") };
+  if (c.type === 1) {
+    const f = (c.components || [])[0] || {};
+    if ([3, 5, 6, 8].includes(f.type)) return fromComp(f);
+    return { type: "buttons", lines: (c.components || []).filter(b => b.url).map(b => b.label + " | " + b.url).join("\n") };
+  }
+  if (c.type === 17) return { type: "container", color: hex6(c.accent_color), spoiler: !!c.spoiler, children: (c.components || []).map(fromComp).filter(Boolean) };
+  return null;
+}
+function fillClassic(p) {
+  const e = (p.embeds || [])[0] || {}, set = (id, v) => { $("e-" + id).value = v || ""; };
+  set("content", p.content); set("title", e.title); set("url", e.url); set("desc", e.description);
+  set("aname", e.author && e.author.name); set("aurl", e.author && e.author.url); set("aicon", e.author && e.author.icon_url);
+  set("thumb", e.thumbnail && e.thumbnail.url); set("image", e.image && e.image.url);
+  set("footer", e.footer && e.footer.text); set("ficon", e.footer && e.footer.icon_url);
+  $("e-color").value = hex6(e.color); $("e-ts").checked = !!e.timestamp;
+  $("efFields").innerHTML = ""; $("efBtns").innerHTML = "";
+  (e.fields || []).forEach(f => { $("addField").click(); const r = $("efFields").lastElementChild; r.querySelector(".fn").value = f.name || ""; r.querySelector(".fv").value = f.value || ""; r.querySelector(".fi").checked = !!f.inline; });
+  ((p.components && p.components[0] && p.components[0].components) || []).filter(b => b.url).forEach(b => { $("addBtn").click(); const r = $("efBtns").lastElementChild; r.querySelector(".bl").value = b.label || ""; r.querySelector(".bu").value = b.url || ""; });
+}
+const getState = () => ({ m: bMode, v2: V2, cl: getPayload(false) });
+function applyState(st) {
+  if (Array.isArray(st.v2)) V2 = st.v2;
+  fillClassic(st.cl || {});
+  formV2();
+  setBuilder(st.m === "cl" ? "cl" : "v2");
+}
+function importJson(txt) {
+  let d;
+  try { d = JSON.parse(txt); } catch (e) { return tSay(t("impBad"), "err"); }
+  if (Array.isArray(d)) d = { components: d };
+  if (!d || typeof d !== "object") return tSay(t("impBad"), "err");
+  const isV2 = (d.flags & 32768) || (d.components || []).some(c => c.type !== 1);
+  if (d.embeds || (d.content && !isV2)) { fillClassic(d); setBuilder("cl"); }
+  else if (Array.isArray(d.components) && d.components.length) { V2 = d.components.map(fromComp).filter(Boolean); formV2(); setBuilder("v2"); }
+  else return tSay(t("impNone"), "err");
+  tSay(t("impOk"), "ok");
+}
+$("impBtn").onclick = () => importJson($("impTxt").value);
+
+const b64u = u => { let x = ""; u.forEach(c => x += String.fromCharCode(c)); return btoa(x).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); };
+const unb64u = x => Uint8Array.from(atob(x.replace(/-/g, "+").replace(/_/g, "/")), c => c.charCodeAt(0));
+async function pack(o) {
+  const raw = new TextEncoder().encode(J(o));
+  if (typeof CompressionStream === "undefined") return "r." + b64u(raw);
+  const r = new Response(new Blob([raw]).stream().pipeThrough(new CompressionStream("deflate-raw")));
+  return "z." + b64u(new Uint8Array(await r.arrayBuffer()));
+}
+async function unpack(x) {
+  const b = unb64u(x.slice(2));
+  if (x.slice(0, 2) === "r.") return JSON.parse(new TextDecoder().decode(b));
+  return JSON.parse(await new Response(new Blob([b]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).text());
+}
+async function loadShared() {
+  const m = location.hash.match(/[?&]d=([\w.\-]+)/);
+  if (!m || m[1] === sharedDone) return;
+  sharedDone = m[1];
+  try { applyState(await unpack(m[1])); tSay(t("shLoaded"), "ok"); } catch (e) { tSay(t("shBad"), "err"); }
+}
+$("shareBtn").onclick = async () => {
+  try {
+    const l = location.origin + location.pathname + "#/embed?d=" + await pack(getState());
+    await navigator.clipboard.writeText(l);
+    tSay(t("shCopied", { n: l.length }), "ok");
+  } catch (e) { tSay(t("shFail"), "err"); }
+};
+
+const TPL = "wk_templates";
+const tplGet = () => { try { return JSON.parse(localStorage.getItem(TPL)) || {}; } catch (e) { return {}; } };
+function tplList(sel) {
+  const s2 = $("tplSel"); s2.innerHTML = "";
+  Object.keys(tplGet()).forEach(k => { const o = document.createElement("option"); o.value = k; o.textContent = k; s2.append(o); });
+  if (sel) s2.value = sel;
+}
+$("tplSave").onclick = () => {
+  const n = $("tplName").value.trim();
+  if (!n) return tSay(t("tplNeed"), "err");
+  const o = tplGet(); o[n] = getState();
+  try { localStorage.setItem(TPL, J(o)); tSay(t("tplSaved"), "ok"); } catch (e) { tSay(t("tplFail"), "err"); }
+  tplList(n);
+};
+$("tplLoad").onclick = () => { const k = $("tplSel").value, o = tplGet(); if (o[k]) { applyState(o[k]); tSay(t("tplLoaded"), "ok"); } };
+$("tplDel").onclick = () => { const k = $("tplSel").value, o = tplGet(); delete o[k]; try { localStorage.setItem(TPL, J(o)); } catch (e) {} tplList(); };
+
+document.addEventListener("focusin", e => {
+  const f = e.target;
+  if (f.closest && f.closest("#efForm, #cvForm") && (f.tagName === "TEXTAREA" || (f.tagName === "INPUT" && f.type === "text"))) lastField = f;
+});
+function ins(txt) {
+  const f = lastField;
+  if (!f || !document.contains(f)) return tSay(t("insNone"), "err");
+  f.setRangeText(txt, f.selectionStart, f.selectionEnd, "end");
+  f.dispatchEvent(new Event("input", { bubbles: true }));
+  f.focus();
+}
+function buildIns() {
+  const el = $("insPanel");
+  if (!lastGuild) { el.innerHTML = `<p class="hint" data-i="insHint" style="margin:0"></p>`; return tr(el); }
+  el.innerHTML = `<label data-i="insTitle"></label>`;
+  const g = document.createElement("div");
+  g.className = "emg";
+  (lastGuild.emojis || []).slice(0, 80).forEach(e => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "ghost"; b.title = e.name;
+    b.innerHTML = `<img src="https://cdn.discordapp.com/emojis/${e.id}.${e.animated ? "gif" : "png"}?size=32" alt="">`;
+    b.onmousedown = ev => ev.preventDefault();
+    b.onclick = () => ins(`<${e.animated ? "a" : ""}:${e.name}:${e.id}>`);
+    g.append(b);
+  });
+  el.append(g);
+  const sel = document.createElement("select");
+  sel.innerHTML = `<option value="" data-i="insRole"></option>` + (lastGuild.roles || []).filter(r => r.name !== "@everyone").map(r => `<option value="${esc(r.id)}">${esc(r.name)}</option>`).join("");
+  sel.onchange = () => { if (sel.value) ins(`<@&${sel.value}>`); sel.value = ""; };
+  el.append(sel);
+  tr(el);
+}
+
+/* ---------- Créateur d'icônes de rôles ---------- */
+const IC = id => $("ic-" + id);
+let icImg = null;
+function icPath(c, sh, px, ins) {
+  const r = px / 2, s = r - ins, w = px - 2 * ins;
+  c.beginPath();
+  if (sh === "circle") c.arc(r, r, s, 0, Math.PI * 2);
+  else if (sh === "square") c.roundRect(ins, ins, w, w, px * 0.22);
+  else if (sh === "hex") for (let i = 0; i < 6; i++) { const a = Math.PI / 3 * i - Math.PI / 2; c[i ? "lineTo" : "moveTo"](r + s * Math.cos(a), r + s * Math.sin(a)); }
+  else if (sh === "star") for (let i = 0; i < 10; i++) { const a = Math.PI / 5 * i - Math.PI / 2, d = i % 2 ? s * 0.5 : s; c[i ? "lineTo" : "moveTo"](r + d * Math.cos(a), r + d * Math.sin(a)); }
+  else {
+    c.moveTo(r, ins); c.lineTo(px - ins, ins + w * 0.18); c.lineTo(px - ins, ins + w * 0.55);
+    c.quadraticCurveTo(px - ins, ins + w * 0.9, r, px - ins); c.quadraticCurveTo(ins, ins + w * 0.9, ins, ins + w * 0.55); c.lineTo(ins, ins + w * 0.18);
+  }
+  c.closePath();
+}
+function drawIcon(cv, px) {
+  cv.width = cv.height = px;
+  const c = cv.getContext("2d"), k = px / 256, bw = Number(IC("bw").value) * k, r = px / 2;
+  c.clearRect(0, 0, px, px);
+  icPath(c, IC("shape").value, px, bw / 2 + k);
+  const g = c.createLinearGradient(0, 0, px, px);
+  g.addColorStop(0, IC("c1").value); g.addColorStop(1, IC("grad").checked ? IC("c2").value : IC("c1").value);
+  c.fillStyle = g; c.fill();
+  if (bw > 0) { c.lineWidth = bw; c.lineJoin = "round"; c.strokeStyle = IC("bc").value; c.stroke(); }
+  const sz = px * Number(IC("sz").value) / 100;
+  if (icImg) {
+    const sc = Math.min(sz / icImg.width, sz / icImg.height);
+    c.drawImage(icImg, r - icImg.width * sc / 2, r - icImg.height * sc / 2, icImg.width * sc, icImg.height * sc);
+  } else if (IC("sym").value) {
+    c.font = `bold ${sz}px "Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji","Segoe UI",sans-serif`;
+    c.textAlign = "center"; c.textBaseline = "middle"; c.fillStyle = IC("sc").value;
+    c.fillText([...IC("sym").value].slice(0, 3).join(""), r, r + sz * 0.06);
+  }
+}
+function icUpd() { drawIcon($("ic-cv"), 256); drawIcon($("ic-mini"), 48); }
+["shape", "c1", "grad", "c2", "bc", "bw", "sym", "sc", "sz"].forEach(id => IC(id).oninput = IC(id).onchange = icUpd);
+["⭐", "👑", "🛡️", "⚔️", "🔥", "💎", "🎮", "🎨", "💻", "🤖", "❤️", "🌙"].forEach(e => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "ghost"; b.textContent = e;
+  b.onclick = () => { IC("sym").value = e; icImg = null; icUpd(); };
+  $("ic-pre").append(b);
+});
+IC("up").onchange = e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  const i = new Image();
+  i.onload = () => { icImg = i; icUpd(); };
+  i.src = URL.createObjectURL(f);
+};
+IC("clear").onclick = () => { icImg = null; IC("up").value = ""; icUpd(); };
+IC("dl").onclick = () => {
+  const px = Number(IC("out").value), cv = document.createElement("canvas");
+  drawIcon(cv, px);
+  cv.toBlob(b => {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(b); a.download = "role-icon-" + px + ".png"; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    const kb = Math.ceil(b.size / 1024);
+    IC("info").textContent = t(kb > 256 ? "icBig" : "icOk", { k: kb });
+  });
+};
+
 buildEmbedForm();
 formV2();
+tplList();
+icUpd();
 applyLang();
 upd();
 </script>
