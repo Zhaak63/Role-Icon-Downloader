@@ -26,7 +26,7 @@
 - Choose the **image size** (64 to 1024 px) and the **file names** (name, ID or both)
 - Animated emojis and stickers are exported as **GIF**
 - Server list with **icons**, English and French interface (EN / FR button)
-- A built-in **embed builder** with live preview: export the **JSON** or **discord.js** code, or send it with a **webhook**
+- A built-in **message builder** (Discord **Components V2**, or classic embeds) with live preview: export the **JSON** or **discord.js** code, or send it with a **webhook**
 - Works with a **Discord account token**, a **bot token**, or a **manual JSON** (no token at all)
 
 ## How to use

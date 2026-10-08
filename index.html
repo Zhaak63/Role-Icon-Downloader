@@ -102,6 +102,18 @@ nav a.act,nav a:hover{color:var(--text);background:var(--panel)}
 .pth{position:absolute;top:8px;right:8px;width:64px;height:64px;border-radius:4px;object-fit:cover}
 .pfoot{font-size:12px;color:#b5bac1;margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .pb{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}.pb span{background:#4e5058;border-radius:4px;padding:4px 12px;font-size:14px}
+.eb select{width:100%;margin-bottom:10px}
+.blk{border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:10px}
+.bh{display:flex;gap:6px;align-items:center;margin-bottom:8px}.bh b{margin-right:auto}
+.sm{padding:3px 10px;font-size:13px}
+.addbar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.sub2{margin-left:8px;padding-left:10px;border-left:2px solid var(--line)}
+.ps{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.pth2{width:70px;height:70px;border-radius:6px;object-fit:cover;flex:none}
+.pbtn{background:#4e5058;border-radius:4px;padding:4px 12px;white-space:nowrap}
+.pg{display:grid;grid-template-columns:repeat(2,1fr);gap:4px;margin-top:6px}.pg img{width:100%;border-radius:6px}
+.pv hr{border:0;border-top:1px solid #3f4147}.pv hr.nd{border-top-color:transparent}
+.h1{font-size:22px;font-weight:700}.h2{font-size:18px;font-weight:700}.h3{font-size:15px;font-weight:700}.sm2{font-size:12px;color:#b5bac1}
 footer{text-align:center;margin-top:28px;font-size:14px;color:var(--mute)}
 footer a{color:var(--mute);text-decoration:none;font-weight:600}
 footer a:hover{color:var(--text);text-decoration:underline}
@@ -215,8 +227,19 @@ footer a:hover{color:var(--text);text-decoration:underline}
   <section id="pg-embed" class="hidden">
     <h1 data-i="embedTitle"></h1>
     <p class="sub" data-i="embedSub"></p>
+    <div class="tabs" style="max-width:440px">
+      <button id="mV2" class="on" type="button" data-i="modeV2"></button>
+      <button id="mCl" class="ghost" type="button" data-i="modeCl"></button>
+    </div>
     <div class="eb">
-      <div class="panel" id="efForm"></div>
+      <div>
+        <div class="panel hidden" id="efForm"></div>
+        <div class="panel" id="cvForm">
+          <p class="hint" data-i="v2Note"></p>
+          <div id="cvList"></div>
+          <div id="v2Stat" class="hint" style="margin-top:10px"></div>
+        </div>
+      </div>
       <div>
         <div class="panel"><label data-i="previewTitle"></label><div id="pv" class="pv"></div></div>
         <div class="panel">
@@ -276,17 +299,24 @@ fr: {
   manualHint: "Fais un <code>GET https://discord.com/api/v10/guilds/ID_DU_SERVEUR</code> avec ton token, puis colle ici la réponse JSON complète.",
   parse: "Analyser le JSON", all: "Tout sélectionner", none: "Tout désélectionner", dl: "Télécharger le ZIP",
   source: "Code source", support: "Support Discord", size: "Taille (px) :",
-  navDl: "Téléchargeur", navEmbed: "Créateur d'embed", homeTitle: "Que veux-tu faire ?", homeSub: "Des outils gratuits pour Discord, qui tournent dans ton navigateur.",
+  navDl: "Téléchargeur", navEmbed: "Créateur de messages", homeTitle: "Que veux-tu faire ?", homeSub: "Des outils gratuits pour Discord, qui tournent dans ton navigateur.",
   cardDlT: "Télécharger icônes et emojis", cardDlD: "Icônes de rôles, emojis, stickers et images d'un serveur, en ZIP.",
-  cardEbT: "Créer un embed", cardEbD: "Compose un message avec aperçu en direct, puis copie le JSON ou le code discord.js, ou envoie-le avec un webhook.",
-  embedTitle: "Créateur d'embed", embedSub: "Compose ton message, vois l'aperçu et récupère le code.", previewTitle: "Aperçu",
+  cardEbT: "Créer un message", cardEbD: "Compose un message avec aperçu en direct, puis copie le JSON ou le code discord.js, ou envoie-le avec un webhook.",
+  embedTitle: "Créateur de messages", embedSub: "Composants Discord (V2) ou embed classique : compose, vois l'aperçu et récupère le code.", previewTitle: "Aperçu",
   eContent: "Message (au-dessus de l'embed)", eColor: "Couleur", eAname: "Nom de l'auteur", eAurl: "Lien de l'auteur", eAicon: "Icône de l'auteur (URL)",
   eTitle: "Titre", eUrl: "Lien du titre", eDesc: "Description", eThumb: "Miniature (URL)", eImage: "Image (URL)", eFooter: "Pied de page", eFicon: "Icône du pied de page (URL)",
   eTs: "Afficher la date d'envoi", eFields: "Champs", addField: "+ Ajouter un champ", fName: "Nom du champ", fVal: "Valeur", fInline: "Sur la même ligne",
   eButtons: "Boutons (liens)", addBtn: "+ Ajouter un bouton", bLabel: "Texte du bouton", bUrl: "https://…", remove: "Supprimer",
   outJson: "JSON", outJs: "discord.js", copyOut: "Copier", whTitle: "Envoyer avec un webhook", whUrl: "URL du webhook", whName: "Nom affiché (facultatif)", whAvatar: "Avatar (URL, facultatif)", whSend: "Envoyer le message",
-  whNote: "L'URL d'un webhook est secrète : elle n'est ni enregistrée ni envoyée ailleurs qu'à discord.com. Les boutons ne sont pas envoyés par webhook : utilise le code discord.js avec un bot.",
+  whNote: "L'URL d'un webhook est secrète : elle n'est ni enregistrée ni envoyée ailleurs qu'à discord.com. En mode embed classique, les boutons ne sont pas envoyés par webhook ; en mode composants, seuls les boutons lien fonctionnent avec un webhook.",
   whBad: "URL de webhook invalide.", whOk: "Message envoyé !", whFail: "Discord a refusé le message (erreur {s}) {m}", whEmpty: "Ajoute au moins un message ou un embed.",
+  modeV2: "Composants (V2)", modeCl: "Embed classique",
+  v2Note: "Les messages en composants V2 remplacent le texte simple et les embeds : tout est composé de blocs (40 composants et 4000 caractères de texte maximum).",
+  add_text: "+ Texte", add_section: "+ Section", add_sep: "+ Séparateur", add_gallery: "+ Galerie", add_buttons: "+ Boutons", add_container: "+ Conteneur",
+  bk_text: "Texte", bk_section: "Section", bk_sep: "Séparateur", bk_gallery: "Galerie d'images", bk_buttons: "Boutons (liens)", bk_container: "Conteneur",
+  textPh: "Texte (markdown : **gras**, # titre, -# petit…)", accThumb: "Miniature à droite", accButton: "Bouton lien à droite", thumbUrl: "URL de la miniature",
+  divider: "Afficher une ligne", spacingBig: "Grand espace", galleryPh: "Une URL d'image par ligne (10 max)", buttonsPh: "Un bouton par ligne : texte | https://lien (5 max)",
+  accent: "Couleur d'accent", spoiler: "Spoiler (masqué)", v2Count: "{c} composant(s) · {n} caractère(s) de texte", v2Warn: "Limite dépassée (40 composants, 4000 caractères).",
   naming: "Nom des fichiers :", namName: "Nom", namId: "ID", namBoth: "Nom + ID", searchPh: "Rechercher par nom…",
   dlOne: "Télécharger cette image", copyLink: "Copier le lien", linkCopied: "Lien copié.",
   optServer: "Icône et bannière du serveur", noServer: "Ce serveur n'a ni icône, ni bannière, ni image d'invitation.", foundServer: "{n} image(s) trouvée(s) sur « {g} ».",
@@ -328,17 +358,24 @@ en: {
   manualHint: "Make a <code>GET https://discord.com/api/v10/guilds/SERVER_ID</code> request with your token, then paste the full JSON response here.",
   parse: "Parse JSON", all: "Select all", none: "Deselect all", dl: "Download ZIP",
   source: "Source code", support: "Discord support", size: "Size (px):",
-  navDl: "Downloader", navEmbed: "Embed builder", homeTitle: "What do you want to do?", homeSub: "Free tools for Discord, running in your browser.",
+  navDl: "Downloader", navEmbed: "Message builder", homeTitle: "What do you want to do?", homeSub: "Free tools for Discord, running in your browser.",
   cardDlT: "Download icons & emojis", cardDlD: "Role icons, emojis, stickers and server images, as a ZIP.",
-  cardEbT: "Create an embed", cardEbD: "Build a message with a live preview, then copy the JSON or discord.js code, or send it with a webhook.",
-  embedTitle: "Embed builder", embedSub: "Build your message, see the preview and get the code.", previewTitle: "Preview",
+  cardEbT: "Create a message", cardEbD: "Build a message with a live preview, then copy the JSON or discord.js code, or send it with a webhook.",
+  embedTitle: "Message builder", embedSub: "Discord components (V2) or classic embed: build, preview and get the code.", previewTitle: "Preview",
   eContent: "Message (above the embed)", eColor: "Color", eAname: "Author name", eAurl: "Author link", eAicon: "Author icon (URL)",
   eTitle: "Title", eUrl: "Title link", eDesc: "Description", eThumb: "Thumbnail (URL)", eImage: "Image (URL)", eFooter: "Footer", eFicon: "Footer icon (URL)",
   eTs: "Show the send time", eFields: "Fields", addField: "+ Add a field", fName: "Field name", fVal: "Value", fInline: "Inline",
   eButtons: "Buttons (links)", addBtn: "+ Add a button", bLabel: "Button label", bUrl: "https://…", remove: "Remove",
   outJson: "JSON", outJs: "discord.js", copyOut: "Copy", whTitle: "Send with a webhook", whUrl: "Webhook URL", whName: "Display name (optional)", whAvatar: "Avatar (URL, optional)", whSend: "Send the message",
-  whNote: "A webhook URL is secret: it is never stored or sent anywhere except discord.com. Buttons are not sent through webhooks: use the discord.js code with a bot.",
+  whNote: "A webhook URL is secret: it is never stored or sent anywhere except discord.com. In classic embed mode, buttons are not sent through webhooks; in components mode, only link buttons work with a webhook.",
   whBad: "Invalid webhook URL.", whOk: "Message sent!", whFail: "Discord rejected the message (error {s}) {m}", whEmpty: "Add at least a message or an embed.",
+  modeV2: "Components (V2)", modeCl: "Classic embed",
+  v2Note: "Components V2 messages replace plain text and embeds: everything is made of blocks (40 components and 4000 characters of text maximum).",
+  add_text: "+ Text", add_section: "+ Section", add_sep: "+ Separator", add_gallery: "+ Gallery", add_buttons: "+ Buttons", add_container: "+ Container",
+  bk_text: "Text", bk_section: "Section", bk_sep: "Separator", bk_gallery: "Image gallery", bk_buttons: "Buttons (links)", bk_container: "Container",
+  textPh: "Text (markdown: **bold**, # title, -# small…)", accThumb: "Thumbnail on the right", accButton: "Link button on the right", thumbUrl: "Thumbnail URL",
+  divider: "Show a line", spacingBig: "Large spacing", galleryPh: "One image URL per line (10 max)", buttonsPh: "One button per line: label | https://link (5 max)",
+  accent: "Accent color", spoiler: "Spoiler (hidden)", v2Count: "{c} component(s) · {n} text character(s)", v2Warn: "Limit exceeded (40 components, 4000 characters).",
   naming: "File names:", namName: "Name", namId: "ID", namBoth: "Name + ID", searchPh: "Search by name…",
   dlOne: "Download this image", copyLink: "Copy link", linkCopied: "Link copied.",
   optServer: "Server icon & banner", noServer: "This server has no icon, banner or invite splash.", foundServer: "{n} image(s) found on \"{g}\".",
@@ -615,8 +652,12 @@ const esc = x => String(x).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(
 const okUrl = u => /^https?:\/\/[^\s"'<>]+$/i.test(u || "");
 const pimg = (u, c) => okUrl(u) ? `<img class="${c}" src="${esc(u)}" alt="">` : "";
 function md(x) {
-  return esc(x).replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-    .replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/\*(.+?)\*/g, "<i>$1</i>").replace(/`(.+?)`/g, "<code>$1</code>").replace(/\n/g, "<br>");
+  const inl = z => esc(z).replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+    .replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/\*(.+?)\*/g, "<i>$1</i>").replace(/`(.+?)`/g, "<code>$1</code>");
+  return String(x).split("\n").map(l => {
+    const m = l.match(/^(#{1,3}) (.+)$/), q = l.match(/^-# (.+)$/);
+    return m ? `<div class="h${m[1].length}">${inl(m[2])}</div>` : q ? `<div class="sm2">${inl(q[1])}</div>` : `<div>${inl(l) || "&nbsp;"}</div>`;
+  }).join("");
 }
 
 function buildEmbedForm() {
@@ -714,6 +755,7 @@ function renderPreview(p) {
   $("pv").innerHTML = h || `<span style="color:#949ba4">…</span>`;
 }
 function upd() {
+  if (bMode === "v2") return updV2();
   const p = getPayload(false);
   renderPreview(p);
   $("eOut").textContent = outMode === "json" ? J(p, null, 2) : genJs(p);
@@ -728,18 +770,166 @@ $("eCopy").onclick = async () => {
 };
 function eSay(m, c) { $("eStatus").textContent = m; $("eStatus").className = c || ""; }
 $("eSend").onclick = async () => {
-  const u = $("e-wh").value.trim(), p = getPayload(true);
+  const u = $("e-wh").value.trim(), p = bMode === "v2" ? v2Payload(true) : getPayload(true);
   if (!/^https:\/\/(discord|discordapp)\.com\/api\/webhooks\/\d+\/[\w-]+$/.test(u)) return eSay(t("whBad"), "err");
-  if (!p.content && !p.embeds) return eSay(t("whEmpty"), "err");
+  if (bMode === "v2" ? !p.components.length : (!p.content && !p.embeds)) return eSay(t("whEmpty"), "err");
   try {
-    const r = await fetch(u + "?wait=true", { method: "POST", headers: { "Content-Type": "application/json" }, body: J(p) });
+    const r = await fetch(u + "?wait=true" + (bMode === "v2" ? "&with_components=true" : ""), { method: "POST", headers: { "Content-Type": "application/json" }, body: J(p) });
     if (r.ok) return eSay(t("whOk"), "ok");
     let m = ""; try { m = "- " + (await r.json()).message; } catch (e) {}
     eSay(t("whFail", { s: r.status, m }), "err");
   } catch (e) { eSay(t("eNet"), "err"); }
 };
 
+/* ---------- Composants V2 ---------- */
+let bMode = "v2";
+const KID = ["text", "section", "sep", "gallery", "buttons"];
+let V2 = [{ type: "container", color: "#5865f2", spoiler: false, children: [{ type: "text", text: "## Welcome!\nWrite your text here." }] }];
+const mkBlock = k => ({
+  text: { type: "text", text: "" },
+  section: { type: "section", text: "", acc: "thumb", url: "", label: "" },
+  sep: { type: "sep", divider: true, big: false },
+  gallery: { type: "gallery", urls: "" },
+  buttons: { type: "buttons", lines: "" },
+  container: { type: "container", color: "#5865f2", spoiler: false, children: [] }
+}[k]);
+
+function mkInput(parent, obj, key, ty, ph) {
+  const e = document.createElement(ty === "ta" ? "textarea" : "input");
+  if (ty === "ta") e.rows = 3; else e.type = "text";
+  e.value = obj[key]; e.dataset.p = ph;
+  e.oninput = () => { obj[key] = e.value; upd(); };
+  parent.append(e);
+}
+function mkCheck(parent, obj, key, lk) {
+  const l = document.createElement("label"), e = document.createElement("input"), sp = document.createElement("span");
+  l.className = "chk"; e.type = "checkbox"; e.checked = obj[key]; sp.dataset.i = lk;
+  e.onchange = () => { obj[key] = e.checked; upd(); };
+  l.append(e, sp); parent.append(l);
+}
+function mkBtn(txt, cls, fn, key) {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = cls; if (key) b.dataset.i = key; else b.textContent = txt;
+  b.onclick = fn; return b;
+}
+function addBar(list, top) {
+  const bar = document.createElement("div");
+  bar.className = "addbar";
+  (top ? [...KID, "container"] : KID).forEach(k => bar.append(mkBtn("", "ghost sm", () => { list.push(mkBlock(k)); formV2(); }, "add_" + k)));
+  return bar;
+}
+function blockList(list, el) {
+  list.forEach((b, i) => {
+    const c = document.createElement("div"), h = document.createElement("div");
+    c.className = "blk"; h.className = "bh";
+    h.innerHTML = `<b data-i="bk_${b.type}"></b>`;
+    const mv = (d, txt) => h.append(mkBtn(txt, "ghost sm", () => { const j = i + d; if (j < 0 || j >= list.length) return; [list[i], list[j]] = [list[j], list[i]]; formV2(); }));
+    mv(-1, "↑"); mv(1, "↓");
+    h.append(mkBtn("✕", "ghost sm", () => { list.splice(i, 1); formV2(); }));
+    c.append(h);
+    if (b.type === "text") mkInput(c, b, "text", "ta", "textPh");
+    if (b.type === "section") {
+      mkInput(c, b, "text", "ta", "textPh");
+      const sel = document.createElement("select");
+      sel.innerHTML = `<option value="thumb" data-i="accThumb"></option><option value="button" data-i="accButton"></option>`;
+      sel.value = b.acc; sel.onchange = () => { b.acc = sel.value; formV2(); };
+      c.append(sel);
+      if (b.acc === "button") mkInput(c, b, "label", "in", "bLabel");
+      mkInput(c, b, "url", "in", b.acc === "thumb" ? "thumbUrl" : "bUrl");
+    }
+    if (b.type === "sep") { mkCheck(c, b, "divider", "divider"); mkCheck(c, b, "big", "spacingBig"); }
+    if (b.type === "gallery") mkInput(c, b, "urls", "ta", "galleryPh");
+    if (b.type === "buttons") mkInput(c, b, "lines", "ta", "buttonsPh");
+    if (b.type === "container") {
+      const l = document.createElement("label"), col = document.createElement("input"), sp = document.createElement("span");
+      l.className = "chk"; col.type = "color"; col.value = b.color; sp.dataset.i = "accent";
+      col.oninput = () => { b.color = col.value; upd(); };
+      l.append(sp, col); c.append(l);
+      mkCheck(c, b, "spoiler", "spoiler");
+      const sub = document.createElement("div");
+      sub.className = "sub2";
+      blockList(b.children, sub);
+      sub.append(addBar(b.children, false));
+      c.append(sub);
+    }
+    el.append(c);
+  });
+}
+function formV2() {
+  const root = $("cvList");
+  root.innerHTML = "";
+  blockList(V2, root);
+  root.append(addBar(V2, true));
+  tr(root); upd();
+}
+
+function v2Comp(b) {
+  if (b.type === "text") return b.text.trim() ? { type: 10, content: b.text } : null;
+  if (b.type === "section") {
+    if (!b.text.trim()) return null;
+    const acc = b.acc === "thumb" ? (okUrl(b.url) ? { type: 11, media: { url: b.url.trim() } } : null)
+      : (b.label.trim() && okUrl(b.url) ? { type: 2, style: 5, label: b.label.trim(), url: b.url.trim() } : null);
+    return acc ? { type: 9, components: [{ type: 10, content: b.text }], accessory: acc } : { type: 10, content: b.text };
+  }
+  if (b.type === "sep") return { type: 14, divider: b.divider, spacing: b.big ? 2 : 1 };
+  if (b.type === "gallery") {
+    const items = b.urls.split("\n").map(x => x.trim()).filter(okUrl).slice(0, 10).map(u => ({ media: { url: u } }));
+    return items.length ? { type: 12, items } : null;
+  }
+  if (b.type === "buttons") {
+    const bs = b.lines.split("\n").map(l => { const [a, ...r] = l.split("|"); return { label: (a || "").trim(), url: r.join("|").trim() }; })
+      .filter(x => x.label && okUrl(x.url)).slice(0, 5).map(x => ({ type: 2, style: 5, label: x.label, url: x.url }));
+    return bs.length ? { type: 1, components: bs } : null;
+  }
+  if (b.type === "container") {
+    const ch = b.children.map(v2Comp).filter(Boolean);
+    return ch.length ? { type: 17, accent_color: parseInt(b.color.slice(1), 16), spoiler: b.spoiler, components: ch } : null;
+  }
+  return null;
+}
+function v2Payload(webhook) {
+  const p = { flags: 32768, components: V2.map(v2Comp).filter(Boolean) };
+  if (webhook) { if ($("e-uname").value.trim()) p.username = $("e-uname").value.trim(); if ($("e-uavatar").value.trim()) p.avatar_url = $("e-uavatar").value.trim(); }
+  return p;
+}
+function v2Stats(list) {
+  let c = 0, n = 0;
+  const walk = a => a.forEach(x => { c++; if (x.type === 10) n += x.content.length; if (x.accessory) c++; if (x.components) walk(x.components); });
+  walk(list);
+  return { c, n };
+}
+function genV2(p) {
+  return "const { MessageFlags } = require('discord.js'); // discord.js v14.19+\n\nawait channel.send({\n  flags: MessageFlags.IsComponentsV2,\n  components: " + J(p.components, null, 2).replace(/\n/g, "\n  ") + ",\n});";
+}
+function pv2(c) {
+  if (c.type === 10) return md(c.content);
+  if (c.type === 9) return `<div class="ps"><div>${md(c.components[0].content)}</div>` + (c.accessory.type === 11 ? pimg(c.accessory.media.url, "pth2") : `<span class="pbtn">${esc(c.accessory.label)} ↗</span>`) + `</div>`;
+  if (c.type === 14) return `<hr class="${c.divider ? "" : "nd"}" style="margin:${c.spacing === 2 ? 14 : 6}px 0">`;
+  if (c.type === 12) return `<div class="pg">${c.items.map(i => pimg(i.media.url, "")).join("")}</div>`;
+  if (c.type === 1) return `<div class="pb">${c.components.map(b => `<span>${esc(b.label)} ↗</span>`).join("")}</div>`;
+  if (c.type === 17) return `<div class="pe" style="border-left-color:#${c.accent_color.toString(16).padStart(6, "0")};max-width:none">${c.components.map(pv2).join("")}</div>`;
+  return "";
+}
+function updV2() {
+  const p = v2Payload(false), st = v2Stats(p.components), over = st.c > 40 || st.n > 4000;
+  $("pv").innerHTML = p.components.map(pv2).join("") || `<span style="color:#949ba4">…</span>`;
+  $("v2Stat").textContent = t("v2Count", { c: st.c, n: st.n }) + (over ? " · " + t("v2Warn") : "");
+  $("v2Stat").style.color = over ? "var(--err)" : "";
+  $("eOut").textContent = outMode === "json" ? J(p, null, 2) : genV2(p);
+}
+function setBuilder(m) {
+  bMode = m;
+  $("mV2").className = m === "v2" ? "on" : "ghost";
+  $("mCl").className = m === "cl" ? "on" : "ghost";
+  $("cvForm").classList.toggle("hidden", m !== "v2");
+  $("efForm").classList.toggle("hidden", m === "v2");
+  upd();
+}
+$("mV2").onclick = () => setBuilder("v2");
+$("mCl").onclick = () => setBuilder("cl");
+
 buildEmbedForm();
+formV2();
 applyLang();
 upd();
 </script>
