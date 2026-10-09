@@ -120,6 +120,7 @@ nav a.act,nav a:hover{color:var(--text);background:var(--panel)}
 .psel{background:#1e1f22;border:1px solid #3f4147;border-radius:4px;padding:8px 10px;color:#b5bac1;margin-top:6px}
 .emg{display:flex;flex-wrap:wrap;gap:4px;max-height:140px;overflow-y:auto;margin-bottom:10px}
 .emg button{padding:3px 6px;font-size:18px}.emg img{width:22px;height:22px;display:block}
+#ic-grid{max-height:230px}#ic-grid button{padding:4px}#ic-grid img{width:26px;height:26px;filter:invert(1)}
 .rp{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;background:#313338;border-radius:8px;padding:8px}
 .rp canvas{width:24px;height:24px}
 .eb input[type=range],.eb input[type=file]{width:100%;padding:0;margin-bottom:10px}
@@ -302,6 +303,9 @@ footer a:hover{color:var(--text);text-decoration:underline}
         <input id="ic-bc" type="color" value="#ffffff">
         <label for="ic-bw" data-i="icBorderW"></label>
         <input id="ic-bw" type="range" min="0" max="24" value="8">
+        <label for="ic-q" data-i="icLib"></label>
+        <input id="ic-q" type="text" data-p="icSearch" autocomplete="off">
+        <div id="ic-grid" class="emg"></div>
         <label for="ic-sym" data-i="icSymbol"></label>
         <input id="ic-sym" type="text" value="⭐">
         <div id="ic-pre" class="emg"></div>
@@ -324,6 +328,7 @@ footer a:hover{color:var(--text);text-decoration:underline}
           <button id="ic-dl" type="button" data-i="icDownload"></button>
           <div id="ic-info" class="hint" style="margin-top:8px"></div>
           <p class="hint" data-i="icNote"></p>
+          <p class="hint" data-i="icCredit"></p>
         </div>
       </div>
     </div>
@@ -392,6 +397,8 @@ fr: {
   icFill: "Couleur de fond", icGrad: "Dégradé avec la couleur ci-dessous", icBorder: "Couleur du contour", icBorderW: "Épaisseur du contour", icSymbol: "Symbole (emoji ou lettres)", icSymColor: "Couleur des lettres", icSymSize: "Taille du symbole",
   icUpload: "Ou une image à la place du symbole", icClear: "Retirer l'image", icExport: "Taille de l'export (px)", icDownload: "Télécharger le PNG", icRole: "Modérateur",
   icNote: "Les icônes de rôles demandent un serveur au niveau 2 de boost, et Discord limite leur poids à environ 256 Ko.", icBig: "Fichier trop lourd ({k} Ko) : la limite est d'environ 256 Ko.", icOk: "{k} Ko : le poids est bon.",
+  icLib: "Bibliothèque d'icônes pleines (Phosphor)", icSearch: "Rechercher : épée, couronne, feu, coeur…", icLoadFail: "Impossible de charger cette icône. Vérifie ta connexion.",
+  icCredit: 'Icônes pleines : <a href="https://phosphoricons.com" target="_blank" rel="noopener noreferrer">Phosphor Icons</a> (licence MIT).',
   naming: "Nom des fichiers :", namName: "Nom", namId: "ID", namBoth: "Nom + ID", searchPh: "Rechercher par nom…",
   dlOne: "Télécharger cette image", copyLink: "Copier le lien", linkCopied: "Lien copié.",
   optServer: "Icône et bannière du serveur", noServer: "Ce serveur n'a ni icône, ni bannière, ni image d'invitation.", foundServer: "{n} image(s) trouvée(s) sur « {g} ».",
@@ -463,6 +470,8 @@ en: {
   icFill: "Background color", icGrad: "Gradient with the color below", icBorder: "Border color", icBorderW: "Border width", icSymbol: "Symbol (emoji or letters)", icSymColor: "Letter color", icSymSize: "Symbol size",
   icUpload: "Or an image instead of the symbol", icClear: "Remove image", icExport: "Export size (px)", icDownload: "Download PNG", icRole: "Moderator",
   icNote: "Role icons need a server at boost level 2, and Discord limits their size to about 256 KB.", icBig: "File too large ({k} KB): the limit is about 256 KB.", icOk: "{k} KB: the size is fine.",
+  icLib: "Solid icon library (Phosphor)", icSearch: "Search: sword, crown, fire, heart…", icLoadFail: "Could not load this icon. Check your connection.",
+  icCredit: 'Solid icons: <a href="https://phosphoricons.com" target="_blank" rel="noopener noreferrer">Phosphor Icons</a> (MIT license).',
   naming: "File names:", namName: "Name", namId: "ID", namBoth: "Name + ID", searchPh: "Search by name…",
   dlOne: "Download this image", copyLink: "Copy link", linkCopied: "Link copied.",
   optServer: "Server icon & banner", noServer: "This server has no icon, banner or invite splash.", foundServer: "{n} image(s) found on \"{g}\".",
@@ -503,6 +512,7 @@ function route() {
   document.querySelectorAll("nav a").forEach(a => a.classList.toggle("act", a.getAttribute("href") === "#/" + pg));
   document.title = SITE + (pg === "home" ? "" : " · " + t({ embed: "navEmbed", icons: "navIcons", download: "navDl" }[pg]));
   if (pg === "embed") { buildIns(); loadShared(); }
+  if (pg === "icons" && !window.phInit) { window.phInit = 1; phGrid(); }
 }
 window.addEventListener("hashchange", route);
 $("siteName").textContent = SITE;
@@ -1179,7 +1189,7 @@ function buildIns() {
 
 /* ---------- Créateur d'icônes de rôles ---------- */
 const IC = id => $("ic-" + id);
-let icImg = null;
+let icImg = null, icSvgText = "";
 function icPath(c, sh, px, ins) {
   const r = px / 2, s = r - ins, w = px - 2 * ins;
   c.beginPath();
@@ -1213,21 +1223,66 @@ function drawIcon(cv, px) {
   }
 }
 function icUpd() { drawIcon($("ic-cv"), 256); drawIcon($("ic-mini"), 48); }
-["shape", "c1", "grad", "c2", "bc", "bw", "sym", "sc", "sz"].forEach(id => IC(id).oninput = IC(id).onchange = icUpd);
+["shape", "c1", "grad", "c2", "bc", "bw", "sz"].forEach(id => IC(id).oninput = IC(id).onchange = icUpd);
+IC("sym").oninput = () => { icImg = null; icSvgText = ""; icUpd(); };
+IC("sc").oninput = IC("sc").onchange = () => icSvgText ? icColorize() : icUpd();
 ["⭐", "👑", "🛡️", "⚔️", "🔥", "💎", "🎮", "🎨", "💻", "🤖", "❤️", "🌙"].forEach(e => {
   const b = document.createElement("button");
   b.type = "button"; b.className = "ghost"; b.textContent = e;
-  b.onclick = () => { IC("sym").value = e; icImg = null; icUpd(); };
+  b.onclick = () => { IC("sym").value = e; icImg = null; icSvgText = ""; icUpd(); };
   $("ic-pre").append(b);
 });
 IC("up").onchange = e => {
   const f = e.target.files[0];
   if (!f) return;
   const i = new Image();
-  i.onload = () => { icImg = i; icUpd(); };
+  i.onload = () => { icImg = i; icSvgText = ""; icUpd(); };
   i.src = URL.createObjectURL(f);
 };
-IC("clear").onclick = () => { icImg = null; IC("up").value = ""; icUpd(); };
+IC("clear").onclick = () => { icImg = null; icSvgText = ""; IC("up").value = ""; icUpd(); };
+
+/* Bibliothèque Phosphor (style plein) */
+const PH = "https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1";
+const PH_FALLBACK = "star crown shield sword fire heart lightning skull ghost game-controller music-note palette code robot moon sun flag trophy medal rocket gift bell camera lock key paw-print leaf diamond sparkle cube planet flask bug cpu microphone headphones chat-circle users user house book pencil wrench gear target eye flower snowflake drop tree anchor airplane car bicycle coffee pizza cake crown-simple seal-check shield-check star-four handshake megaphone lightbulb magic-wand".split(" ");
+const PH_ALIAS = { epee: "sword", couronne: "crown", feu: "fire", coeur: "heart", etoile: "star", bouclier: "shield", eclair: "lightning", lune: "moon", soleil: "sun", fleur: "flower", cle: "key", cadeau: "gift", trophee: "trophy", musique: "music-note", jeu: "game-controller", diamant: "diamond", livre: "book", oeil: "eye", maison: "house", voiture: "car", avion: "airplane", chat: "cat", chien: "dog", poisson: "fish", arbre: "tree", feuille: "leaf", cloche: "bell", cadenas: "lock", ordinateur: "desktop", telephone: "phone", fusee: "rocket", crane: "skull", fantome: "ghost", ampoule: "lightbulb", cible: "target", drapeau: "flag", medaille: "medal", utilisateur: "user", gens: "users", baguette: "magic-wand", engrenage: "gear", cafe: "coffee", gateau: "cake" };
+let phNames = null, phTimer = 0;
+async function phLoad() {
+  if (phNames) return phNames;
+  try {
+    const d = await (await fetch("https://data.jsdelivr.com/v1/packages/npm/@phosphor-icons/core@2.1.1?structure=flat")).json();
+    phNames = d.files.map(f => f.name).filter(n => /^\/assets\/fill\/.+-fill\.svg$/.test(n)).map(n => n.slice(13, -9));
+  } catch (e) { phNames = []; }
+  if (!phNames.length) phNames = PH_FALLBACK;
+  return phNames;
+}
+async function phGrid() {
+  const raw = $("ic-q").value.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-");
+  const q = PH_ALIAS[raw] || raw, names = await phLoad(), g = $("ic-grid");
+  g.innerHTML = "";
+  names.filter(n => !q || n.includes(q)).slice(0, 120).forEach(n => {
+    const b = document.createElement("button"), im = document.createElement("img");
+    b.type = "button"; b.className = "ghost"; b.title = n;
+    im.loading = "lazy"; im.alt = ""; im.src = `${PH}/assets/fill/${n}-fill.svg`; im.onerror = () => b.remove();
+    b.append(im); b.onclick = () => phPick(n); g.append(b);
+  });
+}
+$("ic-q").oninput = () => { clearTimeout(phTimer); phTimer = setTimeout(phGrid, 200); };
+async function phPick(n) {
+  try {
+    const r = await fetch(`${PH}/assets/fill/${n}-fill.svg`);
+    if (!r.ok) throw new Error();
+    icSvgText = (await r.text()).replace("<svg ", '<svg width="256" height="256" ');
+    IC("sym").value = "";
+    icColorize();
+  } catch (e) { IC("info").textContent = t("icLoadFail"); }
+}
+function icColorize() {
+  const c = IC("sc").value;
+  const svg = icSvgText.includes("currentColor") ? icSvgText.replace(/currentColor/g, c) : icSvgText.replace("<svg ", `<svg fill="${c}" `);
+  const i = new Image();
+  i.onload = () => { icImg = i; icUpd(); };
+  i.src = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+}
 IC("dl").onclick = () => {
   const px = Number(IC("out").value), cv = document.createElement("canvas");
   drawIcon(cv, px);

@@ -69,6 +69,8 @@ Need help, found a bug or have an idea? Join the support server.
 
 Made by **Zhaak**. Inspired by [Discord Emoji Downloader](https://github.com/ThaTiemsz/Discord-Emoji-Downloader) by ThaTiemsz.
 
+Solid icons in the role icon maker: [Phosphor Icons](https://phosphoricons.com) (MIT).
+
 *This project is not affiliated with Discord Inc.*
 
 ---
