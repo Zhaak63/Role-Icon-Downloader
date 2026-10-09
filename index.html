@@ -371,6 +371,7 @@ footer.ft{display:grid;grid-template-columns:2fr 1fr 1fr;gap:22px;text-align:lef
         <select id="ic-shape"><option value="circle" data-i="shCircle"></option><option value="square" data-i="shSquare"></option><option value="hex" data-i="shHex"></option><option value="shield" data-i="shShield"></option><option value="star" data-i="shStar"></option></select>
         <label for="ic-c1" data-i="icFill"></label>
         <input id="ic-c1" type="color" value="#5865f2">
+        <label class="chk"><input id="ic-tr" type="checkbox"><span data-i="icTrans"></span></label>
         <label class="chk"><input id="ic-grad" type="checkbox"><span data-i="icGrad"></span></label>
         <input id="ic-c2" type="color" value="#eb459e">
         <label for="ic-bc" data-i="icBorder"></label>
@@ -387,7 +388,7 @@ footer.ft{display:grid;grid-template-columns:2fr 1fr 1fr;gap:22px;text-align:lef
         <label for="ic-sc" data-i="icSymColor"></label>
         <input id="ic-sc" type="color" value="#ffffff">
         <label for="ic-sz" data-i="icSymSize"></label>
-        <input id="ic-sz" type="range" min="30" max="90" value="58">
+        <input id="ic-sz" type="range" min="30" max="100" value="58">
         <label for="ic-up" data-i="icUpload"></label>
         <input id="ic-up" type="file" accept="image/*">
         <button id="ic-clear" class="ghost sm" type="button" data-i="icClear"></button>
@@ -415,6 +416,7 @@ footer.ft{display:grid;grid-template-columns:2fr 1fr 1fr;gap:22px;text-align:lef
     <p class="sub" data-i="coSub"></p>
     <div class="eb">
       <div class="panel">
+        <p class="hint" data-i="coTip"></p>
         <div id="coList"></div>
         <div class="addbar"><button id="coAdd" class="ghost sm" type="button" data-i="coAdd"></button></div>
       </div>
@@ -501,7 +503,7 @@ fr: {
   ftBlurb: "Des outils gratuits pour Discord, sans compte, qui tournent dans ton navigateur.", ftTools: "Outils", ftCommunity: "Communauté", icCount: "{n} icône(s) : fais défiler pour en voir plus",
   navColored: "Texte coloré", cardCoT: "Texte coloré", cardCoD: "Colorie ton texte dans Discord avec des blocs ANSI, puis copie-le en un clic.",
   coTitle: "Générateur de texte coloré", coSub: "Choisis couleurs et styles, puis colle le bloc dans Discord.", coSeg: "Morceau de texte", coPh: "Ton texte", coBold: "Gras", coUnder: "Souligné",
-  coFg: "Couleur du texte", coBgL: "Couleur de fond", coAdd: "+ Ajouter un morceau", coOut: "Code à copier", coRef: "Table des codes ANSI",
+  coFg: "Couleur du texte", coBgL: "Couleur de fond", coAdd: "+ Ajouter un morceau", coOut: "Code à copier", coRef: "Table des codes ANSI", coTip: "Astuce : sélectionne un mot (ou plusieurs) dans un texte, puis clique sur une couleur, le gras ou le souligné pour l'appliquer seulement à la sélection.", icTrans: "Fond transparent (sans remplissage)",
   coNote: "Discord affiche les couleurs ANSI sur ordinateur et sur le web ; sur mobile c'est peu fiable (le texte reste lisible, sans couleur). Copie le bloc avec le bouton sans le retaper : il contient un caractère invisible.",
   icCredit: 'Icônes pleines : <a href="https://phosphoricons.com" target="_blank" rel="noopener noreferrer">Phosphor Icons</a> (licence MIT).',
   naming: "Nom des fichiers :", namName: "Nom", namId: "ID", namBoth: "Nom + ID", searchPh: "Rechercher par nom…",
@@ -581,7 +583,7 @@ en: {
   ftBlurb: "Free tools for Discord, no account needed, running in your browser.", ftTools: "Tools", ftCommunity: "Community", icCount: "{n} icon(s): scroll to see more",
   navColored: "Colored text", cardCoT: "Colored text", cardCoD: "Color your Discord text with ANSI blocks, then copy it in one click.",
   coTitle: "Colored text generator", coSub: "Pick colors and styles, then paste the block in Discord.", coSeg: "Text segment", coPh: "Your text", coBold: "Bold", coUnder: "Underline",
-  coFg: "Text color", coBgL: "Background color", coAdd: "+ Add a segment", coOut: "Code to copy", coRef: "ANSI codes table",
+  coFg: "Text color", coBgL: "Background color", coAdd: "+ Add a segment", coOut: "Code to copy", coRef: "ANSI codes table", coTip: "Tip: select a word (or several) in a text, then click a color, bold or underline to apply it to the selection only.", icTrans: "Transparent background (no fill)",
   coNote: "Discord shows ANSI colors on desktop and web; on mobile it is unreliable (the text stays readable, without color). Copy the block with the button instead of retyping it: it contains an invisible character.",
   icCredit: 'Solid icons: <a href="https://phosphoricons.com" target="_blank" rel="noopener noreferrer">Phosphor Icons</a> (MIT license).',
   naming: "File names:", namName: "Name", namId: "ID", namBoth: "Name + ID", searchPh: "Search by name…",
@@ -1336,7 +1338,7 @@ function drawIcon(cv, px) {
   icPath(c, IC("shape").value, px, bw / 2 + k);
   const g = c.createLinearGradient(0, 0, px, px);
   g.addColorStop(0, IC("c1").value); g.addColorStop(1, IC("grad").checked ? IC("c2").value : IC("c1").value);
-  c.fillStyle = g; c.fill();
+  if (!IC("tr").checked) { c.fillStyle = g; c.fill(); }
   if (bw > 0) { c.lineWidth = bw; c.lineJoin = "round"; c.strokeStyle = IC("bc").value; c.stroke(); }
   const sz = px * Number(IC("sz").value) / 100;
   if (icImg) {
@@ -1349,7 +1351,7 @@ function drawIcon(cv, px) {
   }
 }
 function icUpd() { drawIcon($("ic-cv"), 256); drawIcon($("ic-mini"), 48); }
-["shape", "c1", "grad", "c2", "bc", "bw", "sz"].forEach(id => IC(id).oninput = IC(id).onchange = icUpd);
+["shape", "c1", "tr", "grad", "c2", "bc", "bw", "sz"].forEach(id => IC(id).oninput = IC(id).onchange = icUpd);
 IC("sym").oninput = () => { icImg = null; icSvgText = ""; icUpd(); };
 IC("sc").oninput = IC("sc").onchange = () => icSvgText ? icColorize() : icUpd();
 IC("up").onchange = e => {
@@ -1434,21 +1436,42 @@ function coInput(parent, sg) {
   e.rows = 2; e.value = sg.text; e.dataset.p = "coPh";
   e.oninput = () => { sg.text = e.value; coUpd(); };
   parent.append(e);
+  return e;
 }
-function coCheck(parent, sg, key, lk) {
+function coMerge() {
+  const out = [];
+  CO.forEach(x => {
+    const l = out[out.length - 1];
+    if (l && l.b === x.b && l.u === x.u && l.fg === x.fg && l.bg === x.bg) l.text += x.text; else out.push({ ...x });
+  });
+  CO = out;
+}
+function coApply(i, ta, patch) {
+  const sg = CO[i], a = ta.selectionStart, b = ta.selectionEnd;
+  if (a !== b) {
+    const mk = (txt, extra) => ({ ...sg, text: txt, ...extra }), parts = [];
+    if (a > 0) parts.push(mk(sg.text.slice(0, a)));
+    parts.push(mk(sg.text.slice(a, b), patch));
+    if (b < sg.text.length) parts.push(mk(sg.text.slice(b)));
+    CO.splice(i, 1, ...parts);
+  } else Object.assign(sg, patch);
+  coMerge(); coRender();
+}
+function coCheck(parent, sg, key, lk, ta, i) {
   const l = document.createElement("label"), e = document.createElement("input"), sp = document.createElement("span");
   l.className = "chk"; e.type = "checkbox"; e.checked = sg[key]; sp.dataset.i = lk;
-  e.onchange = () => { sg[key] = e.checked; coUpd(); };
+  e.onchange = () => coApply(i, ta, { [key]: e.checked });
   l.append(e, sp); parent.append(l);
 }
-function coSwatches(sg, key, list, lk) {
+function coSwatches(sg, key, list, lk, ta, i) {
   const w = document.createElement("div"), l = document.createElement("label"), row = document.createElement("div");
   l.dataset.i = lk; row.className = "sw"; w.append(l);
   [["", "", "Aucune", "None"], ...list].forEach(([code, hex, fr2, en2]) => {
     const b = document.createElement("button");
     b.type = "button"; b.className = "swb" + (sg[key] === code ? " sel" : ""); b.title = L === "fr" ? fr2 : en2;
     if (code) b.style.background = hex; else { b.textContent = "∅"; b.style.background = "transparent"; }
-    b.onclick = () => { sg[key] = code; row.querySelectorAll(".swb").forEach(x => x.classList.remove("sel")); b.classList.add("sel"); coUpd(); };
+    b.onmousedown = e => e.preventDefault();
+    b.onclick = () => coApply(i, ta, { [key]: code });
     row.append(b);
   });
   w.append(row);
@@ -1464,9 +1487,9 @@ function coRender() {
     mv(-1, "↑"); mv(1, "↓");
     h.append(mkBtn("✕", "ghost sm", () => { if (CO.length > 1) { CO.splice(i, 1); coRender(); } }));
     c.append(h);
-    coInput(c, sg);
-    coCheck(c, sg, "b", "coBold"); coCheck(c, sg, "u", "coUnder");
-    c.append(coSwatches(sg, "fg", CO_FG, "coFg"), coSwatches(sg, "bg", CO_BG, "coBgL"));
+    const ta = coInput(c, sg);
+    coCheck(c, sg, "b", "coBold", ta, i); coCheck(c, sg, "u", "coUnder", ta, i);
+    c.append(coSwatches(sg, "fg", CO_FG, "coFg", ta, i), coSwatches(sg, "bg", CO_BG, "coBgL", ta, i));
     root.append(c);
   });
   const cell = x => x ? `<td><span class="dot" style="background:${x[1]}"></span>${x[0]} · ${L === "fr" ? x[2] : x[3]}</td>` : "<td></td>";
