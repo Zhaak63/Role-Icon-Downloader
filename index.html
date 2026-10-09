@@ -128,33 +128,93 @@ details textarea{margin-top:8px}
 footer{text-align:center;margin-top:28px;font-size:14px;color:var(--mute)}
 footer a{color:var(--mute);text-decoration:none;font-weight:600}
 footer a:hover{color:var(--text);text-decoration:underline}
+
+/* ===== Thèmes et mise en page ===== */
+:root{color-scheme:dark}
+:root[data-theme="light"]{color-scheme:light;--bg:#f2f3f5;--panel:#ffffff;--line:#d9dbde;--text:#313338;--mute:#5c5e66;--ok:#248046;--err:#d83c3e}
+button{color:#fff}
+button.ghost,.g{color:var(--text)}
+h1{font-size:30px}
+.brand{display:flex;align-items:center;gap:9px}
+.logo{width:24px;height:24px;border-radius:8px;background:var(--accent);position:relative;flex:none}
+.logo::after{content:"";position:absolute;right:-3px;top:-3px;width:9px;height:9px;border-radius:50%;background:#fee75c;border:2px solid var(--bg)}
+#theme,#lang{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 13px}#theme{margin-right:6px}
+.crumb{color:var(--mute);font-size:14px;margin-bottom:10px}.crumb a{color:var(--mute)}
+.eyebrow{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.hero{text-align:left;margin:30px 0 22px}
+.hero h1{font-size:42px;line-height:1.12;margin:8px 0 10px}
+.hero .sub{max-width:560px;font-size:17px;margin:0}
+.sec{margin:30px 0 12px}.sec h2{font-size:20px;margin:0}.sec p{color:var(--mute);margin:2px 0 0}
+.cards{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.card{transition:transform .12s,border-color .12s}.card:hover{transform:translateY(-2px)}
+.ci{width:46px;height:46px;border-radius:12px;background:rgba(88,101,242,.15);color:var(--accent);display:grid;place-items:center;margin-bottom:12px}
+.ci svg{width:24px;height:24px}
+.card .go{display:inline-block;margin-top:12px;color:var(--accent);font-weight:600;font-size:14px}
+.cta{background:linear-gradient(135deg,#5865f2,#7983f5);border-radius:16px;padding:26px 28px;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:38px}
+.cta h2{margin:0 0 4px;font-size:21px}
+.cta .btn{background:#fff;color:#4752c4;padding:10px 18px;border-radius:8px;font-weight:700;text-decoration:none}
+footer.ft{display:grid;grid-template-columns:2fr 1fr 1fr;gap:22px;text-align:left;margin-top:44px;padding-top:26px;border-top:1px solid var(--line);color:var(--text)}
+.ft h3{font-size:12px;color:var(--mute);margin:0 0 10px;text-transform:uppercase;letter-spacing:.07em}
+.ft a{display:block;color:var(--text);text-decoration:none;font-weight:500;margin-bottom:6px}.ft a:hover{color:var(--accent)}
+.ft .cp{grid-column:1/-1;color:var(--mute);font-size:13px}.ft .cp a{display:inline;color:inherit;font-weight:600}
+@media(max-width:700px){footer.ft{grid-template-columns:1fr}.hero h1{font-size:32px}}
+.cb{background:repeating-conic-gradient(#3a3c41 0 25%,#2b2d31 0 50%) 0 0/20px 20px;border-radius:12px}
+#ic-grid{max-height:340px}
+:root[data-theme="light"] .hint a,:root[data-theme="light"] details a{color:#4752c4}
+:root[data-theme="light"] .cb{background:repeating-conic-gradient(#e3e5e8 0 25%,#f2f3f5 0 50%) 0 0/20px 20px}
+:root[data-theme="light"] #ic-grid img{filter:none}
+:root[data-theme="light"] .pv{background:#fff;color:#313338;border:1px solid #d9dbde}
+:root[data-theme="light"] .pv a{color:#006ce7}
+:root[data-theme="light"] .pv code{background:#e3e5e8}
+:root[data-theme="light"] .pe{background:#f2f3f5}
+:root[data-theme="light"] .pb span,:root[data-theme="light"] .pbtn{background:#e3e5e8;color:#313338}
+:root[data-theme="light"] .psel{background:#fff;border-color:#d9dbde;color:#5c5e66}
+:root[data-theme="light"] .pfoot,:root[data-theme="light"] .sm2{color:#5c5e66}
+:root[data-theme="light"] .pv hr{border-top-color:#d9dbde}
+:root[data-theme="light"] .mn{background:rgba(88,101,242,.15);color:#4752c4}
+:root[data-theme="light"] .rp{background:#fff;border:1px solid #d9dbde}
+.ci{color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.14)}
+.ci.c1{background:linear-gradient(135deg,#eb459e,#ed4245)}
+.ci.c2{background:linear-gradient(135deg,#5865f2,#00b0f4)}
+.ci.c3{background:linear-gradient(135deg,#23a55a,#12b886)}
 </style>
 </head>
 <body>
 <main>
   <header class="top">
-    <a class="brand" href="#/">🛠️ <span id="siteName"></span></a>
+    <a class="brand" href="#/"><span class="logo"></span><span id="siteName"></span></a>
     <nav>
       <a href="#/download" data-i="navDl"></a>
       <a href="#/embed" data-i="navEmbed"></a>
       <a href="#/icons" data-i="navIcons"></a>
     </nav>
+    <button id="theme" class="ghost" type="button" aria-label="Theme"></button>
     <button id="lang" class="ghost" type="button" aria-label="Language / Langue">EN</button>
   </header>
 
   <section id="pg-home">
     <div class="hero">
+      <div class="eyebrow" data-i="homeEyebrow"></div>
       <h1 data-i="homeTitle"></h1>
       <p class="sub" data-i="homeSub"></p>
     </div>
+    <div class="sec"><h2 data-i="secMsgT"></h2><p data-i="secMsgD"></p></div>
     <div class="cards">
-      <a class="card" href="#/download"><div class="ic">🖼️</div><h2 data-i="cardDlT"></h2><p data-i="cardDlD"></p></a>
-      <a class="card" href="#/embed"><div class="ic">🧩</div><h2 data-i="cardEbT"></h2><p data-i="cardEbD"></p></a>
-      <a class="card" href="#/icons"><div class="ic">🎨</div><h2 data-i="cardIcT"></h2><p data-i="cardIcD"></p></a>
+      <a class="card" href="#/embed"><div class="ci c1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="3"/><path d="M7 9h10M7 13h6"/></svg></div><h2 data-i="cardEbT"></h2><p data-i="cardEbD"></p><span class="go" data-i="openTool"></span></a>
+    </div>
+    <div class="sec"><h2 data-i="secImgT"></h2><p data-i="secImgD"></p></div>
+    <div class="cards">
+      <a class="card" href="#/download"><div class="ci c2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v10m0 0l-4-4m4 4l4-4M5 19h14"/></svg></div><h2 data-i="cardDlT"></h2><p data-i="cardDlD"></p><span class="go" data-i="openTool"></span></a>
+      <a class="card" href="#/icons"><div class="ci c3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="10.5" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="15.5" cy="10.5" r="1"/></svg></div><h2 data-i="cardIcT"></h2><p data-i="cardIcD"></p><span class="go" data-i="openTool"></span></a>
+    </div>
+    <div class="cta">
+      <div><h2 data-i="ctaT"></h2><p data-i="ctaD" style="margin:0;opacity:.9"></p></div>
+      <a class="btn" href="https://discord.gg/94seN7srjv" target="_blank" rel="noopener noreferrer" data-i="ctaBtn"></a>
     </div>
   </section>
 
   <section id="pg-download" class="hidden">
+    <div class="crumb"><a href="#/" data-i="crHome"></a> / <span data-i="navDl"></span></div>
   <h1>Role Icon Downloader</h1>
   <p class="sub" data-i="sub"></p>
 
@@ -238,6 +298,7 @@ footer a:hover{color:var(--text);text-decoration:underline}
   </section>
 
   <section id="pg-embed" class="hidden">
+    <div class="crumb"><a href="#/" data-i="crHome"></a> / <span data-i="navEmbed"></span></div>
     <h1 data-i="embedTitle"></h1>
     <p class="sub" data-i="embedSub"></p>
     <div class="tabs" style="max-width:440px">
@@ -289,6 +350,7 @@ footer a:hover{color:var(--text);text-decoration:underline}
   </section>
 
   <section id="pg-icons" class="hidden">
+    <div class="crumb"><a href="#/" data-i="crHome"></a> / <span data-i="navIcons"></span></div>
     <h1 data-i="icTitle"></h1>
     <p class="sub" data-i="icSub"></p>
     <div class="eb">
@@ -306,9 +368,10 @@ footer a:hover{color:var(--text);text-decoration:underline}
         <label for="ic-q" data-i="icLib"></label>
         <input id="ic-q" type="text" data-p="icSearch" autocomplete="off">
         <div id="ic-grid" class="emg"></div>
+        <div id="ic-count" class="hint"></div>
         <label for="ic-sym" data-i="icSymbol"></label>
-        <input id="ic-sym" type="text" value="⭐">
-        <div id="ic-pre" class="emg"></div>
+        <input id="ic-sym" type="text" maxlength="3">
+        
         <label for="ic-sc" data-i="icSymColor"></label>
         <input id="ic-sc" type="color" value="#ffffff">
         <label for="ic-sz" data-i="icSymSize"></label>
@@ -319,7 +382,7 @@ footer a:hover{color:var(--text);text-decoration:underline}
       </div>
       <div>
         <div class="panel" style="text-align:center">
-          <canvas id="ic-cv" width="256" height="256" style="width:256px;max-width:100%;background:repeating-conic-gradient(#3a3c41 0 25%,#2b2d31 0 50%) 0 0/20px 20px;border-radius:12px"></canvas>
+          <canvas id="ic-cv" width="256" height="256" class="cb" style="width:256px;max-width:100%"></canvas>
           <div class="rp"><canvas id="ic-mini" width="48" height="48"></canvas><b data-i="icRole"></b></div>
         </div>
         <div class="panel">
@@ -334,10 +397,11 @@ footer a:hover{color:var(--text);text-decoration:underline}
     </div>
   </section>
 
-  <footer>
-    <a href="https://discord.gg/GRpCYzmtuJ" target="_blank" rel="noopener noreferrer">by Zhaak</a>
-    · <a href="https://github.com/Zhaak63/Role-Icon-Downloader" target="_blank" rel="noopener noreferrer" data-i="source"></a>
-    · <a href="https://discord.gg/94seN7srjv" target="_blank" rel="noopener noreferrer" data-i="support"></a>
+  <footer class="ft">
+    <div><b id="ftBrand"></b><p class="hint" data-i="ftBlurb" style="margin-top:6px"></p></div>
+    <div><h3 data-i="ftTools"></h3><a href="#/download" data-i="navDl"></a><a href="#/embed" data-i="navEmbed"></a><a href="#/icons" data-i="navIcons"></a></div>
+    <div><h3 data-i="ftCommunity"></h3><a href="https://discord.gg/94seN7srjv" target="_blank" rel="noopener noreferrer" data-i="support"></a><a href="https://github.com/Zhaak63/Role-Icon-Downloader" target="_blank" rel="noopener noreferrer" data-i="source"></a></div>
+    <div class="cp">© <span id="yr"></span> · <a href="https://discord.gg/GRpCYzmtuJ" target="_blank" rel="noopener noreferrer">by Zhaak</a></div>
   </footer>
 </main>
 
@@ -367,7 +431,7 @@ fr: {
   manualHint: "Fais un <code>GET https://discord.com/api/v10/guilds/ID_DU_SERVEUR</code> avec ton token, puis colle ici la réponse JSON complète.",
   parse: "Analyser le JSON", all: "Tout sélectionner", none: "Tout désélectionner", dl: "Télécharger le ZIP",
   source: "Code source", support: "Support Discord", size: "Taille (px) :",
-  navDl: "Téléchargeur", navEmbed: "Créateur de messages", homeTitle: "Que veux-tu faire ?", homeSub: "Des outils gratuits pour Discord, qui tournent dans ton navigateur.",
+  navDl: "Téléchargeur", navEmbed: "Créateur de messages", homeTitle: "Tout pour ton serveur Discord", homeSub: "Des outils gratuits, sans compte, qui tournent dans ton navigateur.",
   cardDlT: "Télécharger icônes et emojis", cardDlD: "Icônes de rôles, emojis, stickers et images d'un serveur, en ZIP.",
   cardEbT: "Créer un message", cardEbD: "Compose un message avec aperçu en direct, puis copie le JSON ou le code discord.js, ou envoie-le avec un webhook.",
   embedTitle: "Créateur de messages", embedSub: "Composants Discord (V2) ou embed classique : compose, vois l'aperçu et récupère le code.", previewTitle: "Aperçu",
@@ -394,10 +458,13 @@ fr: {
   selPh: "Texte d'invite (placeholder)", selId: "Identifiant (custom_id)", selOpts: "Une option par ligne : libellé | valeur | description (25 max)",
   navIcons: "Créateur d'icônes", cardIcT: "Créer une icône de rôle", cardIcD: "Choisis une forme, des couleurs et un symbole, puis exporte l'image en PNG.",
   icTitle: "Créateur d'icônes de rôles", icSub: "Dessine une icône prête à être envoyée sur Discord.", icShape: "Forme", shCircle: "Cercle", shSquare: "Carré arrondi", shHex: "Hexagone", shShield: "Écu", shStar: "Étoile",
-  icFill: "Couleur de fond", icGrad: "Dégradé avec la couleur ci-dessous", icBorder: "Couleur du contour", icBorderW: "Épaisseur du contour", icSymbol: "Symbole (emoji ou lettres)", icSymColor: "Couleur des lettres", icSymSize: "Taille du symbole",
+  icFill: "Couleur de fond", icGrad: "Dégradé avec la couleur ci-dessous", icBorder: "Couleur du contour", icBorderW: "Épaisseur du contour", icSymbol: "Lettres (facultatif)", icSymColor: "Couleur des lettres", icSymSize: "Taille du symbole",
   icUpload: "Ou une image à la place du symbole", icClear: "Retirer l'image", icExport: "Taille de l'export (px)", icDownload: "Télécharger le PNG", icRole: "Modérateur",
   icNote: "Les icônes de rôles demandent un serveur au niveau 2 de boost, et Discord limite leur poids à environ 256 Ko.", icBig: "Fichier trop lourd ({k} Ko) : la limite est d'environ 256 Ko.", icOk: "{k} Ko : le poids est bon.",
   icLib: "Bibliothèque d'icônes pleines (Phosphor)", icSearch: "Rechercher : épée, couronne, feu, coeur…", icLoadFail: "Impossible de charger cette icône. Vérifie ta connexion.",
+  crHome: "Accueil", homeEyebrow: "Boîte à outils Discord", secMsgT: "Messages", secMsgD: "Compose et prépare tes messages Discord.", secImgT: "Images et icônes", secImgD: "Télécharge et crée les visuels de ton serveur.",
+  openTool: "Ouvrir l'outil →", ctaT: "Une question ou une idée ?", ctaD: "Rejoins le serveur de support pour poser tes questions et proposer de nouveaux outils.", ctaBtn: "Rejoindre le serveur",
+  ftBlurb: "Des outils gratuits pour Discord, sans compte, qui tournent dans ton navigateur.", ftTools: "Outils", ftCommunity: "Communauté", icCount: "{n} icône(s) : fais défiler pour en voir plus",
   icCredit: 'Icônes pleines : <a href="https://phosphoricons.com" target="_blank" rel="noopener noreferrer">Phosphor Icons</a> (licence MIT).',
   naming: "Nom des fichiers :", namName: "Nom", namId: "ID", namBoth: "Nom + ID", searchPh: "Rechercher par nom…",
   dlOne: "Télécharger cette image", copyLink: "Copier le lien", linkCopied: "Lien copié.",
@@ -440,7 +507,7 @@ en: {
   manualHint: "Make a <code>GET https://discord.com/api/v10/guilds/SERVER_ID</code> request with your token, then paste the full JSON response here.",
   parse: "Parse JSON", all: "Select all", none: "Deselect all", dl: "Download ZIP",
   source: "Source code", support: "Discord support", size: "Size (px):",
-  navDl: "Downloader", navEmbed: "Message builder", homeTitle: "What do you want to do?", homeSub: "Free tools for Discord, running in your browser.",
+  navDl: "Downloader", navEmbed: "Message builder", homeTitle: "Everything for your Discord server", homeSub: "Free tools, no account needed, running in your browser.",
   cardDlT: "Download icons & emojis", cardDlD: "Role icons, emojis, stickers and server images, as a ZIP.",
   cardEbT: "Create a message", cardEbD: "Build a message with a live preview, then copy the JSON or discord.js code, or send it with a webhook.",
   embedTitle: "Message builder", embedSub: "Discord components (V2) or classic embed: build, preview and get the code.", previewTitle: "Preview",
@@ -467,10 +534,13 @@ en: {
   selPh: "Placeholder text", selId: "Identifier (custom_id)", selOpts: "One option per line: label | value | description (25 max)",
   navIcons: "Icon maker", cardIcT: "Create a role icon", cardIcD: "Pick a shape, colors and a symbol, then export the image as a PNG.",
   icTitle: "Role icon maker", icSub: "Draw an icon ready to upload to Discord.", icShape: "Shape", shCircle: "Circle", shSquare: "Rounded square", shHex: "Hexagon", shShield: "Shield", shStar: "Star",
-  icFill: "Background color", icGrad: "Gradient with the color below", icBorder: "Border color", icBorderW: "Border width", icSymbol: "Symbol (emoji or letters)", icSymColor: "Letter color", icSymSize: "Symbol size",
+  icFill: "Background color", icGrad: "Gradient with the color below", icBorder: "Border color", icBorderW: "Border width", icSymbol: "Letters (optional)", icSymColor: "Letter color", icSymSize: "Symbol size",
   icUpload: "Or an image instead of the symbol", icClear: "Remove image", icExport: "Export size (px)", icDownload: "Download PNG", icRole: "Moderator",
   icNote: "Role icons need a server at boost level 2, and Discord limits their size to about 256 KB.", icBig: "File too large ({k} KB): the limit is about 256 KB.", icOk: "{k} KB: the size is fine.",
   icLib: "Solid icon library (Phosphor)", icSearch: "Search: sword, crown, fire, heart…", icLoadFail: "Could not load this icon. Check your connection.",
+  crHome: "Home", homeEyebrow: "Discord toolbox", secMsgT: "Messages", secMsgD: "Build and prepare your Discord messages.", secImgT: "Images and icons", secImgD: "Download and create your server's visuals.",
+  openTool: "Open the tool →", ctaT: "A question or an idea?", ctaD: "Join the support server to ask questions and suggest new tools.", ctaBtn: "Join the server",
+  ftBlurb: "Free tools for Discord, no account needed, running in your browser.", ftTools: "Tools", ftCommunity: "Community", icCount: "{n} icon(s): scroll to see more",
   icCredit: 'Solid icons: <a href="https://phosphoricons.com" target="_blank" rel="noopener noreferrer">Phosphor Icons</a> (MIT license).',
   naming: "File names:", namName: "Name", namId: "ID", namBoth: "Name + ID", searchPh: "Search by name…",
   dlOne: "Download this image", copyLink: "Copy link", linkCopied: "Link copied.",
@@ -512,10 +582,23 @@ function route() {
   document.querySelectorAll("nav a").forEach(a => a.classList.toggle("act", a.getAttribute("href") === "#/" + pg));
   document.title = SITE + (pg === "home" ? "" : " · " + t({ embed: "navEmbed", icons: "navIcons", download: "navDl" }[pg]));
   if (pg === "embed") { buildIns(); loadShared(); }
-  if (pg === "icons" && !window.phInit) { window.phInit = 1; phGrid(); }
+  if (pg === "icons" && !window.phInit) { window.phInit = 1; phGrid(); if (!icImg && !IC("sym").value) phPick("star"); }
 }
 window.addEventListener("hashchange", route);
 $("siteName").textContent = SITE;
+$("ftBrand").textContent = SITE;
+$("yr").textContent = new Date().getFullYear();
+const ICO_SUN = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const ICO_MOON = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+function setTheme(th) {
+  document.documentElement.dataset.theme = th;
+  try { localStorage.setItem("wk_theme", th); } catch (e) {}
+  $("theme").innerHTML = th === "dark" ? ICO_SUN : ICO_MOON;
+}
+let th0 = "dark";
+try { th0 = localStorage.getItem("wk_theme") || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"); } catch (e) {}
+setTheme(th0);
+$("theme").onclick = () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
 
 function applyLang() {
   document.documentElement.lang = L;
@@ -1226,12 +1309,6 @@ function icUpd() { drawIcon($("ic-cv"), 256); drawIcon($("ic-mini"), 48); }
 ["shape", "c1", "grad", "c2", "bc", "bw", "sz"].forEach(id => IC(id).oninput = IC(id).onchange = icUpd);
 IC("sym").oninput = () => { icImg = null; icSvgText = ""; icUpd(); };
 IC("sc").oninput = IC("sc").onchange = () => icSvgText ? icColorize() : icUpd();
-["⭐", "👑", "🛡️", "⚔️", "🔥", "💎", "🎮", "🎨", "💻", "🤖", "❤️", "🌙"].forEach(e => {
-  const b = document.createElement("button");
-  b.type = "button"; b.className = "ghost"; b.textContent = e;
-  b.onclick = () => { IC("sym").value = e; icImg = null; icSvgText = ""; icUpd(); };
-  $("ic-pre").append(b);
-});
 IC("up").onchange = e => {
   const f = e.target.files[0];
   if (!f) return;
@@ -1255,17 +1332,26 @@ async function phLoad() {
   if (!phNames.length) phNames = PH_FALLBACK;
   return phNames;
 }
+let phList = [], phShown = 0;
 async function phGrid() {
   const raw = $("ic-q").value.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-");
   const q = PH_ALIAS[raw] || raw, names = await phLoad(), g = $("ic-grid");
-  g.innerHTML = "";
-  names.filter(n => !q || n.includes(q)).slice(0, 120).forEach(n => {
+  phList = names.filter(n => !q || n.includes(q)); phShown = 0;
+  g.innerHTML = ""; g.scrollTop = 0;
+  $("ic-count").textContent = t("icCount", { n: phList.length });
+  phMore();
+}
+function phMore() {
+  const g = $("ic-grid");
+  phList.slice(phShown, phShown + 240).forEach(n => {
     const b = document.createElement("button"), im = document.createElement("img");
     b.type = "button"; b.className = "ghost"; b.title = n;
     im.loading = "lazy"; im.alt = ""; im.src = `${PH}/assets/fill/${n}-fill.svg`; im.onerror = () => b.remove();
     b.append(im); b.onclick = () => phPick(n); g.append(b);
   });
+  phShown += 240;
 }
+$("ic-grid").addEventListener("scroll", () => { const g = $("ic-grid"); if (phShown < phList.length && g.scrollTop + g.clientHeight >= g.scrollHeight - 100) phMore(); });
 $("ic-q").oninput = () => { clearTimeout(phTimer); phTimer = setTimeout(phGrid, 200); };
 async function phPick(n) {
   try {
