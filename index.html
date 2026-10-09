@@ -177,6 +177,16 @@ footer.ft{display:grid;grid-template-columns:2fr 1fr 1fr;gap:22px;text-align:lef
 .ci.c1{background:linear-gradient(135deg,#eb459e,#ed4245)}
 .ci.c2{background:linear-gradient(135deg,#5865f2,#00b0f4)}
 .ci.c3{background:linear-gradient(135deg,#23a55a,#12b886)}
+.ci.c4{background:linear-gradient(135deg,#f0b232,#e7792b)}
+.sw{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.swb{width:30px;height:30px;border-radius:8px;border:2px solid var(--line);padding:0;color:var(--text);font-size:13px;line-height:1}
+.swb.sel{outline:3px solid var(--accent);outline-offset:1px}
+.ansi{background:#1e1f22;border:1px solid #3f4147;border-radius:8px;padding:12px;font-family:Consolas,"Courier New",monospace;font-size:14px;white-space:pre-wrap;word-break:break-word;color:#dbdee1;min-height:60px}
+:root[data-theme="light"] .ansi{background:#f2f3f5;border-color:#d9dbde;color:#313338}
+#coOut{max-height:260px;overflow:auto;font-size:12px}
+.rt{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.rt td,.rt th{padding:4px 6px;text-align:left;border-bottom:1px solid var(--line)}
+.dot{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;border:1px solid var(--line)}
 </style>
 </head>
 <body>
@@ -187,6 +197,7 @@ footer.ft{display:grid;grid-template-columns:2fr 1fr 1fr;gap:22px;text-align:lef
       <a href="#/download" data-i="navDl"></a>
       <a href="#/embed" data-i="navEmbed"></a>
       <a href="#/icons" data-i="navIcons"></a>
+      <a href="#/colored" data-i="navColored"></a>
     </nav>
     <button id="theme" class="ghost" type="button" aria-label="Theme"></button>
     <button id="lang" class="ghost" type="button" aria-label="Language / Langue">EN</button>
@@ -201,6 +212,7 @@ footer.ft{display:grid;grid-template-columns:2fr 1fr 1fr;gap:22px;text-align:lef
     <div class="sec"><h2 data-i="secMsgT"></h2><p data-i="secMsgD"></p></div>
     <div class="cards">
       <a class="card" href="#/embed"><div class="ci c1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="3"/><path d="M7 9h10M7 13h6"/></svg></div><h2 data-i="cardEbT"></h2><p data-i="cardEbD"></p><span class="go" data-i="openTool"></span></a>
+      <a class="card" href="#/colored"><div class="ci c4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17L12 5l6 12M8.5 12h7"/><path d="M5 21h14"/></svg></div><h2 data-i="cardCoT"></h2><p data-i="cardCoD"></p><span class="go" data-i="openTool"></span></a>
     </div>
     <div class="sec"><h2 data-i="secImgT"></h2><p data-i="secImgD"></p></div>
     <div class="cards">
@@ -397,9 +409,31 @@ footer.ft{display:grid;grid-template-columns:2fr 1fr 1fr;gap:22px;text-align:lef
     </div>
   </section>
 
+  <section id="pg-colored" class="hidden">
+    <div class="crumb"><a href="#/" data-i="crHome"></a> / <span data-i="navColored"></span></div>
+    <h1 data-i="coTitle"></h1>
+    <p class="sub" data-i="coSub"></p>
+    <div class="eb">
+      <div class="panel">
+        <div id="coList"></div>
+        <div class="addbar"><button id="coAdd" class="ghost sm" type="button" data-i="coAdd"></button></div>
+      </div>
+      <div>
+        <div class="panel"><label data-i="previewTitle"></label><div id="coPv" class="ansi"></div></div>
+        <div class="panel">
+          <label data-i="coOut"></label>
+          <pre id="coOut"></pre>
+          <div class="bar"><button id="coCopy" type="button" data-i="copyOut"></button><span class="count" id="coLen"></span></div>
+          <p class="hint" data-i="coNote"></p>
+          <details><summary data-i="coRef"></summary><div id="coRefBody"></div></details>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer class="ft">
     <div><b id="ftBrand"></b><p class="hint" data-i="ftBlurb" style="margin-top:6px"></p></div>
-    <div><h3 data-i="ftTools"></h3><a href="#/download" data-i="navDl"></a><a href="#/embed" data-i="navEmbed"></a><a href="#/icons" data-i="navIcons"></a></div>
+    <div><h3 data-i="ftTools"></h3><a href="#/download" data-i="navDl"></a><a href="#/embed" data-i="navEmbed"></a><a href="#/icons" data-i="navIcons"></a><a href="#/colored" data-i="navColored"></a></div>
     <div><h3 data-i="ftCommunity"></h3><a href="https://discord.gg/94seN7srjv" target="_blank" rel="noopener noreferrer" data-i="support"></a><a href="https://github.com/Zhaak63/Role-Icon-Downloader" target="_blank" rel="noopener noreferrer" data-i="source"></a></div>
     <div class="cp">© <span id="yr"></span> · <a href="https://discord.gg/GRpCYzmtuJ" target="_blank" rel="noopener noreferrer">by Zhaak</a></div>
   </footer>
@@ -465,6 +499,10 @@ fr: {
   crHome: "Accueil", homeEyebrow: "Boîte à outils Discord", secMsgT: "Messages", secMsgD: "Compose et prépare tes messages Discord.", secImgT: "Images et icônes", secImgD: "Télécharge et crée les visuels de ton serveur.",
   openTool: "Ouvrir l'outil →", ctaT: "Une question ou une idée ?", ctaD: "Rejoins le serveur de support pour poser tes questions et proposer de nouveaux outils.", ctaBtn: "Rejoindre le serveur",
   ftBlurb: "Des outils gratuits pour Discord, sans compte, qui tournent dans ton navigateur.", ftTools: "Outils", ftCommunity: "Communauté", icCount: "{n} icône(s) : fais défiler pour en voir plus",
+  navColored: "Texte coloré", cardCoT: "Texte coloré", cardCoD: "Colorie ton texte dans Discord avec des blocs ANSI, puis copie-le en un clic.",
+  coTitle: "Générateur de texte coloré", coSub: "Choisis couleurs et styles, puis colle le bloc dans Discord.", coSeg: "Morceau de texte", coPh: "Ton texte", coBold: "Gras", coUnder: "Souligné",
+  coFg: "Couleur du texte", coBgL: "Couleur de fond", coAdd: "+ Ajouter un morceau", coOut: "Code à copier", coRef: "Table des codes ANSI",
+  coNote: "Discord affiche les couleurs ANSI sur ordinateur et sur le web ; sur mobile c'est peu fiable (le texte reste lisible, sans couleur). Copie le bloc avec le bouton sans le retaper : il contient un caractère invisible.",
   icCredit: 'Icônes pleines : <a href="https://phosphoricons.com" target="_blank" rel="noopener noreferrer">Phosphor Icons</a> (licence MIT).',
   naming: "Nom des fichiers :", namName: "Nom", namId: "ID", namBoth: "Nom + ID", searchPh: "Rechercher par nom…",
   dlOne: "Télécharger cette image", copyLink: "Copier le lien", linkCopied: "Lien copié.",
@@ -541,6 +579,10 @@ en: {
   crHome: "Home", homeEyebrow: "Discord toolbox", secMsgT: "Messages", secMsgD: "Build and prepare your Discord messages.", secImgT: "Images and icons", secImgD: "Download and create your server's visuals.",
   openTool: "Open the tool →", ctaT: "A question or an idea?", ctaD: "Join the support server to ask questions and suggest new tools.", ctaBtn: "Join the server",
   ftBlurb: "Free tools for Discord, no account needed, running in your browser.", ftTools: "Tools", ftCommunity: "Community", icCount: "{n} icon(s): scroll to see more",
+  navColored: "Colored text", cardCoT: "Colored text", cardCoD: "Color your Discord text with ANSI blocks, then copy it in one click.",
+  coTitle: "Colored text generator", coSub: "Pick colors and styles, then paste the block in Discord.", coSeg: "Text segment", coPh: "Your text", coBold: "Bold", coUnder: "Underline",
+  coFg: "Text color", coBgL: "Background color", coAdd: "+ Add a segment", coOut: "Code to copy", coRef: "ANSI codes table",
+  coNote: "Discord shows ANSI colors on desktop and web; on mobile it is unreliable (the text stays readable, without color). Copy the block with the button instead of retyping it: it contains an invisible character.",
   icCredit: 'Solid icons: <a href="https://phosphoricons.com" target="_blank" rel="noopener noreferrer">Phosphor Icons</a> (MIT license).',
   naming: "File names:", namName: "Name", namId: "ID", namBoth: "Name + ID", searchPh: "Search by name…",
   dlOne: "Download this image", copyLink: "Copy link", linkCopied: "Link copied.",
@@ -577,12 +619,13 @@ function tr(root = document) {
 }
 function route() {
   const h = location.hash.replace(/^#\/?/, "").split("?")[0];
-  const pg = ["download", "embed", "icons"].includes(h) ? h : "home";
-  ["home", "download", "embed", "icons"].forEach(x => $("pg-" + x).classList.toggle("hidden", x !== pg));
+  const pg = ["download", "embed", "icons", "colored"].includes(h) ? h : "home";
+  ["home", "download", "embed", "icons", "colored"].forEach(x => $("pg-" + x).classList.toggle("hidden", x !== pg));
   document.querySelectorAll("nav a").forEach(a => a.classList.toggle("act", a.getAttribute("href") === "#/" + pg));
-  document.title = SITE + (pg === "home" ? "" : " · " + t({ embed: "navEmbed", icons: "navIcons", download: "navDl" }[pg]));
+  document.title = SITE + (pg === "home" ? "" : " · " + t({ embed: "navEmbed", icons: "navIcons", colored: "navColored", download: "navDl" }[pg]));
   if (pg === "embed") { buildIns(); loadShared(); }
   if (pg === "icons" && !window.phInit) { window.phInit = 1; phGrid(); if (!icImg && !IC("sym").value) phPick("star"); }
+  if (pg === "colored") coRender();
 }
 window.addEventListener("hashchange", route);
 $("siteName").textContent = SITE;
@@ -1379,6 +1422,84 @@ IC("dl").onclick = () => {
     const kb = Math.ceil(b.size / 1024);
     IC("info").textContent = t(kb > 256 ? "icBig" : "icOk", { k: kb });
   });
+};
+
+/* ---------- Texte coloré (ANSI) ---------- */
+const CO_FG = [["30","#4f545c","Gris","Gray"],["31","#dc322f","Rouge","Red"],["32","#859900","Vert","Green"],["33","#b58900","Jaune","Yellow"],["34","#268bd2","Bleu","Blue"],["35","#d33682","Rose","Pink"],["36","#2aa198","Cyan","Cyan"],["37","#ffffff","Blanc","White"]];
+const CO_BG = [["40","#002b36","Bleu nuit","Firefly"],["41","#cb4b16","Orange","Orange"],["42","#586e75","Bleu marbre","Marble"],["43","#657b83","Gris turquoise","Grayish teal"],["44","#839496","Gris","Gray"],["45","#6c71c4","Indigo","Indigo"],["46","#93a1a1","Gris clair","Light gray"],["47","#fdf6e3","Blanc","White"]];
+let CO = [{ text: "Hello Discord", b: true, u: false, fg: "36", bg: "" }];
+
+function coInput(parent, sg) {
+  const e = document.createElement("textarea");
+  e.rows = 2; e.value = sg.text; e.dataset.p = "coPh";
+  e.oninput = () => { sg.text = e.value; coUpd(); };
+  parent.append(e);
+}
+function coCheck(parent, sg, key, lk) {
+  const l = document.createElement("label"), e = document.createElement("input"), sp = document.createElement("span");
+  l.className = "chk"; e.type = "checkbox"; e.checked = sg[key]; sp.dataset.i = lk;
+  e.onchange = () => { sg[key] = e.checked; coUpd(); };
+  l.append(e, sp); parent.append(l);
+}
+function coSwatches(sg, key, list, lk) {
+  const w = document.createElement("div"), l = document.createElement("label"), row = document.createElement("div");
+  l.dataset.i = lk; row.className = "sw"; w.append(l);
+  [["", "", "Aucune", "None"], ...list].forEach(([code, hex, fr2, en2]) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "swb" + (sg[key] === code ? " sel" : ""); b.title = L === "fr" ? fr2 : en2;
+    if (code) b.style.background = hex; else { b.textContent = "∅"; b.style.background = "transparent"; }
+    b.onclick = () => { sg[key] = code; row.querySelectorAll(".swb").forEach(x => x.classList.remove("sel")); b.classList.add("sel"); coUpd(); };
+    row.append(b);
+  });
+  w.append(row);
+  return w;
+}
+function coRender() {
+  const root = $("coList");
+  root.innerHTML = "";
+  CO.forEach((sg, i) => {
+    const c = document.createElement("div"), h = document.createElement("div");
+    c.className = "blk"; h.className = "bh"; h.innerHTML = `<b data-i="coSeg"></b>`;
+    const mv = (d, txt) => h.append(mkBtn(txt, "ghost sm", () => { const j = i + d; if (j < 0 || j >= CO.length) return; [CO[i], CO[j]] = [CO[j], CO[i]]; coRender(); }));
+    mv(-1, "↑"); mv(1, "↓");
+    h.append(mkBtn("✕", "ghost sm", () => { if (CO.length > 1) { CO.splice(i, 1); coRender(); } }));
+    c.append(h);
+    coInput(c, sg);
+    coCheck(c, sg, "b", "coBold"); coCheck(c, sg, "u", "coUnder");
+    c.append(coSwatches(sg, "fg", CO_FG, "coFg"), coSwatches(sg, "bg", CO_BG, "coBgL"));
+    root.append(c);
+  });
+  const cell = x => x ? `<td><span class="dot" style="background:${x[1]}"></span>${x[0]} · ${L === "fr" ? x[2] : x[3]}</td>` : "<td></td>";
+  $("coRefBody").innerHTML = `<table class="rt"><tr><th data-i="coFg"></th><th data-i="coBgL"></th></tr>` + CO_FG.map((x, i) => `<tr>${cell(x)}${cell(CO_BG[i])}</tr>`).join("") + `</table>`;
+  tr(root); tr($("coRefBody")); coUpd();
+}
+function coBuild() {
+  const ESC = "\x1b";
+  const body = CO.map(sg => {
+    const c = [sg.b ? 1 : "", sg.u ? 4 : "", sg.fg, sg.bg].filter(Boolean).join(";");
+    return c ? `${ESC}[${c}m${sg.text}${ESC}[0m` : sg.text;
+  }).join("");
+  return "```ansi\n" + body + "\n```";
+}
+function coUpd() {
+  $("coPv").innerHTML = CO.map(sg => {
+    const f = CO_FG.find(x => x[0] === sg.fg), b = CO_BG.find(x => x[0] === sg.bg), st = [];
+    if (f) st.push("color:" + f[1]);
+    if (b) st.push("background:" + b[1]);
+    if (sg.b) st.push("font-weight:700");
+    if (sg.u) st.push("text-decoration:underline");
+    return `<span style="${st.join(";")}">${esc(sg.text)}</span>`;
+  }).join("") || "…";
+  const out = coBuild();
+  $("coOut").textContent = out.replace(/\x1b/g, "␛");
+  $("coLen").textContent = out.length + " / 2000";
+  $("coLen").style.color = out.length > 2000 ? "var(--err)" : "";
+}
+$("coAdd").onclick = () => { CO.push({ text: "", b: false, u: false, fg: "", bg: "" }); coRender(); };
+$("coCopy").onclick = async () => {
+  const b = $("coCopy");
+  try { await navigator.clipboard.writeText(coBuild()); b.textContent = t("copied"); } catch (e) { b.textContent = t("copyFail"); }
+  setTimeout(() => b.textContent = t("copyOut"), 2000);
 };
 
 buildEmbedForm();
