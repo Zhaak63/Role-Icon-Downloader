@@ -617,7 +617,7 @@ let guildName = "server", roles = [], lastGuild = null;
 const t = (k, v = {}) => (T[L][k] || k).replace(/\{(\w+)\}/g, (_, x) => v[x]);
 function say(msg, cls = "") { const s = $("status"); s.textContent = msg; s.className = cls; }
 
-const SITE = "Aeshtetic Creators";
+const SITE = "Aesthetic Creators";
 function tr(root = document) {
   root.querySelectorAll("[data-i]").forEach(e => e.innerHTML = t(e.dataset.i));
   root.querySelectorAll("[data-p]").forEach(e => e.placeholder = t(e.dataset.p));
