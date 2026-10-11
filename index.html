@@ -237,6 +237,9 @@ body{padding:0}
 .mtop button{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;padding:0}
 .mtop button svg{width:22px;height:22px}
 @media(max-width:900px){.content{padding:24px 16px 40px}.mtop{margin:-24px -16px 18px;padding:12px 16px}}
+/* Logo à gauche, bouton menu à droite, tiroir côté droit */
+.mtop{flex-direction:row-reverse}
+.side{left:auto;right:0;transform:translateX(100%);border-right:0;border-left:1px solid var(--line)}
 </style>
 </head>
 <body>
