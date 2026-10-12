@@ -250,6 +250,21 @@ body{padding:0}
 .tsr .pvv{flex:1 1 170px;font-weight:600}
 .tsr code{flex:1 1 150px;word-break:break-all}
 .tsr button{padding:5px 12px;font-size:13px}
+.ci.c6,.si.c6{background:linear-gradient(135deg,#06b6d4,#3b82f6)}
+.abwrap{max-width:760px;margin:0 auto}
+.abwrap .panel{margin-bottom:14px}
+.abwrap h2{font-size:19px;margin:0 0 10px}
+.abwrap h2.abfaq{margin:26px 0 12px}
+.ablist{margin:0;padding-left:20px}.ablist li{margin-bottom:6px}
+details.faq{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:10px;background:var(--panel)}
+details.faq summary{cursor:pointer;font-weight:600}
+details.faq p{margin:10px 0 0;color:var(--mute);line-height:1.6}
+.spo{background:#1e1f22;color:transparent;border-radius:4px;cursor:pointer;padding:0 2px}
+.spo.on{color:inherit;background:rgba(127,127,127,.25)}
+.qt{border-left:4px solid #4e5058;padding-left:10px}
+.cbk{background:#1e1f22;border:1px solid #3f4147;border-radius:6px;padding:8px;margin:4px 0;white-space:pre-wrap;font-size:13px}
+#ft-list .tsr .pvv{flex:1 1 0;min-width:0;word-break:break-word}
+#ft-list .tsr{padding:8px 0}
 </style>
 </head>
 <body>
@@ -261,12 +276,15 @@ body{padding:0}
       <div class="sgroup" data-i="secMsgT"></div>
       <a href="#/embed"><span class="si c1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="3"/><path d="M7 9h10M7 13h6"/></svg></span><span data-i="navEmbed"></span></a>
       <a href="#/colored"><span class="si c4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17L12 5l6 12M8.5 12h7"/><path d="M5 21h14"/></svg></span><span data-i="navColored"></span></a>
+      <a href="#/textfmt"><span class="si c6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 6h14M12 6v13M9 19h6"/></svg></span><span data-i="navFmt"></span></a>
+      <div class="sgroup" data-i="secUtilT"></div>
       <a href="#/timestamps"><span class="si c5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span data-i="navTs"></span></a>
       <div class="sgroup" data-i="secImgT"></div>
       <a href="#/download"><span class="si c2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v10m0 0l-4-4m4 4l4-4M5 19h14"/></svg></span><span data-i="navDl"></span></a>
       <a href="#/icons"><span class="si c3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="10.5" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="15.5" cy="10.5" r="1"/></svg></span><span data-i="navIcons"></span></a>
     </nav>
     <div class="sfoot">
+      <a href="#/about" data-i="navAbout"></a>
       <a href="https://discord.gg/94seN7srjv" target="_blank" rel="noopener noreferrer" data-i="support"></a>
       <a href="https://github.com/Zhaak63/Role-Icon-Downloader" target="_blank" rel="noopener noreferrer" data-i="source"></a>
       <div class="srow">
@@ -293,6 +311,10 @@ body{padding:0}
     <div class="cards">
       <a class="card" href="#/embed"><div class="ci c1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="3"/><path d="M7 9h10M7 13h6"/></svg></div><h2 data-i="cardEbT"></h2><p data-i="cardEbD"></p><span class="go" data-i="openTool"></span></a>
       <a class="card" href="#/colored"><div class="ci c4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17L12 5l6 12M8.5 12h7"/><path d="M5 21h14"/></svg></div><h2 data-i="cardCoT"></h2><p data-i="cardCoD"></p><span class="go" data-i="openTool"></span></a>
+      <a class="card" href="#/textfmt"><div class="ci c6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 6h14M12 6v13M9 19h6"/></svg></div><h2 data-i="cardFmtT"></h2><p data-i="cardFmtD"></p><span class="go" data-i="openTool"></span></a>
+    </div>
+    <div class="sec"><h2 data-i="secUtilT"></h2><p data-i="secUtilD"></p></div>
+    <div class="cards">
       <a class="card" href="#/timestamps"><div class="ci c5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h2 data-i="cardTsT"></h2><p data-i="cardTsD"></p><span class="go" data-i="openTool"></span></a>
     </div>
     <div class="sec"><h2 data-i="secImgT"></h2><p data-i="secImgD"></p></div>
@@ -532,10 +554,52 @@ body{padding:0}
     </div>
   </section>
 
+  <section id="pg-textfmt" class="hidden">
+    <div class="crumb"><a href="#/" data-i="crHome"></a> / <span data-i="navFmt"></span></div>
+    <h1 data-i="fmtTitle"></h1>
+    <p class="sub" data-i="fmtSub"></p>
+    <div class="eb">
+      <div class="panel">
+        <label for="ft-in" data-i="fmtIn"></label>
+        <textarea id="ft-in" rows="5" data-p="fmtPh">Hello Discord</textarea>
+        <label data-i="fmtTool"></label>
+        <div class="addbar" id="ft-bar"></div>
+        <label data-i="previewTitle"></label>
+        <div id="ft-pv" class="pv"></div>
+        <button id="ft-copy" type="button" data-i="fmtCopy" style="margin-top:10px"></button>
+      </div>
+      <div class="panel">
+        <label data-i="fmtUni"></label>
+        <div id="ft-list"></div>
+        <p class="hint" data-i="fmtUniNote"></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="pg-about" class="hidden">
+    <div class="crumb"><a href="#/" data-i="crHome"></a> / <span data-i="navAbout"></span></div>
+    <h1 data-i="aboutTitle"></h1>
+    <p class="sub" data-i="aboutSub"></p>
+    <div class="abwrap">
+      <div class="panel"><h2 data-i="abHow"></h2><ol class="ablist"><li data-i="abHow1"></li><li data-i="abHow2"></li><li data-i="abHow3"></li></ol></div>
+      <div class="panel"><h2 data-i="abSec"></h2><p data-i="abSecTxt" style="margin:0"></p></div>
+      <div class="panel"><h2 data-i="abLim"></h2><ul class="ablist" data-i="abLimList"></ul></div>
+      <h2 class="abfaq" data-i="abFaq"></h2>
+      <details class="faq"><summary data-i="faqQ1"></summary><p data-i="faqA1"></p></details>
+      <details class="faq"><summary data-i="faqQ2"></summary><p data-i="faqA2"></p></details>
+      <details class="faq"><summary data-i="faqQ3"></summary><p data-i="faqA3"></p></details>
+      <details class="faq"><summary data-i="faqQ4"></summary><p data-i="faqA4"></p></details>
+      <details class="faq"><summary data-i="faqQ5"></summary><p data-i="faqA5"></p></details>
+      <details class="faq"><summary data-i="faqQ6"></summary><p data-i="faqA6"></p></details>
+      <details class="faq"><summary data-i="faqQ7"></summary><p data-i="faqA7"></p></details>
+      <details class="faq"><summary data-i="faqQ8"></summary><p data-i="faqA8"></p></details>
+    </div>
+  </section>
+
   <footer class="ft">
     <div><b id="ftBrand"><img class="logoimg" alt="Aesthetic Creators"></b><p class="hint" data-i="ftBlurb" style="margin-top:6px"></p></div>
-    <div><h3 data-i="ftTools"></h3><a href="#/download" data-i="navDl"></a><a href="#/embed" data-i="navEmbed"></a><a href="#/icons" data-i="navIcons"></a><a href="#/colored" data-i="navColored"></a><a href="#/timestamps" data-i="navTs"></a></div>
-    <div><h3 data-i="ftCommunity"></h3><a href="https://discord.gg/94seN7srjv" target="_blank" rel="noopener noreferrer" data-i="support"></a><a href="https://github.com/Zhaak63/Role-Icon-Downloader" target="_blank" rel="noopener noreferrer" data-i="source"></a></div>
+    <div><h3 data-i="ftTools"></h3><a href="#/download" data-i="navDl"></a><a href="#/embed" data-i="navEmbed"></a><a href="#/icons" data-i="navIcons"></a><a href="#/colored" data-i="navColored"></a><a href="#/timestamps" data-i="navTs"></a><a href="#/textfmt" data-i="navFmt"></a></div>
+    <div><h3 data-i="ftCommunity"></h3><a href="#/about" data-i="navAbout"></a><a href="https://discord.gg/94seN7srjv" target="_blank" rel="noopener noreferrer" data-i="support"></a><a href="https://github.com/Zhaak63/Role-Icon-Downloader" target="_blank" rel="noopener noreferrer" data-i="source"></a></div>
     <div class="cp">© <span id="yr"></span> · <a href="https://discord.gg/GRpCYzmtuJ" target="_blank" rel="noopener noreferrer">Aesthetic Creators</a></div>
   </footer>
 </main>
@@ -607,7 +671,26 @@ fr: {
   tsTitle: "Générateur de timestamps", tsSub: "Choisis une date, copie le code et colle-le dans Discord : chacun le voit dans sa langue et son fuseau horaire.",
   tsDate: "Date et heure", tsZone: "Fuseau horaire de la date saisie", tsNow: "Maintenant", tsAuto: "(auto)", tsInvalid: "Date invalide.", tsInfo: "Valeur Unix : {e} · {u} UTC",
   tsNote: "L'aperçu est affiché dans ton fuseau et ta langue ; sur Discord, chaque personne voit l'heure dans le sien. Le format relatif (R) se met à jour tout seul dans Discord.",
-  ts_t: "Heure courte", ts_T: "Heure longue", ts_d: "Date courte", ts_D: "Date longue", ts_f: "Date et heure", ts_F: "Date complète et heure", ts_R: "Relatif", cardCoT: "Texte coloré", cardCoD: "Colorie ton texte dans Discord avec des blocs ANSI, puis copie-le en un clic.",
+  ts_t: "Heure courte", ts_T: "Heure longue", ts_d: "Date courte", ts_D: "Date longue", ts_f: "Date et heure", ts_F: "Date complète et heure", ts_R: "Relatif",
+  navFmt: "Formateur de texte", cardFmtT: "Formateur de texte", cardFmtD: "Gras, italique, barré, spoiler… et polices Unicode pour tes pseudos et tes messages.",
+  secUtilT: "Utilitaires", secUtilD: "Petits outils pratiques pour ton serveur.",
+  fmtTitle: "Formateur de texte", fmtSub: "Mets en forme ton texte pour Discord, ou transforme-le avec des polices Unicode.",
+  fmtIn: "Ton texte", fmtPh: "Écris ton texte ici…", fmtTool: "Mise en forme Discord", fmtCopy: "Copier le texte", fmtUni: "Polices Unicode",
+  fmtUniNote: "Ces polices sont de vrais caractères Unicode : elles se copient partout. Les lecteurs d'écran ne les lisent pas et certains caractères peuvent mal s'afficher selon l'appareil.",
+  fb_b: "Gras", fb_i: "Italique", fb_u: "Souligné", fb_s: "Barré", fb_sp: "Spoiler", fb_c: "Code", fb_cb: "Bloc de code", fb_q: "Citation", fb_h: "Titre", fb_sm: "Petit texte", fb_l: "Liste",
+  navAbout: "À propos / FAQ", aboutTitle: "À propos et FAQ", aboutSub: "Comment ça marche, ce qui arrive à ton token, et les limites des outils.",
+  abHow: "Comment ça marche", abHow1: "Choisis un outil dans le menu ou sur l'accueil.", abHow2: "Règle les options : tout se passe dans ta page, sans compte à créer.", abHow3: "Copie le résultat ou télécharge le fichier.",
+  abSec: "Sécurité et confidentialité", abSecTxt: "Le site est une simple page web : tout son code s'exécute dans ton navigateur. Aucun serveur à nous ne reçoit tes données : ton token, ton webhook et tes messages ne nous sont jamais envoyés. Seuls les modèles que tu enregistres toi-même restent dans ton navigateur.",
+  abLim: "Limites", abLimList: "<li>Icônes de rôles : le serveur doit avoir au moins le niveau 2 de boost.</li><li>Stickers Lottie : ignorés, car ils ne peuvent pas être convertis en image.</li><li>Texte coloré (ANSI) : peu fiable sur mobile.</li><li>Messages : les menus déroulants ne sont pas envoyés par webhook, et les composants V2 demandent discord.js 14.19 ou plus récent.</li><li>Timestamps : l'aperçu du format relatif est approximatif.</li><li>Polices Unicode : non lues par les lecteurs d'écran.</li><li>Token de compte : son usage va à l'encontre des conditions d'utilisation de Discord.</li>",
+  abFaq: "Questions fréquentes",
+  faqQ1: "C'est quoi ce site ?", faqA1: "Une boîte à outils gratuite pour Discord : télécharger les icônes de rôles, emojis et stickers d'un serveur, créer des messages (composants V2 et embeds), colorer et mettre en forme du texte, générer des timestamps et dessiner des icônes de rôles. Aucun compte n'est nécessaire.",
+  faqQ2: "Pourquoi mon token reste dans mon navigateur ?", faqA2: "Pour lister tes serveurs et récupérer leurs images, la page interroge directement l'API de Discord depuis ton navigateur, avec ton token. Il n'est envoyé qu'à discord.com, jamais à un serveur à nous, jamais enregistré, et il disparaît quand tu fermes l'onglet. La page charge aussi des ressources publiques (JSZip, les icônes Phosphor, les images du CDN de Discord), mais sans ton token.",
+  faqQ3: "Comment vérifier que le site ne vole pas mon token ?", faqA3: `Le code est public : <a href="${SRC}" target="_blank" rel="noopener noreferrer">voir le code source</a>. Tu peux aussi ouvrir les outils de développement du navigateur (F12, onglet Réseau) pour voir que les requêtes avec ton token partent vers discord.com seulement. Le plus sûr reste le mode « JSON manuel », qui n'utilise aucun token.`,
+  faqQ4: "Est-ce risqué d'utiliser mon token de compte ?", faqA4: "Un token de compte donne accès à tout ton compte : ne le partage jamais, avec personne. L'utiliser en dehors de l'app Discord va à l'encontre des conditions d'utilisation de Discord ; le risque pour de simples lectures est faible, mais il existe. Alternatives : un token de bot invité sur le serveur, ou le mode JSON manuel. En cas de doute, changer ton mot de passe renouvelle ton token.",
+  faqQ5: "Pourquoi je ne vois pas les icônes de rôles de mon serveur ?", faqA5: "Les icônes de rôles n'existent que sur les serveurs au niveau 2 de boost ou plus, et les rôles qui utilisent un emoji standard n'ont pas d'image à télécharger.",
+  faqQ6: "Le texte coloré marche-t-il sur mobile ?", faqA6: "Discord affiche les couleurs ANSI sur ordinateur et sur le web ; sur mobile c'est peu fiable : le texte reste lisible, mais sans couleur.",
+  faqQ7: "Pourquoi mes menus déroulants ne partent pas par webhook ?", faqA7: "Ce sont des composants interactifs : Discord ne les accepte qu'avec un bot. Utilise le code discord.js généré, ou garde les boutons lien, qui marchent avec un webhook.",
+  faqQ8: "Comment signaler un bug ou proposer un outil ?", faqA8: `Rejoins le <a href="https://discord.gg/94seN7srjv" target="_blank" rel="noopener noreferrer">serveur de support</a> (salons #bug-reports et #suggestions). Le code est aussi sur <a href="${SRC}" target="_blank" rel="noopener noreferrer">GitHub</a>.`, cardCoT: "Texte coloré", cardCoD: "Colorie ton texte dans Discord avec des blocs ANSI, puis copie-le en un clic.",
   coTitle: "Générateur de texte coloré", coSub: "Choisis couleurs et styles, puis colle le bloc dans Discord.", coSeg: "Morceau de texte", coPh: "Ton texte", coBold: "Gras", coUnder: "Souligné",
   coFg: "Couleur du texte", coBgL: "Couleur de fond", coAdd: "+ Ajouter un morceau", coOut: "Code à copier", coRef: "Table des codes ANSI", coTip: "Astuce : sélectionne un mot (ou plusieurs) dans un texte, puis clique sur une couleur, le gras ou le souligné pour l'appliquer seulement à la sélection.", icTrans: "Fond transparent (sans remplissage)",
   coNote: "Discord affiche les couleurs ANSI sur ordinateur et sur le web ; sur mobile c'est peu fiable (le texte reste lisible, sans couleur). Copie le bloc avec le bouton sans le retaper : il contient un caractère invisible.",
@@ -692,7 +775,26 @@ en: {
   tsTitle: "Timestamp generator", tsSub: "Pick a date, copy the code and paste it in Discord: everyone sees it in their own language and time zone.",
   tsDate: "Date and time", tsZone: "Time zone of the entered date", tsNow: "Now", tsAuto: "(auto)", tsInvalid: "Invalid date.", tsInfo: "Unix value: {e} · {u} UTC",
   tsNote: "The preview is shown in your time zone and language; on Discord, each person sees the time in their own. The relative format (R) updates by itself in Discord.",
-  ts_t: "Short time", ts_T: "Long time", ts_d: "Short date", ts_D: "Long date", ts_f: "Date and time", ts_F: "Full date and time", ts_R: "Relative", cardCoT: "Colored text", cardCoD: "Color your Discord text with ANSI blocks, then copy it in one click.",
+  ts_t: "Short time", ts_T: "Long time", ts_d: "Short date", ts_D: "Long date", ts_f: "Date and time", ts_F: "Full date and time", ts_R: "Relative",
+  navFmt: "Text formatter", cardFmtT: "Text formatter", cardFmtD: "Bold, italic, strikethrough, spoilers… and Unicode fonts for your nicknames and messages.",
+  secUtilT: "Utilities", secUtilD: "Handy little tools for your server.",
+  fmtTitle: "Text formatter", fmtSub: "Format your text for Discord, or transform it with Unicode fonts.",
+  fmtIn: "Your text", fmtPh: "Write your text here…", fmtTool: "Discord formatting", fmtCopy: "Copy the text", fmtUni: "Unicode fonts",
+  fmtUniNote: "These fonts are real Unicode characters: they can be copied anywhere. Screen readers do not read them and some characters may display badly depending on the device.",
+  fb_b: "Bold", fb_i: "Italic", fb_u: "Underline", fb_s: "Strikethrough", fb_sp: "Spoiler", fb_c: "Code", fb_cb: "Code block", fb_q: "Quote", fb_h: "Heading", fb_sm: "Small text", fb_l: "List",
+  navAbout: "About / FAQ", aboutTitle: "About and FAQ", aboutSub: "How it works, what happens to your token, and the tools' limits.",
+  abHow: "How it works", abHow1: "Pick a tool in the menu or on the home page.", abHow2: "Set the options: everything happens in your page, no account to create.", abHow3: "Copy the result or download the file.",
+  abSec: "Security and privacy", abSecTxt: "The site is a simple web page: all its code runs in your browser. No server of ours receives your data: your token, your webhook and your messages are never sent to us. Only the templates you save yourself stay in your browser.",
+  abLim: "Limits", abLimList: "<li>Role icons: the server must be at boost level 2 or higher.</li><li>Lottie stickers: skipped, because they cannot be converted to an image.</li><li>Colored text (ANSI): unreliable on mobile.</li><li>Messages: select menus are not sent through webhooks, and V2 components need discord.js 14.19 or newer.</li><li>Timestamps: the relative format preview is approximate.</li><li>Unicode fonts: not read by screen readers.</li><li>Account token: using it goes against Discord's Terms of Service.</li>",
+  abFaq: "Frequently asked questions",
+  faqQ1: "What is this site?", faqA1: "A free toolbox for Discord: download a server's role icons, emojis and stickers, build messages (V2 components and embeds), color and format text, generate timestamps and draw role icons. No account needed.",
+  faqQ2: "Why does my token stay in my browser?", faqA2: "To list your servers and fetch their images, the page queries Discord's API directly from your browser, with your token. It is only sent to discord.com, never to a server of ours, never stored, and it disappears when you close the tab. The page also loads public resources (JSZip, Phosphor icons, images from Discord's CDN), but without your token.",
+  faqQ3: "How can I check that the site doesn't steal my token?", faqA3: `The code is public: <a href="${SRC}" target="_blank" rel="noopener noreferrer">view the source code</a>. You can also open your browser's developer tools (F12, Network tab) to see that requests carrying your token only go to discord.com. The safest option remains the "Manual JSON" mode, which uses no token at all.`,
+  faqQ4: "Is it risky to use my account token?", faqA4: "An account token gives access to your whole account: never share it with anyone. Using it outside the Discord app goes against Discord's Terms of Service; the risk for simple reads is low, but it exists. Alternatives: a bot token invited to the server, or the Manual JSON mode. If in doubt, changing your password renews your token.",
+  faqQ5: "Why can't I see my server's role icons?", faqA5: "Role icons only exist on servers at boost level 2 or higher, and roles that use a standard emoji have no image to download.",
+  faqQ6: "Does colored text work on mobile?", faqA6: "Discord shows ANSI colors on desktop and web; on mobile it is unreliable: the text stays readable, but without color.",
+  faqQ7: "Why are my select menus not sent through a webhook?", faqA7: "They are interactive components: Discord only accepts them from a bot. Use the generated discord.js code, or keep link buttons, which work with a webhook.",
+  faqQ8: "How do I report a bug or suggest a tool?", faqA8: `Join the <a href="https://discord.gg/94seN7srjv" target="_blank" rel="noopener noreferrer">support server</a> (#bug-reports and #suggestions channels). The code is also on <a href="${SRC}" target="_blank" rel="noopener noreferrer">GitHub</a>.`, cardCoT: "Colored text", cardCoD: "Color your Discord text with ANSI blocks, then copy it in one click.",
   coTitle: "Colored text generator", coSub: "Pick colors and styles, then paste the block in Discord.", coSeg: "Text segment", coPh: "Your text", coBold: "Bold", coUnder: "Underline",
   coFg: "Text color", coBgL: "Background color", coAdd: "+ Add a segment", coOut: "Code to copy", coRef: "ANSI codes table", coTip: "Tip: select a word (or several) in a text, then click a color, bold or underline to apply it to the selection only.", icTrans: "Transparent background (no fill)",
   coNote: "Discord shows ANSI colors on desktop and web; on mobile it is unreliable (the text stays readable, without color). Copy the block with the button instead of retyping it: it contains an invisible character.",
@@ -732,14 +834,16 @@ function tr(root = document) {
 }
 function route() {
   const h = location.hash.replace(/^#\/?/, "").split("?")[0];
-  const pg = ["download", "embed", "icons", "colored", "timestamps"].includes(h) ? h : "home";
-  ["home", "download", "embed", "icons", "colored", "timestamps"].forEach(x => $("pg-" + x).classList.toggle("hidden", x !== pg));
+  const PGS = ["download", "embed", "icons", "colored", "timestamps", "textfmt", "about"];
+  const pg = PGS.includes(h) ? h : "home";
+  ["home", ...PGS].forEach(x => $("pg-" + x).classList.toggle("hidden", x !== pg));
   document.querySelectorAll("nav a").forEach(a => a.classList.toggle("act", a.getAttribute("href") === (pg === "home" ? "#/" : "#/" + pg)));
-  document.title = SITE + (pg === "home" ? "" : " · " + t({ embed: "navEmbed", icons: "navIcons", colored: "navColored", timestamps: "navTs", download: "navDl" }[pg]));
+  document.title = SITE + (pg === "home" ? "" : " · " + t({ embed: "navEmbed", icons: "navIcons", colored: "navColored", timestamps: "navTs", textfmt: "navFmt", about: "navAbout", download: "navDl" }[pg]));
   if (pg === "embed") { buildIns(); loadShared(); }
   if (pg === "icons" && !window.phInit) { window.phInit = 1; phGrid(); if (!icImg && !IC("sym").value) phPick("star"); }
   if (pg === "colored") coRender();
   if (pg === "timestamps") tsUpd();
+  if (pg === "textfmt") ftUpd();
 }
 window.addEventListener("hashchange", route);
 $("siteName").textContent = SITE;
@@ -1687,6 +1791,107 @@ function tsInit() {
   $("ts-now").onclick = () => { $("ts-dt").value = tsNowStr(sel.value); tsUpd(); };
 }
 tsInit();
+
+/* ---------- Formateur de texte ---------- */
+function ftBlock(up, lo, dg, ex) {
+  const m = {};
+  for (let i = 0; i < 26; i++) {
+    if (up) m[String.fromCharCode(65 + i)] = String.fromCodePoint(up + i);
+    if (lo) m[String.fromCharCode(97 + i)] = String.fromCodePoint(lo + i);
+  }
+  if (dg) for (let i = 0; i < 10; i++) m[String(i)] = String.fromCodePoint(dg + i);
+  return Object.assign(m, ex || {});
+}
+const FT_SMALLCAPS = { a: "ᴀ", b: "ʙ", c: "ᴄ", d: "ᴅ", e: "ᴇ", f: "ꜰ", g: "ɢ", h: "ʜ", i: "ɪ", j: "ᴊ", k: "ᴋ", l: "ʟ", m: "ᴍ", n: "ɴ", o: "ᴏ", p: "ᴘ", q: "ǫ", r: "ʀ", s: "ꜱ", t: "ᴛ", u: "ᴜ", v: "ᴠ", w: "ᴡ", x: "x", y: "ʏ", z: "ᴢ" };
+const FT_FLIP = { a: "ɐ", b: "q", c: "ɔ", d: "p", e: "ǝ", f: "ɟ", g: "ƃ", h: "ɥ", i: "ᴉ", j: "ɾ", k: "ʞ", l: "l", m: "ɯ", n: "u", o: "o", p: "d", q: "b", r: "ɹ", s: "s", t: "ʇ", u: "n", v: "ʌ", w: "ʍ", x: "x", y: "ʎ", z: "z", "?": "¿", "!": "¡", ".": "˙", ",": "'" };
+const FT_CIRC = ftBlock(0x24B6, 0x24D0, 0, { 0: "⓪", 1: "①", 2: "②", 3: "③", 4: "④", 5: "⑤", 6: "⑥", 7: "⑦", 8: "⑧", 9: "⑨" });
+const FT_STYLES = [
+  ["Gras", "Bold", ftBlock(0x1D5D4, 0x1D5EE, 0x1D7EC)],
+  ["Gras (serif)", "Bold (serif)", ftBlock(0x1D400, 0x1D41A, 0x1D7CE)],
+  ["Italique", "Italic", ftBlock(0x1D434, 0x1D44E, 0, { h: "ℎ" })],
+  ["Gras italique", "Bold italic", ftBlock(0x1D468, 0x1D482, 0)],
+  ["Sans-serif", "Sans-serif", ftBlock(0x1D5A0, 0x1D5BA, 0x1D7E2)],
+  ["Sans-serif italique", "Sans-serif italic", ftBlock(0x1D608, 0x1D622, 0)],
+  ["Sans-serif gras italique", "Sans-serif bold italic", ftBlock(0x1D63C, 0x1D656, 0)],
+  ["Script", "Script", ftBlock(0x1D49C, 0x1D4B6, 0, { B: "ℬ", E: "ℰ", F: "ℱ", H: "ℋ", I: "ℐ", L: "ℒ", M: "ℳ", R: "ℛ", e: "ℯ", g: "ℊ", o: "ℴ" })],
+  ["Script gras", "Bold script", ftBlock(0x1D4D0, 0x1D4EA, 0)],
+  ["Fraktur", "Fraktur", ftBlock(0x1D504, 0x1D51E, 0, { C: "ℭ", H: "ℌ", I: "ℑ", R: "ℜ", Z: "ℨ" })],
+  ["Fraktur gras", "Bold fraktur", ftBlock(0x1D56C, 0x1D586, 0)],
+  ["Double trait", "Double-struck", ftBlock(0x1D538, 0x1D552, 0x1D7D8, { C: "ℂ", H: "ℍ", N: "ℕ", P: "ℙ", Q: "ℚ", R: "ℝ", Z: "ℤ" })],
+  ["Machine à écrire", "Monospace", ftBlock(0x1D670, 0x1D68A, 0x1D7F6)],
+  ["Cerclé", "Circled", FT_CIRC],
+  ["Carré noir", "Negative squared", Object.assign(ftBlock(0x1F170, 0, 0), Object.fromEntries([...Array(26)].map((_, i) => [String.fromCharCode(97 + i), String.fromCodePoint(0x1F170 + i)])))],
+  ["Carré", "Squared", Object.assign(ftBlock(0x1F130, 0, 0), Object.fromEntries([...Array(26)].map((_, i) => [String.fromCharCode(97 + i), String.fromCodePoint(0x1F130 + i)])))],
+  ["Pleine largeur", "Fullwidth", ftBlock(0xFF21, 0xFF41, 0xFF10)],
+  ["Petites capitales", "Small caps", FT_SMALLCAPS],
+  ["À l'envers", "Upside down", FT_FLIP, "rev"],
+  ["Barré", "Strikethrough", null, "\u0336"],
+  ["Souligné", "Underlined", null, "\u0332"]
+];
+function ftConv(txt, st) {
+  const [, , map, extra] = st;
+  if (!map) return [...txt].map(c => c === "\n" ? c : c + extra).join("");
+  const out = [...txt].map(c => map[c] || map[c.toLowerCase()] || c);
+  return extra === "rev" ? out.reverse().join("") : out.join("");
+}
+function ftMd(src) {
+  const blocks = [];
+  let x = esc(src).replace(/```([\s\S]*?)```/g, (_, c) => { blocks.push(`<div class="cbk">${c.replace(/^\n/, "")}</div>`); return `\u0000${blocks.length - 1}\u0000`; });
+  x = x.replace(/`([^`\n]+)`/g, (_, c) => { blocks.push(`<code>${c}</code>`); return `\u0000${blocks.length - 1}\u0000`; });
+  x = x.replace(/\|\|([\s\S]+?)\|\|/g, '<span class="spo">$1</span>')
+    .replace(/\*\*\*(.+?)\*\*\*/g, "<b><i>$1</i></b>").replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/__(.+?)__/g, "<u>$1</u>")
+    .replace(/\*(.+?)\*/g, "<i>$1</i>").replace(/(^|\s)_([^_\n]+)_(?=\s|$|[.,!?])/g, "$1<i>$2</i>").replace(/~~(.+?)~~/g, "<s>$1</s>");
+  x = x.split("\n").map(l => {
+    const h = l.match(/^(#{1,3}) (.+)$/), q = l.match(/^-# (.+)$/), b = l.match(/^&gt; (.*)$/), li = l.match(/^[-*] (.+)$/);
+    return h ? `<div class="h${h[1].length}">${h[2]}</div>` : q ? `<div class="sm2">${q[1]}</div>` : b ? `<div class="qt">${b[1]}</div>` : li ? `<div>• ${li[1]}</div>` : `<div>${l || "&nbsp;"}</div>`;
+  }).join("");
+  return x.replace(/\u0000(\d+)\u0000/g, (_, i) => blocks[+i]);
+}
+function ftWrap(pre, suf) {
+  const t = $("ft-in"), a = t.selectionStart, b = t.selectionEnd, v = t.value;
+  t.value = v.slice(0, a) + pre + v.slice(a, b) + suf + v.slice(b);
+  t.focus(); t.setSelectionRange(a + pre.length, b + pre.length); ftUpd();
+}
+function ftLine(pre) {
+  const t = $("ft-in"), v = t.value, a = t.selectionStart, b = t.selectionEnd;
+  const s0 = a === 0 ? 0 : v.lastIndexOf("\n", a - 1) + 1;
+  let e0 = v.indexOf("\n", b); if (e0 < 0) e0 = v.length;
+  const seg = v.slice(s0, e0).split("\n").map(l => pre + l).join("\n");
+  t.value = v.slice(0, s0) + seg + v.slice(e0);
+  t.focus(); t.setSelectionRange(s0, s0 + seg.length); ftUpd();
+}
+function ftUpd() {
+  const txt = $("ft-in").value;
+  $("ft-pv").innerHTML = ftMd(txt);
+  const box = $("ft-list");
+  box.innerHTML = "";
+  FT_STYLES.forEach(st => {
+    const row = document.createElement("div"), nm = document.createElement("div"), pv = document.createElement("div"), b = document.createElement("button");
+    const out = ftConv(txt, st);
+    row.className = "tsr"; nm.className = "nm"; pv.className = "pvv";
+    nm.textContent = L === "fr" ? st[0] : st[1]; pv.textContent = out;
+    b.type = "button"; b.className = "ghost"; b.textContent = t("copyOut");
+    b.onclick = async () => { try { await navigator.clipboard.writeText(out); b.textContent = t("copied"); } catch (er) { b.textContent = t("copyFail"); } setTimeout(() => b.textContent = t("copyOut"), 1500); };
+    row.append(nm, pv, b); box.append(row);
+  });
+}
+function ftInit() {
+  const bar = $("ft-bar");
+  [["fb_b", () => ftWrap("**", "**")], ["fb_i", () => ftWrap("*", "*")], ["fb_u", () => ftWrap("__", "__")], ["fb_s", () => ftWrap("~~", "~~")], ["fb_sp", () => ftWrap("||", "||")],
+   ["fb_c", () => ftWrap("`", "`")], ["fb_cb", () => ftWrap("```\n", "\n```")], ["fb_q", () => ftLine("> ")], ["fb_h", () => ftLine("# ")], ["fb_sm", () => ftLine("-# ")], ["fb_l", () => ftLine("- ")]].forEach(([k, fn]) => {
+    const b = mkBtn("", "ghost sm", fn, k);
+    b.onmousedown = e => e.preventDefault();
+    bar.append(b);
+  });
+  $("ft-in").oninput = ftUpd;
+  $("ft-pv").addEventListener("click", e => { const sp = e.target.closest(".spo"); if (sp) sp.classList.toggle("on"); });
+  $("ft-copy").onclick = async () => {
+    const b = $("ft-copy");
+    try { await navigator.clipboard.writeText($("ft-in").value); b.textContent = t("copied"); } catch (e) { b.textContent = t("copyFail"); }
+    setTimeout(() => b.textContent = t("fmtCopy"), 1500);
+  };
+}
+ftInit();
 
 buildEmbedForm();
 formV2();
