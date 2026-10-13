@@ -265,6 +265,71 @@ details.faq p{margin:10px 0 0;color:var(--mute);line-height:1.6}
 .cbk{background:#1e1f22;border:1px solid #3f4147;border-radius:6px;padding:8px;margin:4px 0;white-space:pre-wrap;font-size:13px}
 #ft-list .tsr .pvv{flex:1 1 0;min-width:0;word-break:break-word}
 #ft-list .tsr{padding:8px 0}
+/* ===== Plus d'espace ===== */
+.content{padding:32px 40px 72px}
+main{max-width:1000px}
+.mtop{margin:-32px -40px 30px;padding:12px 28px}
+.hero{position:relative;margin:46px 0 38px}
+.hero h1{margin:10px 0 14px}
+.hero .sub{line-height:1.6}
+.sec{margin:52px 0 20px}
+.cards{gap:22px}
+.card{padding:28px}
+.card h2{margin:10px 0 8px}
+.panel{padding:24px;margin-bottom:22px}
+.eb{gap:26px}
+label{margin-bottom:8px}
+main section>.crumb{margin-bottom:14px}
+main section>.sub{margin:0 0 34px;line-height:1.6}
+.cta{margin-top:60px;padding:34px 38px}
+footer.ft{margin-top:76px;padding-top:36px;gap:28px}
+.abwrap .panel{margin-bottom:20px}
+details.faq{padding:16px 20px;margin-bottom:14px}
+@media(max-width:900px){
+  .content{padding:24px 18px 56px}
+  .mtop{margin:-24px -18px 24px;padding:12px 18px}
+  .card{padding:22px}.panel{padding:20px}.sec{margin:38px 0 16px}.hero{margin:30px 0 28px}
+}
+/* ===== Animations ===== */
+@keyframes pageIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes linkIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+@keyframes glow{from{transform:translateX(-50%) translateY(0) scale(1)}to{transform:translateX(-46%) translateY(16px) scale(1.14)}}
+@keyframes ctaShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+main section:not(.hidden){animation:pageIn .4s ease both}
+.hero::before{content:"";position:absolute;left:50%;top:-30px;width:560px;max-width:90%;height:260px;transform:translateX(-50%);background:radial-gradient(closest-side,var(--accent),transparent);opacity:.2;filter:blur(34px);z-index:-1;pointer-events:none;animation:glow 9s ease-in-out infinite alternate}
+.cta{background-size:200% 200%;animation:ctaShift 10s ease infinite}
+.card{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.card:hover{transform:translateY(-5px);box-shadow:0 14px 34px rgba(0,0,0,.28)}
+.card .ci{transition:transform .25s ease}
+.card:hover .ci{transform:scale(1.1) rotate(-5deg)}
+.card .go{transition:transform .2s ease}
+.card:hover .go{transform:translateX(5px)}
+.logoimg{transition:transform .3s ease}
+a.brand:hover .logoimg{transform:scale(1.04)}
+button{transition:background .15s,border-color .15s,transform .1s,opacity .15s}
+button:active{transform:scale(.97)}
+.snav a,.sfoot a{transition:background .15s,color .15s,transform .15s}
+.snav a:hover{transform:translateX(3px)}
+.scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:55;opacity:0;pointer-events:none;transition:opacity .25s ease}
+.scrim.on{opacity:1;pointer-events:auto}
+.side.open .snav>*,.side.open .sfoot>*{animation:linkIn .38s ease both}
+.side.open .snav>:nth-child(1){animation-delay:0.04s}
+.side.open .snav>:nth-child(2){animation-delay:0.08s}
+.side.open .snav>:nth-child(3){animation-delay:0.12s}
+.side.open .snav>:nth-child(4){animation-delay:0.16s}
+.side.open .snav>:nth-child(5){animation-delay:0.20s}
+.side.open .snav>:nth-child(6){animation-delay:0.24s}
+.side.open .snav>:nth-child(7){animation-delay:0.28s}
+.side.open .snav>:nth-child(8){animation-delay:0.32s}
+.side.open .snav>:nth-child(9){animation-delay:0.36s}
+.side.open .snav>:nth-child(10){animation-delay:0.40s}
+.rv{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+.rv.in{opacity:1;transform:none}
+.card.rv.in{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease,opacity .55s ease}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv{opacity:1!important;transform:none!important}
+}
 </style>
 </head>
 <body>
@@ -1907,6 +1972,18 @@ upd();
   scrim.onclick = () => set(false);
   window.addEventListener("hashchange", () => set(false));
   document.addEventListener("keydown", e => { if (e.key === "Escape") set(false); });
+})();
+(function () {
+  if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    el.classList.add("in"); io.unobserve(el);
+    setTimeout(() => { el.style.transitionDelay = "0s"; }, 900);
+  }), { threshold: 0.1 });
+  document.querySelectorAll(".card, .sec, .cta, details.faq, .abwrap .panel, .ft").forEach((el, i) => {
+    el.classList.add("rv"); el.style.transitionDelay = ((i % 4) * 70) + "ms"; io.observe(el);
+  });
 })();
 </script>
 </body>
